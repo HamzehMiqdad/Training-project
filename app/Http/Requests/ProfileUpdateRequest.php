@@ -18,25 +18,16 @@ class ProfileUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required','string','max:255'],
-            'phone_number' => ['required','phone'],
-            'gender'=> ['required',new Enum(Gender::class)],
-            'age' => ['required', 'integer'],
-            'whatsapp_number'=>['required','phone'],
-            'facebook'=>['required','url'],
-            'store_name'=> ['required','string'],
-            'location' => ['required','string'],
-            'logo' => ['required','image'],
-            'details' => ['required','string'],
-            'email' => [
-                'required',
-                'string',
-                'lowercase',
-                'email',
-                'max:255',
-                Rule::unique(User::class)->ignore($this->user()->id),
-            ],
+            'first_name'   => 'required|string|max:255',
+            'last_name'    => 'required|string|max:255',
+            'phone_number' => 'required|string',
+            'whatsapp'     => 'nullable|string',
+            'facebook'     => 'nullable|string',
+            'store_name'   => 'required|string|max:255',
+            'country'      => 'required|string',
+            'city'         => 'required|string',
+            'details'      => 'nullable|string',
+            'logo'         => 'nullable|image|max:2048',
         ];
     }
 }

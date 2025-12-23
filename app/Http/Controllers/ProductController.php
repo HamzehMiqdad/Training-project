@@ -16,46 +16,72 @@ class ProductController extends Controller
     {
         $query = $request->input('q');
 
-        $products = Product::where('availabe_for_sale', true)
-            ->where('name', 'like', "{$query}%");
+        // قاعدة للفلترة العامة
+        $productsQuery = Product::where('availabe_for_sale', true)
+            ->when($query, fn($q) => $q->where('name', 'like', "%{$query}%"));
 
         if ($request->filled('category')) {
-            $products->where('category', $request->category);
+            $productsQuery->where('category', $request->category);
         }
 
         if ($request->filled('subcategory')) {
-            $products->where('subcategory', $request->subcategory);
+            $productsQuery->where('subcategory', $request->subcategory);
         }
 
-        $products = $products->latest()->paginate(9)->withQueryString();
+        // باقي المنتجات (Other Products) مع Pagination
+        $products = $productsQuery->latest()->paginate(9)->withQueryString();
+
+        // Top Categories
+        $topCategories = Product::select('category')
+            ->groupBy('category')
+            ->orderByRaw('COUNT(*) DESC')
+            ->pluck('category')
+            ->take(3);
+
+        // Top Products (hits)
+        $topProducts = Product::where('availabe_for_sale', true)
+            ->orderByDesc('hits')
+            ->take(3)
+            ->get();
+
+        // New Products
+        $newProducts = Product::where('availabe_for_sale', true)
+            ->latest()
+            ->take(3)
+            ->get();
+
+        // الإعلانات
+        $ads = Advertisement::active()->get();
+        $ad_top = $ads->where('place', 'products_top')->count() ? $ads->where('place', 'products_top')->random() : null;
+        $ad_sidebar = $ads->where('place', 'products_sidebar')->count() ? $ads->where('place', 'products_sidebar')->random() : null;
+        $ad_bottom = $ads->where('place', 'products_bottom')->count() ? $ads->where('place', 'products_bottom')->random() : null;
 
         $categories = Product::select('category')->distinct()->pluck('category');
         $subcategories = Product::select('subcategory')->distinct()->pluck('subcategory');
 
-        // جلب إعلان عشوائي لكل مكان
-        $ads = Advertisement::active()->get();
-        $ad_top = $ads->where('place', 'products_top');
-        $ad_top = $ad_top->count() ? $ad_top->random() : null;
-
-        $ad_sidebar = $ads->where('place', 'products_sidebar');
-        $ad_sidebar = $ad_sidebar->count() ? $ad_sidebar->random() : null;
-
-        $ad_bottom = $ads->where('place', 'products_bottom');
-        $ad_bottom = $ad_bottom->count() ? $ad_bottom->random() : null;
-
         return view('home', compact(
-            'products', 'categories', 'subcategories',
-            'ad_top', 'ad_sidebar', 'ad_bottom'
+            'topCategories',
+            'topProducts',
+            'newProducts',
+            'products',
+            'categories',
+            'subcategories',
+            'ad_top',
+            'ad_sidebar',
+            'ad_bottom'
         ));
     }
 
 
-  
-    public function show(Product $product){
+
+
+
+    public function show(Product $product)
+    {
         $product->increment('hits');
-        
+
         $product->load('user');
-        return view('products.show',[
+        return view('products.show', [
             'product' => $product
         ]);
     }
@@ -65,28 +91,29 @@ class ProductController extends Controller
         if (!in_array($field, $allowed)) {
             return response()->json([]);
         }
-    
+
         $query = $request->get('q', '');
-    
+
         $values = Product::query()
-                    ->where($field, 'like', "%{$query}%")
-                    ->distinct()
-                    ->limit(10)
-                    ->pluck($field);
-    
+            ->where($field, 'like', "%{$query}%")
+            ->distinct()
+            ->limit(10)
+            ->pluck($field);
+
         return response()->json($values);
     }
-    public function search(Request $request){
+    public function search(Request $request)
+    {
         $request->validate([
-            'name' => ['required','string','max:255'],
-            'category'=>['nullable','string']
+            'name' => ['required', 'string', 'max:255'],
+            'category' => ['nullable', 'string']
         ]);
 
-        $products = Product::where('name','like','%'.$request['name'].'%');
-        if($request['category']){
-            $products = $products->where('category','=',$request['category']);
+        $products = Product::where('name', 'like', '%' . $request['name'] . '%');
+        if ($request['category']) {
+            $products = $products->where('category', '=', $request['category']);
         }
-        return view('',[
+        return view('', [
             'products' => $products->paginate(5)
         ]);
     }

@@ -60,8 +60,8 @@
            href="{{ route('products.index') }}">Products</a>
     </li>
     <li class="nav-item mb-2 mb-lg-0">
-        <a class="nav-link nav-link-custom {{ request()->routeIs('profile.show') ? 'text-white' : 'text-secondary' }}"
-           href="/">Profile</a>
+        <a class="nav-link nav-link-custom {{ request()->routeIs('profile.edit') ? 'text-white' : 'text-secondary' }}"
+           href="{{ route('profile.edit') }}">Profile</a>
     </li>
 </ul>
 @endauth
