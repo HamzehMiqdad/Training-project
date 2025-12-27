@@ -1,5 +1,4 @@
 
-@section('title', 'Products')
 
 @section('content')
 

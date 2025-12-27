@@ -32,7 +32,7 @@ return new class extends Migration
             $table->string('cat4')->nullable();
             $table->string('cat5')->nullable();
 
-
+            
             $table->foreignIdFor(model: User::class)->constrained();
 
             $table->timestamps();

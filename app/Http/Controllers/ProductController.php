@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Advertisement;
 use App\Models\Product;
+use App\Models\Search_Histroy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,8 +16,11 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $query = $request->input('q');
-
-        // قاعدة للفلترة العامة
+        if($query){
+            Search_Histroy::create(
+                ['text' => $query]
+            );
+        }
         $productsQuery = Product::where('availabe_for_sale', true)
             ->when($query, fn($q) => $q->where('name', 'like', "%{$query}%"));
 
@@ -28,29 +32,25 @@ class ProductController extends Controller
             $productsQuery->where('subcategory', $request->subcategory);
         }
 
-        // باقي المنتجات (Other Products) مع Pagination
         $products = $productsQuery->latest()->paginate(9)->withQueryString();
 
-        // Top Categories
         $topCategories = Product::select('category')
             ->groupBy('category')
             ->orderByRaw('COUNT(*) DESC')
             ->pluck('category')
             ->take(3);
 
-        // Top Products (hits)
         $topProducts = Product::where('availabe_for_sale', true)
             ->orderByDesc('hits')
             ->take(3)
             ->get();
 
-        // New Products
         $newProducts = Product::where('availabe_for_sale', true)
             ->latest()
             ->take(3)
             ->get();
 
-        // الإعلانات
+        
         $ads = Advertisement::active()->get();
         $ad_top = $ads->where('place', 'products_top')->count() ? $ads->where('place', 'products_top')->random() : null;
         $ad_sidebar = $ads->where('place', 'products_sidebar')->count() ? $ads->where('place', 'products_sidebar')->random() : null;
@@ -102,20 +102,6 @@ class ProductController extends Controller
 
         return response()->json($values);
     }
-    public function search(Request $request)
-    {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'category' => ['nullable', 'string']
-        ]);
-
-        $products = Product::where('name', 'like', '%' . $request['name'] . '%');
-        if ($request['category']) {
-            $products = $products->where('category', '=', $request['category']);
-        }
-        return view('', [
-            'products' => $products->paginate(5)
-        ]);
-    }
+  
 
 }
