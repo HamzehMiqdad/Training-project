@@ -23,7 +23,7 @@ class ProductFactory extends Factory
             'details' => $this->faker->paragraph,
             'category' => $this->faker->randomElement(['ملابس','ادوات','الكترونيات','طعام','أحذية']),
             'subcategory' => $this->faker->randomElement(['رجالي','نسائي','منزلي','موبايلات']),
-            'price' => $this->faker->numberBetween(100000, 5000000),
+            'price' => $this->faker->numberBetween(100000, 500000),
             'availabe_for_sale' => true,
             'image' => 'products/sample.jpg',
          ];

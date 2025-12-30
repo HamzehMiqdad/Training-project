@@ -4,14 +4,15 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\AdminUserController;
-use App\Http\Controllers\AdvertisementController;
+use App\Http\Controllers\Web\AdvertisementController;
 use App\Http\Controllers\Auth\AdminAuthController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UserProductController;
+use App\Http\Controllers\Web\ProductController;
+use App\Http\Controllers\Web\ProfileController;
+use App\Http\Controllers\Web\UserProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/','/products')->name('home');
+
 
 Route::get('/dashboard', [UserProductController::class,'index'])->middleware(['auth', 'verified','activated'])->name('dashboard');
 

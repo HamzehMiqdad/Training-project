@@ -1,38 +1,35 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
-use App\Http\Resources\ProductResource;
-use App\Models\Advertisement;
 use App\Models\Product;
+use App\Services\ProductService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+
 class UserProductController extends Controller
 {
+    public function __construct(
+        private ProductService $productService
+    ) {}
+
     public function index(Request $request)
     {
         $user = auth()->user();
         $search = $request->input('q');
 
-        $productsQuery = Product::where('user_id', $user->id)
-            ->when($search, function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%");
-            });
-
-        $products = $productsQuery->latest()->get();
-
-        $totalHits = $products->sum('hits');
-
-        $topProduct = $products->sortByDesc('hits')->first();
+        $products = $this->productService->getUserProducts($user->id, $search);
+        $stats = $this->productService->getUserProductStats($user->id);
 
         return view('dashboard', compact(
             'products',
-            'totalHits',
-            'topProduct',
             'search'
-        ));
+        ))->with([
+            'totalHits' => $stats['total_hits'],
+            'topProduct' => $stats['top_product'],
+        ]);
     }
 
     public function create()
@@ -43,15 +40,10 @@ class UserProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         $data = $request->validated();
-
-        if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('products', 'public');
-        } else {
-            $data['image'] = null;
-        }
         $data['availabe_for_sale'] = $request->has('availabe_for_sale');
-        // associate with authenticated user
-        Auth::user()->products()->create($data);
+        
+        $this->productService->createProduct($data, $request->user()->id);
+        
         return redirect('/dashboard')->with('success', 'Product Added Successfully');
     }
 
@@ -59,20 +51,21 @@ class UserProductController extends Controller
     {
         return view('products.edit', ['product' => $product]);
     }
+
     public function update(Product $product, UpdateProductRequest $request)
     {
         $data = $request->validated();
-        if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('products', 'public');
-        }
         $data['availabe_for_sale'] = $request->has('availabe_for_sale');
-        $product->update($data);
-        return redirect('/dashboard')->with('sucess', 'Product Updated Successfully');
+        
+        $this->productService->updateProduct($product, $data);
+        
+        return redirect('/dashboard')->with('success', 'Product Updated Successfully');
     }
 
     public function destroy(Product $product)
     {
-        $product->delete();
+        $this->productService->deleteProduct($product);
+        
         return redirect('/dashboard')->with('success', 'Product Deleted Successfully');
     }
 

@@ -1,17 +1,22 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Services\ProfileService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+    public function __construct(
+        private ProfileService $profileService
+    ) {}
+
     /**
      * Display the user's profile form.
      */
@@ -27,16 +32,8 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $user = auth()->user();
         $data = $request->validated();
-        if ($request->hasFile('logo')) {
-            if ($user->logo) {
-                Storage::delete($user->logo);
-            }
-            $data['logo'] = $request->file('logo')->store('logos', 'public');
-        }
-
-        $user->update($data);
+        $this->profileService->updateProfile($request->user(), $data);
 
         return back()->with('success', 'Profile updated successfully.');
     }
@@ -54,7 +51,7 @@ class ProfileController extends Controller
 
         Auth::logout();
 
-        $user->delete();
+        $this->profileService->deleteAccount($user);
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
