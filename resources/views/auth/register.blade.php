@@ -28,18 +28,18 @@
                     </div>
 
                     {{-- Display Validation Errors --}}
-                    @if ($errors->any())
+                @if ($errors->any())
                         <div class="mb-5 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-full">
                             <ul class="mb-0 text-sm text-red-600 dark:text-red-400">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
                     <form action="{{ route('register') }}" method="POST" enctype="multipart/form-data" class="flex flex-col gap-5">
-                        @csrf
+                    @csrf
 
                         {{-- First Name & Last Name --}}
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -74,7 +74,7 @@
                                         value="{{ old('last_name') }}"
                                         required
                                     />
-                                </div>
+                        </div>
                                 @error('last_name')
                                     <span class="text-sm text-red-500 ml-1">{{ $message }}</span>
                                 @enderror
@@ -154,7 +154,7 @@
                                     <option value="female" {{ old('gender') === 'female' ? 'selected' : '' }}>Female</option>
                                 </select>
                                 <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">arrow_drop_down</span>
-                            </div>
+                        </div>
                             @error('gender')
                                 <span class="text-sm text-red-500 ml-1">{{ $message }}</span>
                             @enderror
@@ -173,7 +173,7 @@
                                     value="{{ old('store_name') }}"
                                     required
                                 />
-                            </div>
+                        </div>
                             @error('store_name')
                                 <span class="text-sm text-red-500 ml-1">{{ $message }}</span>
                             @enderror
@@ -192,7 +192,7 @@
                                     value="{{ old('location') }}"
                                     required
                                 />
-                            </div>
+                        </div>
                             @error('location')
                                 <span class="text-sm text-red-500 ml-1">{{ $message }}</span>
                             @enderror
@@ -212,7 +212,7 @@
                                         value="{{ old('country') }}"
                                         required
                                     />
-                                </div>
+                        </div>
                                 @error('country')
                                     <span class="text-sm text-red-500 ml-1">{{ $message }}</span>
                                 @enderror
@@ -251,7 +251,7 @@
                                         value="{{ old('whatsapp') }}"
                                         required
                                     />
-                                </div>
+                        </div>
                                 @error('whatsapp')
                                     <span class="text-sm text-red-500 ml-1">{{ $message }}</span>
                                 @enderror
@@ -269,7 +269,7 @@
                                         value="{{ old('facebook') }}"
                                         required
                                     />
-                                </div>
+                        </div>
                                 @error('facebook')
                                     <span class="text-sm text-red-500 ml-1">{{ $message }}</span>
                                 @enderror
@@ -289,8 +289,8 @@
                                         accept="image/*"
                                         required
                                     />
-                                </div>
-                              
+                        </div>
+
                             </label>
 
                             <label class="flex flex-col gap-2">
@@ -303,7 +303,7 @@
                                         name="logo"
                                         accept="image/*"
                                     />
-                                </div>
+                        </div>
                                 @error('logo')
                                     <span class="text-sm text-red-500 ml-1">{{ $message }}</span>
                                 @enderror
@@ -372,7 +372,7 @@
                                 >
                                     <span class="material-symbols-outlined text-xl" id="password-confirm-toggle-icon">visibility</span>
                                 </button>
-                            </div>
+                        </div>
                         </label>
 
                         <button class="w-full h-14 bg-primary hover:bg-[#d9d505] text-[#181811] font-bold rounded-full text-base mt-2 transition-colors shadow-[0_4px_14px_rgba(249,245,6,0.3)]" type="submit">
@@ -384,7 +384,7 @@
                         Already have an account? <a class="text-text-main dark:text-white font-bold underline decoration-primary decoration-2 underline-offset-4 hover:decoration-[#d9d505]" href="{{ route('login') }}">Log in</a>
                     </p>
                 </div>
-            </div>
+                        </div>
 
             <div class="hidden lg:block w-1/2 bg-background-light dark:bg-[#1a190b] relative overflow-hidden group">
                 <div class="absolute top-0 right-0 w-full h-full">

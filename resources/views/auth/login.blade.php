@@ -26,19 +26,19 @@
                         </div>
                     </div>
 
-                    {{-- Display Validation Errors --}}
-                    @if ($errors->any())
+                {{-- Display Validation Errors --}}
+                @if ($errors->any())
                         <div class="mb-5 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-full">
                             <ul class="mb-0 text-sm text-red-600 dark:text-red-400">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
                     <form method="POST" action="{{ route('login.attempt') }}" class="flex flex-col gap-5">
-                        @csrf
+                    @csrf
 
                         <label class="flex flex-col gap-2">
                             <span class="text-sm font-bold text-text-main dark:text-white ml-1">Email Address</span>
@@ -53,8 +53,8 @@
                                     required
                                     autofocus
                                 />
-                            </div>
-                           
+                    </div>
+
                         </label>
 
                         <label class="flex flex-col gap-2">
@@ -78,8 +78,8 @@
                                 >
                                     <span class="material-symbols-outlined text-xl" id="password-toggle-icon">visibility</span>
                                 </button>
-                            </div>
-                            
+                    </div>
+
                         </label>
 
                         <div class="flex items-center ml-1">

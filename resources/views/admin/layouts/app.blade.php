@@ -77,9 +77,15 @@
     {{-- Page Content --}}
     <main class="flex-grow w-full max-w-[1440px] mx-auto px-4 md:px-8 py-6">
         @if(session('success'))
-            <div class="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl">
-                <p class="text-sm text-green-600 dark:text-green-400">{{ session('success') }}</p>
-            </div>
+            <x-alert type="success" dismissible class="mb-6">
+                {{ session('success') }}
+            </x-alert>
+        @endif
+
+        @if(session('error'))
+            <x-alert type="error" dismissible class="mb-6">
+                {{ session('error') }}
+            </x-alert>
         @endif
 
         @yield('content')

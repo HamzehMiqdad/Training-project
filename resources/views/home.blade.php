@@ -276,7 +276,6 @@
                 {{-- Hero Section --}}
             @if(!request()->filled('q') && !request()->filled('category') && !request()->filled('subcategory'))
                     <section class="grid grid-cols-1 xl:grid-cols-12 gap-6">
-                        @if(!$ad_top)
                             <div class="xl:col-span-8 relative rounded-xl overflow-hidden bg-gray-100 dark:bg-[#32311b] min-h-[400px] flex items-center group animate-fade-in-up">
                                 <div class="absolute inset-0 hero-gradient"></div>
                                 <div class="absolute inset-0 bg-gradient-to-r from-primary/20 via-primary/10 to-transparent"></div>
@@ -290,7 +289,6 @@
                                     </p>
                                 </div>
                             </div>
-                        @endif
 
                         {{-- Top Categories Cards --}}
                         <div class="xl:col-span-4 flex flex-col gap-6">
@@ -358,10 +356,13 @@
     </div>
                         </section>
                     @endif
+
+                    {{-- Additional Home Sections: Features, How It Works, Categories Showcase, CTA --}}
+                    @include('partials.home-sections')
                 @endif
 
                 {{-- Main Products Grid --}}
-                <section class="space-y-6">
+                <section class="space-y-6" id="all-products">
                     <div class="flex items-center justify-between px-2">
                         <h2 class="text-xl font-bold text-[#181811] dark:text-white">
                             @if(request()->filled('q') || request()->filled('category'))
@@ -393,7 +394,7 @@
                                             <span class="material-symbols-outlined">chevron_left</span>
                                         </span>
                                     @else
-                                        <a href="{{ $products->previousPageUrl() }}" class="px-4 py-2 rounded-full border border-gray-300 dark:border-gray-600 font-bold text-sm text-[#181811] dark:text-white hover:bg-white dark:hover:bg-[#32311b] hover:border-primary transition-colors shadow-sm">
+                                        <a href="{{ $products->previousPageUrl() }}#all-products" class="px-4 py-2 rounded-full border border-gray-300 dark:border-gray-600 font-bold text-sm text-[#181811] dark:text-white hover:bg-white dark:hover:bg-[#32311b] hover:border-primary transition-colors shadow-sm">
                                             <span class="material-symbols-outlined">chevron_left</span>
                                         </a>
                                     @endif
@@ -407,7 +408,7 @@
                                     @endphp
                                     
                                     @if($start > 1)
-                                        <a href="{{ $products->url(1) }}" class="px-4 py-2 rounded-full border border-gray-300 dark:border-gray-600 font-bold text-sm text-[#181811] dark:text-white hover:bg-white dark:hover:bg-[#32311b] hover:border-primary transition-colors shadow-sm">1</a>
+                                        <a href="{{ $products->url(1) }}#all-products" class="px-4 py-2 rounded-full border border-gray-300 dark:border-gray-600 font-bold text-sm text-[#181811] dark:text-white hover:bg-white dark:hover:bg-[#32311b] hover:border-primary transition-colors shadow-sm">1</a>
                                         @if($start > 2)
                                             <span class="px-2 text-gray-400">...</span>
                                         @endif
@@ -417,7 +418,7 @@
                                         @if ($page == $current)
                                             <span class="px-4 py-2 rounded-full bg-primary text-[#181811] font-bold text-sm shadow-sm">{{ $page }}</span>
                                         @else
-                                            <a href="{{ $products->url($page) }}" class="px-4 py-2 rounded-full border border-gray-300 dark:border-gray-600 font-bold text-sm text-[#181811] dark:text-white hover:bg-white dark:hover:bg-[#32311b] hover:border-primary transition-colors shadow-sm">
+                                            <a href="{{ $products->url($page) }}#all-products" class="px-4 py-2 rounded-full border border-gray-300 dark:border-gray-600 font-bold text-sm text-[#181811] dark:text-white hover:bg-white dark:hover:bg-[#32311b] hover:border-primary transition-colors shadow-sm">
                                                 {{ $page }}
                                             </a>
                                         @endif
@@ -427,12 +428,12 @@
                                         @if($end < $last - 1)
                                             <span class="px-2 text-gray-400">...</span>
                                         @endif
-                                        <a href="{{ $products->url($last) }}#products-section" class="px-4 py-2 rounded-full border border-gray-300 dark:border-gray-600 font-bold text-sm text-[#181811] dark:text-white hover:bg-white dark:hover:bg-[#32311b] hover:border-primary transition-colors shadow-sm pagination-link">{{ $last }}</a>
+                                        <a href="{{ $products->url($last) }}#all-products" class="px-4 py-2 rounded-full border border-gray-300 dark:border-gray-600 font-bold text-sm text-[#181811] dark:text-white hover:bg-white dark:hover:bg-[#32311b] hover:border-primary transition-colors shadow-sm pagination-link">{{ $last }}</a>
                                     @endif
 
                                     {{-- Next Page Link --}}
                                     @if ($products->hasMorePages())
-                                        <a href="{{ $products->nextPageUrl() }}#products-section" class="px-4 py-2 rounded-full border border-gray-300 dark:border-gray-600 font-bold text-sm text-[#181811] dark:text-white hover:bg-white dark:hover:bg-[#32311b] hover:border-primary transition-colors shadow-sm pagination-link">
+                                        <a href="{{ $products->nextPageUrl() }}#all-products" class="px-4 py-2 rounded-full border border-gray-300 dark:border-gray-600 font-bold text-sm text-[#181811] dark:text-white hover:bg-white dark:hover:bg-[#32311b] hover:border-primary transition-colors shadow-sm pagination-link">
                                             <span class="material-symbols-outlined">chevron_right</span>
                                         </a>
                                     @else
