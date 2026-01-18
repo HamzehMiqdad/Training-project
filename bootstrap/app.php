@@ -4,6 +4,7 @@ use App\Http\Middleware\CheckActivated;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Support\Facades\Auth;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -23,6 +24,15 @@ return Application::configure(basePath: dirname(__DIR__))
         });
 
         $middleware->redirectUsersTo(function ($request) {
+        
+            
+            // For regular routes, check web guard first
+            if (Auth::guard('web')->check()) {
+                return route('products.index');
+            }
+            
+            
+            // Fallback: check admin guard (in case of mixed authentication)
             if (Auth::guard('admin')->check()) {
                 return route('admin.dashboard');
             }

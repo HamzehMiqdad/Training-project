@@ -1,134 +1,313 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Edit Profile - MarketHub</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f9f506",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#23220f",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem", 
+                        "lg": "2rem", 
+                        "xl": "3rem", 
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        body {
+            font-family: "Spline Sans", sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#181811] dark:text-white min-h-screen flex flex-col font-display">
 
-@section('title', 'My Profile')
+    @include('partials.header')
 
-@section('content')
-
-@if(session('success'))
-    <div class="alert alert-success">{{ session('success') }}</div>
-@endif
-
-<div class="row">
-    {{-- PROFILE FORM --}}
-    <div class="col-lg-8">
-        <div class="card shadow-sm mb-4">
-            <div class="card-header fw-bold">Profile Information</div>
-
-            <div class="card-body">
-                <form method="POST"
-                      action="{{ route('profile.update') }}"
-                      enctype="multipart/form-data">
-                    @csrf
-                    @method('PATCH')
-
-                    <div class="row g-3">
-
-                        <div class="col-md-6">
-                            <label class="form-label">First Name</label>
-                            <input class="form-control"
-                                   name="first_name"
-                                   value="{{ old('first_name', $user->first_name) }}">
-                        </div>
-
-                        <div class="col-md-6">
-                            <label class="form-label">Last Name</label>
-                            <input class="form-control"
-                                   name="last_name"
-                                   value="{{ old('last_name', $user->last_name) }}">
-                        </div>
-
-                        <div class="col-md-6">
-                            <label class="form-label">Phone</label>
-                            <input class="form-control"
-                                   name="phone_number"
-                                   value="{{ old('phone_number', $user->phone_number) }}">
-                        </div>
-
-                        <div class="col-md-6">
-                            <label class="form-label">WhatsApp</label>
-                            <input class="form-control"
-                                   name="whatsapp"
-                                   value="{{ old('whatsapp', $user->whatsapp) }}">
-                        </div>
-
-                        <div class="col-md-6">
-                            <label class="form-label">Facebook</label>
-                            <input class="form-control"
-                                   name="facebook"
-                                   value="{{ old('facebook', $user->facebook) }}">
-                        </div>
-
-                        <div class="col-md-6">
-                            <label class="form-label">Store Name</label>
-                            <input class="form-control"
-                                   name="store_name"
-                                   value="{{ old('store_name', $user->store_name) }}">
-                        </div>
-
-                        <div class="col-md-6">
-                            <label class="form-label">Country</label>
-                            <input class="form-control"
-                                   name="country"
-                                   value="{{ old('country', $user->country) }}">
-                        </div>
-
-                        <div class="col-md-6">
-                            <label class="form-label">City</label>
-                            <input class="form-control"
-                                   name="city"
-                                   value="{{ old('city', $user->city) }}">
-                        </div>
-
-                        <div class="col-12">
-                            <label class="form-label">Details</label>
-                            <textarea class="form-control"
-                                      rows="3"
-                                      name="details">{{ old('details', $user->details) }}</textarea>
-                        </div>
-
-                        <div class="col-12">
-                            <label class="form-label">Store Logo</label>
-                            <input type="file" class="form-control" name="logo">
-                        </div>
-
-                    </div>
-
-                    <div class="mt-4">
-                        <button class="btn btn-primary">
-                            Save Changes
-                        </button>
-                    </div>
-
-                </form>
-            </div>
-        </div>
-    </div>
-
-    {{-- DANGER ZONE --}}
-    <div class="col-lg-4">
-        <div class="card border-danger shadow-sm">
-            <div class="card-header bg-danger text-white fw-bold">
-                Danger Zone
+    <main class="flex-1 flex flex-col items-center py-8 px-4 sm:px-6 lg:px-8">
+        <div class="w-full max-w-[960px] flex flex-col gap-8">
+            <div class="flex flex-wrap justify-between items-end gap-3 px-2">
+                <div class="flex min-w-72 flex-col gap-2">
+                    <p class="text-slate-900 dark:text-white text-3xl sm:text-4xl font-black leading-tight tracking-[-0.033em]">Edit Profile</p>
+                    <p class="text-stone-500 dark:text-stone-400 text-base font-normal leading-normal">Update your profile information and store details.</p>
+                </div>
             </div>
 
-            <div class="card-body">
-                <p class="text-danger small">
-                    Deleting your account is permanent and cannot be undone.
-                </p>
+            {{-- Success Message --}}
+            @if(session('success'))
+                <div class="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl p-4">
+                    <p class="text-sm text-green-600 dark:text-green-400">{{ session('success') }}</p>
+                </div>
+            @endif
 
-                <form method="POST"
-                      action="{{ route('profile.destroy') }}"
-                      onsubmit="return confirm('Are you sure you want to delete your account?');">
-                    @csrf
-                    @method('DELETE')
+            {{-- Display Validation Errors --}}
+            @if ($errors->any())
+                <div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4">
+                    <ul class="mb-0 text-sm text-red-600 dark:text-red-400 space-y-1">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
-                    <button class="btn btn-danger w-100">
-                        Delete My Account
+            {{-- Profile Information Section --}}
+            <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data" class="flex flex-col gap-6">
+                @csrf
+                @method('PATCH')
+
+                <section class="bg-white dark:bg-stone-dark rounded-lg p-6 sm:p-8 shadow-sm border border-stone-100 dark:border-stone-800">
+                    <div class="flex items-center gap-2 mb-6">
+                        <span class="material-symbols-outlined text-primary">person</span>
+                        <h3 class="text-slate-900 dark:text-white text-xl font-bold leading-tight tracking-[-0.015em]">Profile Information</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="col-span-1 md:col-span-2">
+                            <label class="flex flex-col gap-2">
+                                <p class="text-slate-900 dark:text-stone-200 text-base font-medium">Email</p>
+                                <input 
+                                    class="form-input w-full rounded-xl border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-slate-900 dark:text-white focus:border-primary focus:ring-primary h-14 px-4 placeholder:text-stone-400 dark:placeholder:text-stone-600 font-normal shadow-sm @error('email') border-red-500 @enderror" 
+                                    name="email" 
+                                    type="email"
+                                    value="{{ old('email', $user->email) }}"
+                                    disabled
+                                    readonly
+                                />
+                                <p class="text-xs text-stone-500">Email cannot be changed</p>
+                            </label>
+                        </div>
+
+                        <div class="col-span-1">
+                            <label class="flex flex-col gap-2">
+                                <p class="text-slate-900 dark:text-stone-200 text-base font-medium">First Name</p>
+                                <input 
+                                    class="form-input w-full rounded-xl border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-slate-900 dark:text-white focus:border-primary focus:ring-primary h-14 px-4 placeholder:text-stone-400 dark:placeholder:text-stone-600 font-normal shadow-sm @error('first_name') border-red-500 @enderror" 
+                                    name="first_name" 
+                                    placeholder="John" 
+                                    type="text"
+                                    value="{{ old('first_name', $user->first_name) }}"
+                                    required
+                                />
+                                @error('first_name')
+                                    <p class="text-sm text-red-500">{{ $message }}</p>
+                                @enderror
+                            </label>
+                        </div>
+
+                        <div class="col-span-1">
+                            <label class="flex flex-col gap-2">
+                                <p class="text-slate-900 dark:text-stone-200 text-base font-medium">Last Name</p>
+                                <input 
+                                    class="form-input w-full rounded-xl border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-slate-900 dark:text-white focus:border-primary focus:ring-primary h-14 px-4 placeholder:text-stone-400 dark:placeholder:text-stone-600 font-normal shadow-sm @error('last_name') border-red-500 @enderror" 
+                                    name="last_name" 
+                                    placeholder="Doe" 
+                                    type="text"
+                                    value="{{ old('last_name', $user->last_name) }}"
+                                    required
+                                />
+                                @error('last_name')
+                                    <p class="text-sm text-red-500">{{ $message }}</p>
+                                @enderror
+                            </label>
+                        </div>
+
+                        <div class="col-span-1">
+                            <label class="flex flex-col gap-2">
+                                <p class="text-slate-900 dark:text-stone-200 text-base font-medium">Phone Number</p>
+                                <input 
+                                    class="form-input w-full rounded-xl border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-slate-900 dark:text-white focus:border-primary focus:ring-primary h-14 px-4 placeholder:text-stone-400 dark:placeholder:text-stone-600 font-normal shadow-sm @error('phone_number') border-red-500 @enderror" 
+                                    name="phone_number" 
+                                    placeholder="+1234567890" 
+                                    type="text"
+                                    value="{{ old('phone_number', $user->phone_number) }}"
+                                    required
+                                />
+                                @error('phone_number')
+                                    <p class="text-sm text-red-500">{{ $message }}</p>
+                                @enderror
+                            </label>
+                        </div>
+
+                        <div class="col-span-1">
+                            <label class="flex flex-col gap-2">
+                                <p class="text-slate-900 dark:text-stone-200 text-base font-medium">WhatsApp</p>
+                                <input 
+                                    class="form-input w-full rounded-xl border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-slate-900 dark:text-white focus:border-primary focus:ring-primary h-14 px-4 placeholder:text-stone-400 dark:placeholder:text-stone-600 font-normal shadow-sm @error('whatsapp') border-red-500 @enderror" 
+                                    name="whatsapp" 
+                                    placeholder="+1234567890" 
+                                    type="text"
+                                    value="{{ old('whatsapp', $user->whatsapp) }}"
+                                />
+                                @error('whatsapp')
+                                    <p class="text-sm text-red-500">{{ $message }}</p>
+                                @enderror
+                            </label>
+                        </div>
+
+                        <div class="col-span-1 md:col-span-2">
+                            <label class="flex flex-col gap-2">
+                                <p class="text-slate-900 dark:text-stone-200 text-base font-medium">Facebook URL</p>
+                                <input 
+                                    class="form-input w-full rounded-xl border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-slate-900 dark:text-white focus:border-primary focus:ring-primary h-14 px-4 placeholder:text-stone-400 dark:placeholder:text-stone-600 font-normal shadow-sm @error('facebook') border-red-500 @enderror" 
+                                    name="facebook" 
+                                    placeholder="https://facebook.com/yourprofile" 
+                                    type="url"
+                                    value="{{ old('facebook', $user->facebook) }}"
+                                />
+                                @error('facebook')
+                                    <p class="text-sm text-red-500">{{ $message }}</p>
+                                @enderror
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+                {{-- Store Information Section --}}
+                <section class="bg-white dark:bg-stone-dark rounded-lg p-6 sm:p-8 shadow-sm border border-stone-100 dark:border-stone-800">
+                    <div class="flex items-center gap-2 mb-6">
+                        <span class="material-symbols-outlined text-primary">storefront</span>
+                        <h3 class="text-slate-900 dark:text-white text-xl font-bold leading-tight tracking-[-0.015em]">Store Information</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="col-span-1 md:col-span-2">
+                            <label class="flex flex-col gap-2">
+                                <p class="text-slate-900 dark:text-stone-200 text-base font-medium">Store Name</p>
+                                <input 
+                                    class="form-input w-full rounded-xl border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-slate-900 dark:text-white focus:border-primary focus:ring-primary h-14 px-4 placeholder:text-stone-400 dark:placeholder:text-stone-600 font-normal shadow-sm @error('store_name') border-red-500 @enderror" 
+                                    name="store_name" 
+                                    placeholder="My Awesome Store" 
+                                    type="text"
+                                    value="{{ old('store_name', $user->store_name) }}"
+                                    required
+                                />
+                                @error('store_name')
+                                    <p class="text-sm text-red-500">{{ $message }}</p>
+                                @enderror
+                            </label>
+                        </div>
+
+                        <div class="col-span-1">
+                            <label class="flex flex-col gap-2">
+                                <p class="text-slate-900 dark:text-stone-200 text-base font-medium">Country</p>
+                                <input 
+                                    class="form-input w-full rounded-xl border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-slate-900 dark:text-white focus:border-primary focus:ring-primary h-14 px-4 placeholder:text-stone-400 dark:placeholder:text-stone-600 font-normal shadow-sm @error('country') border-red-500 @enderror" 
+                                    name="country" 
+                                    placeholder="Syria" 
+                                    type="text"
+                                    value="{{ old('country', $user->country) }}"
+                                    required
+                                />
+                                @error('country')
+                                    <p class="text-sm text-red-500">{{ $message }}</p>
+                                @enderror
+                            </label>
+                        </div>
+
+                        <div class="col-span-1">
+                            <label class="flex flex-col gap-2">
+                                <p class="text-slate-900 dark:text-stone-200 text-base font-medium">City</p>
+                                <input 
+                                    class="form-input w-full rounded-xl border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-slate-900 dark:text-white focus:border-primary focus:ring-primary h-14 px-4 placeholder:text-stone-400 dark:placeholder:text-stone-600 font-normal shadow-sm @error('city') border-red-500 @enderror" 
+                                    name="city" 
+                                    placeholder="Damascus" 
+                                    type="text"
+                                    value="{{ old('city', $user->city) }}"
+                                    required
+                                />
+                                @error('city')
+                                    <p class="text-sm text-red-500">{{ $message }}</p>
+                                @enderror
+                            </label>
+                        </div>
+
+                        <div class="col-span-1 md:col-span-2">
+                            <label class="flex flex-col gap-2">
+                                <p class="text-slate-900 dark:text-stone-200 text-base font-medium">Details (Optional)</p>
+                                <textarea 
+                                    class="form-textarea w-full rounded-xl border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-slate-900 dark:text-white focus:border-primary focus:ring-primary min-h-[140px] p-4 placeholder:text-stone-400 dark:placeholder:text-stone-600 font-normal shadow-sm resize-y @error('details') border-red-500 @enderror" 
+                                    name="details" 
+                                    placeholder="Tell us about your store..."
+                                    rows="3"
+                                >{{ old('details', $user->details) }}</textarea>
+                                @error('details')
+                                    <p class="text-sm text-red-500">{{ $message }}</p>
+                                @enderror
+                            </label>
+                        </div>
+
+                        <div class="col-span-1 md:col-span-2">
+                            <label class="flex flex-col gap-2">
+                                <p class="text-slate-900 dark:text-stone-200 text-base font-medium">Store Logo (Optional)</p>
+                                @if($user->logo)
+                                    <div class="mb-2">
+                                        <p class="text-sm text-stone-500 mb-2">Current logo:</p>
+                                        <img src="{{ asset('storage/' . $user->logo) }}" alt="Store Logo" class="size-24 object-cover rounded-xl border border-stone-200 dark:border-stone-700"/>
+                                    </div>
+                                @endif
+                                <input 
+                                    class="form-input w-full rounded-xl border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-slate-900 dark:text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-[#181811] hover:file:bg-[#d9d505] focus:border-primary focus:ring-primary h-14 px-4 font-normal shadow-sm @error('logo') border-red-500 @enderror" 
+                                    name="logo" 
+                                    type="file"
+                                    accept="image/*"
+                                />
+                                @error('logo')
+                                    <p class="text-sm text-red-500">{{ $message }}</p>
+                                @enderror
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="flex flex-col-reverse sm:flex-row justify-end items-center gap-4 pt-6 pb-20">
+                    <a href="{{ route('dashboard') }}" class="w-full sm:w-auto flex min-w-[120px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-6 bg-transparent border border-stone-300 dark:border-stone-700 text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 text-base font-bold transition-all">
+                        Cancel
+                    </a>
+                    <button class="w-full sm:w-auto flex min-w-[200px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-8 bg-primary text-[#181811] hover:bg-[#eae605] text-base font-bold shadow-lg shadow-primary/20 transition-all hover:scale-[1.02] active:scale-95" type="submit">
+                        Save Changes
                     </button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+                </div>
+            </form>
 
-@endsection
+            {{-- Danger Zone Section --}}
+            <section class="bg-red-50 dark:bg-red-900/20 rounded-lg p-6 sm:p-8 shadow-sm border border-red-200 dark:border-red-800">
+                <div class="flex items-center gap-2 mb-6">
+                    <span class="material-symbols-outlined text-red-600 dark:text-red-400">warning</span>
+                    <h3 class="text-red-900 dark:text-red-200 text-xl font-bold leading-tight tracking-[-0.015em]">Danger Zone</h3>
+                </div>
+                <div class="flex flex-col gap-4">
+                    <p class="text-red-700 dark:text-red-300 text-sm">
+                        Once you delete your account, there is no going back. Please be certain.
+                    </p>
+                    <form action="{{ route('profile.destroy') }}" method="POST" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="flex items-center gap-2 rounded-full h-12 px-6 bg-red-600 hover:bg-red-700 text-white text-base font-bold transition-colors shadow-lg shadow-red-600/20">
+                            <span class="material-symbols-outlined text-lg">delete</span>
+                            <span>Delete My Account</span>
+                        </button>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    @include('partials.footer')
+
+</body>
+</html>

@@ -3,73 +3,144 @@
 @section('title','Edit Advertisement')
 
 @section('content')
-<div class="card shadow-sm">
-    <div class="card-body">
-        <h4>Edit Advertisement</h4>
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul class="mb-0">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-        <form method="POST"
-              enctype="multipart/form-data"
-              action="{{ route('admin.advertisements.update',$advertisement) }}">
-            @csrf @method('PUT')
-
-            <div class="mb-3">
-                <label>Owner</label>
-                <input class="form-control"
-                       name="owner"
-                       value="{{ $advertisement->owner }}">
-            </div>
-
-            <div class="mb-3">
-                <label>Link</label>
-                <input class="form-control"
-                       name="link"
-                       value="{{ $advertisement->link }}">
-            </div>
-
-            <div class="mb-3">
-                <label>Place</label>
-                <select name="place" class="form-select">
-                    @foreach(['products_top','products_sidebar','products_bottom'] as $place)
-                        <option value="{{ $place }}"
-                            @selected($advertisement->place === $place)>
-                            {{ ucfirst(str_replace('_',' ',$place)) }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label>Current Image</label><br>
-                <img src="{{ asset('storage/'.$advertisement->image) }}"
-                     width="150" class="rounded mb-2">
-                <input type="file" name="image" class="form-control">
-            </div>
-
-            <div class="row">
-                <div class="col">
-                    <label>Start</label>
-                    <input type="date" name="start_time"
-                           class="form-control"
-                           value="{{ $advertisement->start_time->format('Y-m-d') }}">
-                </div>
-                <div class="col">
-                    <label>End</label>
-                    <input type="date" name="end_time"
-                           class="form-control"
-                           value="{{ $advertisement->end_time->format('Y-m-d') }}">
-                </div>
-            </div>
-
-            <button class="btn btn-primary mt-3">Update</button>
-        </form>
+<div class="flex flex-col gap-8">
+    <div class="flex flex-col gap-1">
+        <h1 class="text-4xl font-black tracking-tight text-[#181811] dark:text-white">Edit Advertisement</h1>
+        <p class="text-base text-[#8c8b5f] dark:text-[#a1a18d]">Update advertisement details.</p>
     </div>
+
+    @if ($errors->any())
+        <div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4">
+            <ul class="mb-0 text-sm text-red-600 dark:text-red-400 space-y-1">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <form method="POST" enctype="multipart/form-data" action="{{ route('admin.advertisements.update', $advertisement) }}" class="flex flex-col gap-6">
+        @csrf
+        @method('PUT')
+
+        <section class="bg-white dark:bg-[#32311b] rounded-xl p-6 sm:p-8 shadow-sm border border-[#e6e6db] dark:border-[#3a392a]">
+            <div class="flex items-center gap-2 mb-6">
+                <span class="material-symbols-outlined text-primary">campaign</span>
+                <h3 class="text-slate-900 dark:text-white text-xl font-bold leading-tight tracking-[-0.015em]">Advertisement Details</h3>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="col-span-1 md:col-span-2">
+                    <label class="flex flex-col gap-2">
+                        <p class="text-slate-900 dark:text-stone-200 text-base font-medium">Owner</p>
+                        <input 
+                            class="form-input w-full rounded-xl border-[#e6e6db] dark:border-[#3a392a] bg-white dark:bg-[#2c2b18] text-slate-900 dark:text-white focus:border-primary focus:ring-primary h-14 px-4 placeholder:text-stone-400 dark:placeholder:text-stone-600 font-normal shadow-sm @error('owner') border-red-500 @enderror" 
+                            name="owner" 
+                            type="text"
+                            value="{{ old('owner', $advertisement->owner) }}"
+                            required
+                        />
+                        @error('owner')
+                            <p class="text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </label>
+                </div>
+
+                <div class="col-span-1 md:col-span-2">
+                    <label class="flex flex-col gap-2">
+                        <p class="text-slate-900 dark:text-stone-200 text-base font-medium">Link</p>
+                        <input 
+                            class="form-input w-full rounded-xl border-[#e6e6db] dark:border-[#3a392a] bg-white dark:bg-[#2c2b18] text-slate-900 dark:text-white focus:border-primary focus:ring-primary h-14 px-4 placeholder:text-stone-400 dark:placeholder:text-stone-600 font-normal shadow-sm @error('link') border-red-500 @enderror" 
+                            name="link" 
+                            type="url"
+                            placeholder="https://example.com"
+                            value="{{ old('link', $advertisement->link) }}"
+                            required
+                        />
+                        @error('link')
+                            <p class="text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </label>
+                </div>
+
+                <div class="col-span-1">
+                    <label class="flex flex-col gap-2">
+                        <p class="text-slate-900 dark:text-stone-200 text-base font-medium">Place</p>
+                        <select name="place" class="w-full rounded-xl border-[#e6e6db] dark:border-[#3a392a] bg-white dark:bg-[#2c2b18] text-slate-900 dark:text-white focus:border-primary focus:ring-primary h-14 px-4 font-normal shadow-sm @error('place') border-red-500 @enderror" required>
+                            @foreach(['products_top','products_sidebar','products_bottom'] as $place)
+                                <option value="{{ $place }}" {{ old('place', $advertisement->place) === $place ? 'selected' : '' }}>
+                                    {{ ucfirst(str_replace('_', ' ', $place)) }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('place')
+                            <p class="text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </label>
+                </div>
+
+                <div class="col-span-1">
+                    <label class="flex flex-col gap-2">
+                        <p class="text-slate-900 dark:text-stone-200 text-base font-medium">Image</p>
+                        <input 
+                            class="form-input w-full rounded-xl border-[#e6e6db] dark:border-[#3a392a] bg-white dark:bg-[#2c2b18] text-slate-900 dark:text-white focus:border-primary focus:ring-primary h-14 px-4 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-[#181811] hover:file:bg-[#d9d505] @error('image') border-red-500 @enderror" 
+                            type="file" 
+                            name="image" 
+                            accept="image/*"
+                        />
+                        @error('image')
+                            <p class="text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                        @if($advertisement->image)
+                            <div class="mt-2 flex items-center gap-2 text-sm text-[#8c8b5f] dark:text-[#a1a18d]">
+                                <img src="{{ asset('storage/' . $advertisement->image) }}" alt="Current Image" class="size-20 rounded-xl object-cover border border-[#e6e6db] dark:border-[#3a392a]"/>
+                                <span>Current image. Leave empty to keep.</span>
+                            </div>
+                        @endif
+                    </label>
+                </div>
+
+                <div class="col-span-1">
+                    <label class="flex flex-col gap-2">
+                        <p class="text-slate-900 dark:text-stone-200 text-base font-medium">Start Date</p>
+                        <input 
+                            class="form-input w-full rounded-xl border-[#e6e6db] dark:border-[#3a392a] bg-white dark:bg-[#2c2b18] text-slate-900 dark:text-white focus:border-primary focus:ring-primary h-14 px-4 font-normal shadow-sm @error('start_time') border-red-500 @enderror" 
+                            type="date" 
+                            name="start_time" 
+                            value="{{ old('start_time', $advertisement->start_time->format('Y-m-d')) }}"
+                            required
+                        />
+                        @error('start_time')
+                            <p class="text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </label>
+                </div>
+
+                <div class="col-span-1">
+                    <label class="flex flex-col gap-2">
+                        <p class="text-slate-900 dark:text-stone-200 text-base font-medium">End Date</p>
+                        <input 
+                            class="form-input w-full rounded-xl border-[#e6e6db] dark:border-[#3a392a] bg-white dark:bg-[#2c2b18] text-slate-900 dark:text-white focus:border-primary focus:ring-primary h-14 px-4 font-normal shadow-sm @error('end_time') border-red-500 @enderror" 
+                            type="date" 
+                            name="end_time" 
+                            value="{{ old('end_time', $advertisement->end_time->format('Y-m-d')) }}"
+                            required
+                        />
+                        @error('end_time')
+                            <p class="text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <div class="flex flex-col-reverse sm:flex-row justify-end items-center gap-4 pt-6">
+            <a href="{{ route('admin.advertisements.index') }}" class="w-full sm:w-auto flex min-w-[120px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-6 bg-transparent border border-[#e6e6db] dark:border-[#3a392a] text-[#181811] dark:text-white hover:bg-[#f8f8f5] dark:hover:bg-[#2c2b18] text-base font-bold transition-all">
+                Cancel
+            </a>
+            <button class="w-full sm:w-auto flex min-w-[200px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-8 bg-primary text-[#181811] hover:bg-[#eae605] text-base font-bold shadow-lg shadow-primary/20 transition-all hover:scale-[1.02] active:scale-95" type="submit">
+                Update Advertisement
+            </button>
+        </div>
+    </form>
 </div>
 @endsection

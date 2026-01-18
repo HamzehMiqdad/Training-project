@@ -1,199 +1,432 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    @include('partials.auth-head')
+</head>
 
-@section('title', 'Create Account')
+<body class="bg-background-light dark:bg-background-dark text-text-main dark:text-white transition-colors duration-200 min-h-screen flex flex-col">
+    @include('partials.auth-header')
 
-@section('content')
-<div class="row justify-content-center">
-    <div class="col-md-8">
-
-        <div class="card shadow-sm">
-            <div class="card-body">
-
-                <h3 class="text-center mb-3">Create Account</h3>
-
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul class="mb-0">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
+    <main class="flex-grow flex items-center justify-center p-4 lg:p-10">
+        <div class="w-full max-w-[1200px] bg-surface-light dark:bg-surface-dark rounded-xl lg:rounded-2xl overflow-hidden shadow-sm dark:shadow-none min-h-[700px] flex flex-col lg:flex-row border border-[#e6e6db] dark:border-[#3e3d24]">
+            <div class="w-full lg:w-1/2 p-8 lg:p-16 flex flex-col justify-start relative overflow-y-auto max-h-[90vh] lg:max-h-none">
+                <div class="max-w-[420px] mx-auto w-full">
+                    <div class="mb-10 text-center">
+                        <h1 class="text-3xl lg:text-4xl font-bold mb-3 text-text-main dark:text-white">Create Account</h1>
+                        <p class="text-text-muted dark:text-[#a3a38a]">Enter your details to join our marketplace.</p>
                     </div>
-                @endif
 
-                <form action="{{ route('register') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-
-                    <div class="row">
-
-                        {{-- First Name --}}
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">First Name</label>
-                            <input type="text" name="first_name"
-                                   class="form-control @error('first_name') is-invalid @enderror"
-                                   value="{{ old('first_name') }}" required>
-                            @error('first_name') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                    <div class="mb-8">
+                        <div class="flex border-b border-[#e6e6db] dark:border-[#3e3d24]">
+                            <a href="{{ route('login') }}" class="flex-1 pb-4 border-b-[3px] border-transparent text-text-muted hover:text-text-main dark:hover:text-white font-bold text-sm transition-all text-center">
+                                Log In
+                            </a>
+                            <button class="flex-1 pb-4 border-b-[3px] border-primary text-text-main dark:text-white font-bold text-sm transition-all">
+                                Sign Up
+                            </button>
                         </div>
+                    </div>
 
-                        {{-- Last Name --}}
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Last Name</label>
-                            <input type="text" name="last_name"
-                                   class="form-control @error('last_name') is-invalid @enderror"
-                                   value="{{ old('last_name') }}" required>
-                            @error('last_name') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                    {{-- Display Validation Errors --}}
+                    @if ($errors->any())
+                        <div class="mb-5 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-full">
+                            <ul class="mb-0 text-sm text-red-600 dark:text-red-400">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <form action="{{ route('register') }}" method="POST" enctype="multipart/form-data" class="flex flex-col gap-5">
+                        @csrf
+
+                        {{-- First Name & Last Name --}}
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <label class="flex flex-col gap-2">
+                                <span class="text-sm font-bold text-text-main dark:text-white ml-1">First Name</span>
+                                <div class="relative">
+                                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">person</span>
+                                    <input 
+                                        class="w-full h-14 bg-background-light dark:bg-background-dark border border-[#e6e6db] dark:border-[#3e3d24] rounded-full px-12 text-base text-text-main dark:text-white placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all @error('first_name') border-red-500 @enderror" 
+                                        placeholder="John" 
+                                        type="text"
+                                        name="first_name"
+                                        value="{{ old('first_name') }}"
+                                        required
+                                        autofocus
+                                    />
+                                </div>
+                                @error('first_name')
+                                    <span class="text-sm text-red-500 ml-1">{{ $message }}</span>
+                                @enderror
+                            </label>
+
+                            <label class="flex flex-col gap-2">
+                                <span class="text-sm font-bold text-text-main dark:text-white ml-1">Last Name</span>
+                                <div class="relative">
+                                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">person</span>
+                                    <input 
+                                        class="w-full h-14 bg-background-light dark:bg-background-dark border border-[#e6e6db] dark:border-[#3e3d24] rounded-full px-12 text-base text-text-main dark:text-white placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all @error('last_name') border-red-500 @enderror" 
+                                        placeholder="Doe" 
+                                        type="text"
+                                        name="last_name"
+                                        value="{{ old('last_name') }}"
+                                        required
+                                    />
+                                </div>
+                                @error('last_name')
+                                    <span class="text-sm text-red-500 ml-1">{{ $message }}</span>
+                                @enderror
+                            </label>
                         </div>
 
                         {{-- Email --}}
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Email</label>
-                            <input type="email" name="email"
-                                   class="form-control @error('email') is-invalid @enderror"
-                                   value="{{ old('email') }}" required>
-                            @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                        </div>
+                        <label class="flex flex-col gap-2">
+                            <span class="text-sm font-bold text-text-main dark:text-white ml-1">Email Address</span>
+                            <div class="relative">
+                                <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">mail</span>
+                                <input 
+                                    class="w-full h-14 bg-background-light dark:bg-background-dark border border-[#e6e6db] dark:border-[#3e3d24] rounded-full px-12 text-base text-text-main dark:text-white placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all @error('email') border-red-500 @enderror" 
+                                    placeholder="name@example.com" 
+                                    type="email"
+                                    name="email"
+                                    value="{{ old('email') }}"
+                                    required
+                                />
+                            </div>
+                            @error('email')
+                                <span class="text-sm text-red-500 ml-1">{{ $message }}</span>
+                            @enderror
+                        </label>
 
-                        {{-- Phone Number --}}
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Phone Number</label>
-                            <input type="text" name="phone_number"
-                                   class="form-control @error('phone_number') is-invalid @enderror"
-                                   value="{{ old('phone_number') }}" required>
-                            @error('phone_number') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                        </div>
+                        {{-- Phone Number & Age --}}
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <label class="flex flex-col gap-2">
+                                <span class="text-sm font-bold text-text-main dark:text-white ml-1">Phone Number</span>
+                                <div class="relative">
+                                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">phone</span>
+                                    <input 
+                                        class="w-full h-14 bg-background-light dark:bg-background-dark border border-[#e6e6db] dark:border-[#3e3d24] rounded-full px-12 text-base text-text-main dark:text-white placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all @error('phone_number') border-red-500 @enderror" 
+                                        placeholder="+1234567890" 
+                                        type="text"
+                                        name="phone_number"
+                                        value="{{ old('phone_number') }}"
+                                        required
+                                    />
+                                </div>
+                                @error('phone_number')
+                                    <span class="text-sm text-red-500 ml-1">{{ $message }}</span>
+                                @enderror
+                            </label>
 
-                        {{-- Store Name --}}
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Store Name</label>
-                            <input type="text" name="store_name"
-                                   class="form-control @error('store_name') is-invalid @enderror"
-                                   value="{{ old('store_name') }}" required>
-                            @error('store_name') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                        </div>
-
-                        {{-- Location --}}
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Location</label>
-                            <input type="text" name="location"
-                                   class="form-control @error('location') is-invalid @enderror"
-                                   value="{{ old('location') }}" required>
-                            @error('location') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                        </div>
-
-                        {{-- Country --}}
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Country</label>
-                            <input type="text" name="country"
-                                   class="form-control @error('country') is-invalid @enderror"
-                                   value="{{ old('country') }}" required>
-                            @error('country') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                        </div>
-
-                        {{-- City --}}
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">City</label>
-                            <input type="text" name="city"
-                                   class="form-control @error('city') is-invalid @enderror"
-                                   value="{{ old('city') }}" required>
-                            @error('city') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                        </div>
-
-                        {{-- Age --}}
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Age</label>
-                            <input type="number" name="age"
-                                   class="form-control @error('age') is-invalid @enderror"
-                                   value="{{ old('age') }}" required>
-                            @error('age') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            <label class="flex flex-col gap-2">
+                                <span class="text-sm font-bold text-text-main dark:text-white ml-1">Age</span>
+                                <div class="relative">
+                                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">cake</span>
+                                    <input 
+                                        class="w-full h-14 bg-background-light dark:bg-background-dark border border-[#e6e6db] dark:border-[#3e3d24] rounded-full px-12 text-base text-text-main dark:text-white placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all @error('age') border-red-500 @enderror" 
+                                        placeholder="25" 
+                                        type="number"
+                                        name="age"
+                                        value="{{ old('age') }}"
+                                        required
+                                    />
+                                </div>
+                                @error('age')
+                                    <span class="text-sm text-red-500 ml-1">{{ $message }}</span>
+                                @enderror
+                            </label>
                         </div>
 
                         {{-- Gender --}}
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Gender</label>
-                            <select name="gender"
-                                    class="form-select @error('gender') is-invalid @enderror"
-                                    required>
-                                <option value="">Select</option>
-                                <option value="male" {{ old('gender') === 'male' ? 'selected' : '' }}>Male</option>
-                                <option value="female" {{ old('gender') === 'female' ? 'selected' : '' }}>Female</option>
-                            </select>
-                            @error('gender') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        <label class="flex flex-col gap-2">
+                            <span class="text-sm font-bold text-text-main dark:text-white ml-1">Gender</span>
+                            <div class="relative">
+                                <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none z-10">wc</span>
+                                <select 
+                                    class="w-full h-14 bg-background-light dark:bg-background-dark border border-[#e6e6db] dark:border-[#3e3d24] rounded-full pl-12 pr-10 text-base text-text-main dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all appearance-none cursor-pointer @error('gender') border-red-500 @enderror"
+                                    name="gender"
+                                    required
+                                >
+                                    <option value="">Select Gender</option>
+                                    <option value="male" {{ old('gender') === 'male' ? 'selected' : '' }}>Male</option>
+                                    <option value="female" {{ old('gender') === 'female' ? 'selected' : '' }}>Female</option>
+                                </select>
+                                <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">arrow_drop_down</span>
+                            </div>
+                            @error('gender')
+                                <span class="text-sm text-red-500 ml-1">{{ $message }}</span>
+                            @enderror
+                        </label>
+
+                        {{-- Store Name --}}
+                        <label class="flex flex-col gap-2">
+                            <span class="text-sm font-bold text-text-main dark:text-white ml-1">Store Name</span>
+                            <div class="relative">
+                                <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">store</span>
+                                <input 
+                                    class="w-full h-14 bg-background-light dark:bg-background-dark border border-[#e6e6db] dark:border-[#3e3d24] rounded-full px-12 text-base text-text-main dark:text-white placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all @error('store_name') border-red-500 @enderror" 
+                                    placeholder="My Store" 
+                                    type="text"
+                                    name="store_name"
+                                    value="{{ old('store_name') }}"
+                                    required
+                                />
+                            </div>
+                            @error('store_name')
+                                <span class="text-sm text-red-500 ml-1">{{ $message }}</span>
+                            @enderror
+                        </label>
+
+                        {{-- Location --}}
+                        <label class="flex flex-col gap-2">
+                            <span class="text-sm font-bold text-text-main dark:text-white ml-1">Location</span>
+                            <div class="relative">
+                                <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">location_on</span>
+                                <input 
+                                    class="w-full h-14 bg-background-light dark:bg-background-dark border border-[#e6e6db] dark:border-[#3e3d24] rounded-full px-12 text-base text-text-main dark:text-white placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all @error('location') border-red-500 @enderror" 
+                                    placeholder="Street Address" 
+                                    type="text"
+                                    name="location"
+                                    value="{{ old('location') }}"
+                                    required
+                                />
+                            </div>
+                            @error('location')
+                                <span class="text-sm text-red-500 ml-1">{{ $message }}</span>
+                            @enderror
+                        </label>
+
+                        {{-- Country & City --}}
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <label class="flex flex-col gap-2">
+                                <span class="text-sm font-bold text-text-main dark:text-white ml-1">Country</span>
+                                <div class="relative">
+                                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">public</span>
+                                    <input 
+                                        class="w-full h-14 bg-background-light dark:bg-background-dark border border-[#e6e6db] dark:border-[#3e3d24] rounded-full px-12 text-base text-text-main dark:text-white placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all @error('country') border-red-500 @enderror" 
+                                        placeholder="Country" 
+                                        type="text"
+                                        name="country"
+                                        value="{{ old('country') }}"
+                                        required
+                                    />
+                                </div>
+                                @error('country')
+                                    <span class="text-sm text-red-500 ml-1">{{ $message }}</span>
+                                @enderror
+                            </label>
+
+                            <label class="flex flex-col gap-2">
+                                <span class="text-sm font-bold text-text-main dark:text-white ml-1">City</span>
+                                <div class="relative">
+                                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">location_city</span>
+                                    <input 
+                                        class="w-full h-14 bg-background-light dark:bg-background-dark border border-[#e6e6db] dark:border-[#3e3d24] rounded-full px-12 text-base text-text-main dark:text-white placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all @error('city') border-red-500 @enderror" 
+                                        placeholder="City" 
+                                        type="text"
+                                        name="city"
+                                        value="{{ old('city') }}"
+                                        required
+                                    />
+                                </div>
+                                @error('city')
+                                    <span class="text-sm text-red-500 ml-1">{{ $message }}</span>
+                                @enderror
+                            </label>
                         </div>
 
-                        {{-- WhatsApp --}}
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">WhatsApp</label>
-                            <input type="text" name="whatsapp"
-                                   class="form-control @error('whatsapp') is-invalid @enderror"
-                                   value="{{ old('whatsapp') }}" required>
-                            @error('whatsapp') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        {{-- WhatsApp & Facebook --}}
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <label class="flex flex-col gap-2">
+                                <span class="text-sm font-bold text-text-main dark:text-white ml-1">WhatsApp</span>
+                                <div class="relative">
+                                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">chat</span>
+                                    <input 
+                                        class="w-full h-14 bg-background-light dark:bg-background-dark border border-[#e6e6db] dark:border-[#3e3d24] rounded-full px-12 text-base text-text-main dark:text-white placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all @error('whatsapp') border-red-500 @enderror" 
+                                        placeholder="+1234567890" 
+                                        type="text"
+                                        name="whatsapp"
+                                        value="{{ old('whatsapp') }}"
+                                        required
+                                    />
+                                </div>
+                                @error('whatsapp')
+                                    <span class="text-sm text-red-500 ml-1">{{ $message }}</span>
+                                @enderror
+                            </label>
+
+                            <label class="flex flex-col gap-2">
+                                <span class="text-sm font-bold text-text-main dark:text-white ml-1">Facebook URL</span>
+                                <div class="relative">
+                                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">link</span>
+                                    <input 
+                                        class="w-full h-14 bg-background-light dark:bg-background-dark border border-[#e6e6db] dark:border-[#3e3d24] rounded-full px-12 text-base text-text-main dark:text-white placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all @error('facebook') border-red-500 @enderror" 
+                                        placeholder="https://facebook.com/..." 
+                                        type="url"
+                                        name="facebook"
+                                        value="{{ old('facebook') }}"
+                                        required
+                                    />
+                                </div>
+                                @error('facebook')
+                                    <span class="text-sm text-red-500 ml-1">{{ $message }}</span>
+                                @enderror
+                            </label>
                         </div>
 
-                        {{-- Facebook --}}
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Facebook URL</label>
-                            <input type="text" name="facebook"
-                                   class="form-control @error('facebook') is-invalid @enderror"
-                                   value="{{ old('facebook') }}" required>
-                            @error('facebook') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                        </div>
+                        {{-- User Image & Logo --}}
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <label class="flex flex-col gap-2">
+                                <span class="text-sm font-bold text-text-main dark:text-white ml-1">Profile Image <span class="text-red-500">*</span></span>
+                                <div class="relative">
+                                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">image</span>
+                                    <input 
+                                        class="w-full h-14 bg-background-light dark:bg-background-dark border border-[#e6e6db] dark:border-[#3e3d24] rounded-full pl-12 pr-4 text-base text-text-main dark:text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-[#181811] hover:file:bg-[#d9d505] focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all cursor-pointer @error('user_image') border-red-500 @enderror" 
+                                        type="file"
+                                        name="user_image"
+                                        accept="image/*"
+                                        required
+                                    />
+                                </div>
+                              
+                            </label>
 
-                        {{-- User Image --}}
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Profile Image</label>
-                            <input type="file" name="user_image"
-                                   class="form-control @error('userImage') is-invalid @enderror"
-                                   required>
-                            @error('user_image') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                        </div>
-
-                        {{-- Logo --}}
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Store Logo</label>
-                            <input type="file" name="logo"
-                                   class="form-control @error('logo') is-invalid @enderror">
-                            @error('logo') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            <label class="flex flex-col gap-2">
+                                <span class="text-sm font-bold text-text-main dark:text-white ml-1">Store Logo (Optional)</span>
+                                <div class="relative">
+                                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">image</span>
+                                    <input 
+                                        class="w-full h-14 bg-background-light dark:bg-background-dark border border-[#e6e6db] dark:border-[#3e3d24] rounded-full pl-12 pr-4 text-base text-text-main dark:text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-[#181811] hover:file:bg-[#d9d505] focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all cursor-pointer @error('logo') border-red-500 @enderror" 
+                                        type="file"
+                                        name="logo"
+                                        accept="image/*"
+                                    />
+                                </div>
+                                @error('logo')
+                                    <span class="text-sm text-red-500 ml-1">{{ $message }}</span>
+                                @enderror
+                            </label>
                         </div>
 
                         {{-- Details --}}
-                        <div class="col-12 mb-3">
-                            <label class="form-label">Details</label>
-                            <textarea name="details"
-                                      class="form-control @error('details') is-invalid @enderror"
-                                      rows="3">{{ old('details') }}</textarea>
-                            @error('details') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                        </div>
+                        <label class="flex flex-col gap-2">
+                            <span class="text-sm font-bold text-text-main dark:text-white ml-1">Details (Optional)</span>
+                            <div class="relative">
+                                <span class="material-symbols-outlined absolute left-4 top-4 text-text-muted select-none pointer-events-none">description</span>
+                                <textarea 
+                                    class="w-full min-h-[100px] bg-background-light dark:bg-background-dark border border-[#e6e6db] dark:border-[#3e3d24] rounded-2xl px-12 pt-4 pb-4 text-base text-text-main dark:text-white placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none @error('details') border-red-500 @enderror" 
+                                    placeholder="Tell us about your store..." 
+                                    name="details"
+                                    rows="3"
+                                >{{ old('details') }}</textarea>
+                            </div>
+                            @error('details')
+                                <span class="text-sm text-red-500 ml-1">{{ $message }}</span>
+                            @enderror
+                        </label>
 
-                        {{-- Password --}}
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Password</label>
-                            <input type="password" name="password"
-                                   class="form-control @error('password') is-invalid @enderror"
-                                   required>
-                            @error('password') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                        </div>
+                        {{-- Password & Confirm Password --}}
+                        <label class="flex flex-col gap-2">
+                            <span class="text-sm font-bold text-text-main dark:text-white ml-1">Password</span>
+                            <div class="relative">
+                                <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">lock</span>
+                                <input 
+                                    class="w-full h-14 bg-background-light dark:bg-background-dark border border-[#e6e6db] dark:border-[#3e3d24] rounded-full px-12 text-base text-text-main dark:text-white placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all @error('password') border-red-500 @enderror" 
+                                    placeholder="••••••••" 
+                                    type="password"
+                                    name="password"
+                                    id="password"
+                                    required
+                                />
+                                <button 
+                                    class="absolute right-4 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-main dark:hover:text-white transition-colors" 
+                                    type="button"
+                                    onclick="togglePasswordVisibility('password', 'password-toggle-icon')"
+                                >
+                                    <span class="material-symbols-outlined text-xl" id="password-toggle-icon">visibility</span>
+                                </button>
+                            </div>
+                            @error('password')
+                                <span class="text-sm text-red-500 ml-1">{{ $message }}</span>
+                            @enderror
+                        </label>
 
-                        {{-- Confirm Password --}}
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Confirm Password</label>
-                            <input type="password" name="password_confirmation"
-                                   class="form-control" required>
-                        </div>
+                        <label class="flex flex-col gap-2">
+                            <span class="text-sm font-bold text-text-main dark:text-white ml-1">Confirm Password</span>
+                            <div class="relative">
+                                <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">lock</span>
+                                <input 
+                                    class="w-full h-14 bg-background-light dark:bg-background-dark border border-[#e6e6db] dark:border-[#3e3d24] rounded-full px-12 text-base text-text-main dark:text-white placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all" 
+                                    placeholder="••••••••" 
+                                    type="password"
+                                    name="password_confirmation"
+                                    id="password_confirmation"
+                                    required
+                                />
+                                <button 
+                                    class="absolute right-4 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-main dark:hover:text-white transition-colors" 
+                                    type="button"
+                                    onclick="togglePasswordVisibility('password_confirmation', 'password-confirm-toggle-icon')"
+                                >
+                                    <span class="material-symbols-outlined text-xl" id="password-confirm-toggle-icon">visibility</span>
+                                </button>
+                            </div>
+                        </label>
 
-                    </div>
+                        <button class="w-full h-14 bg-primary hover:bg-[#d9d505] text-[#181811] font-bold rounded-full text-base mt-2 transition-colors shadow-[0_4px_14px_rgba(249,245,6,0.3)]" type="submit">
+                            Create Account
+                        </button>
+                    </form>
 
-                    <button class="btn btn-success w-100 mt-2">Create Account</button>
-
-                    <p class="text-center mt-3">
-                        Already have an account?
-                        <a href="{{ route('login') }}">Log in</a>
+                    <p class="text-center mt-8 text-sm text-text-muted">
+                        Already have an account? <a class="text-text-main dark:text-white font-bold underline decoration-primary decoration-2 underline-offset-4 hover:decoration-[#d9d505]" href="{{ route('login') }}">Log in</a>
                     </p>
+                </div>
+            </div>
 
-                </form>
-
+            <div class="hidden lg:block w-1/2 bg-background-light dark:bg-[#1a190b] relative overflow-hidden group">
+                <div class="absolute top-0 right-0 w-full h-full">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="Modern abstract shopping bags and discount tags on a vibrant yellow background" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCsY-c7lTsP965MJrzT4n7FTVliUcHYy-njk6ris-PD19HS2docsehx8WTIdPpFy4rFKTqo1gbw2FrMWr4x_TOIDgUDVHnq7OHkOtmsCroUS0TOV1V2i4s84fNH1JW8_5V-QB6QZA6QQJbpFtzyzbQrQp4oPP2gJyWmuJQn6tQsXuLpV-CchJT2UaK7AKSIj24jrHqR2g22DPzvWl9uoYrDNIYZroCx77vJDmDUG0Wv6snt63lqIuwO1HwNb7LLKn44vFAavbFeCZQ');">
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60"></div>
+                </div>
+                <div class="absolute bottom-16 left-12 right-12 text-white">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 bg-white/20 backdrop-blur-md rounded-full mb-4 border border-white/20">
+                        <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                        <span class="text-xs font-medium">New Collection Dropped</span>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-4 leading-tight">Join the fastest growing marketplace for creators.</h3>
+                    <div class="flex items-center gap-4">
+                        <div class="flex -space-x-3">
+                            <div class="w-10 h-10 rounded-full border-2 border-white bg-gray-200 bg-cover bg-center" data-alt="Portrait of a female user smiling" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCShToIGyn5RXPLZ-D9b2ffHBKNQhpkG3F3w3t_ziF8XcdfNkc5cKCj6Y-8mw_hgpXTyNqhZTsPRCgNatc4gRq0AjBfGyvXXj6rWb2VYo16njU6WB0ajgo1AR7gRS_CRO4m7pqI2xVnIA7gkd-nL3FlO6DorMoN9rdcWjFW2doK2fhjDKxhRnkVc66Hr4X3IjaLjQJN2znKhnplAcHkk5tawhrKGPEI5YxGPLuVghIBx8NJL6IzNVkobg32Ucr_iPZbAoxHy5nkI2w')"></div>
+                            <div class="w-10 h-10 rounded-full border-2 border-white bg-gray-200 bg-cover bg-center" data-alt="Portrait of a male user looking forward" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDzWDUxlyJaRxBVquw08NLiONs_xk5VKHm6MNLMXSX1VzanAjYEWk8vzA764D8yr8Hc4BUQHq0KPZIJAjryLtF9MwxQ-uv1BkJqixvd60Pm6GZ8CFs0IIgZ0P33GESiByEkQbWdtyBxhj2_0R2jmz2Q2Vsf5mw1lgweqlJf_BGnI8o3pIgPNE-f6AgExtwgxAt_wm2q997sLO-xDuZirFJJpeG1krGfo7t0vxtd0o6RzNMV8W4HL_dM69TBfVv-NE1aOVezpmbqM4I')"></div>
+                            <div class="w-10 h-10 rounded-full border-2 border-white bg-gray-200 bg-cover bg-center" data-alt="Portrait of a male user smiling with glasses" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC2_tLcu-XGdUBlLUu1Uab9nMfHt1ZVFVze3JbIEJ2VV-qCaPrMQR2u0ecT7yrli2hYMNM6UBQxDYpmuGa-q9gbU-iX3kmI74BuzqY0q4zBo8cPUBxDktO1anZyEb7gVTniI5CwUNbJoaVUu1xfWwSLrfK6KoSpjLdSdOkiKe35jFVggYHK4u2RT3RAud1NAvtuPoI9zkWICX19OrdzxaBr5ISqRtGTmgD8NRbVcmsfshLot0L039bPIg1NW3sbRwpw3IuUk8sHrFE')"></div>
+                            <div class="w-10 h-10 rounded-full border-2 border-white bg-primary text-[#181811] flex items-center justify-center text-xs font-bold">+2k</div>
+                        </div>
+                        <p class="text-sm font-medium text-white/90">Creators joined this week</p>
+                    </div>
+                </div>
             </div>
         </div>
+    </main>
 
-    </div>
-</div>
-@endsection
+    @include('partials.auth-footer', ['showLinks' => true])
+
+    <script>
+        function togglePasswordVisibility(inputId, iconId) {
+            const passwordInput = document.getElementById(inputId);
+            const toggleIcon = document.getElementById(iconId);
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.textContent = 'visibility_off';
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.textContent = 'visibility';
+            }
+        }
+    </script>
+</body>
+</html>

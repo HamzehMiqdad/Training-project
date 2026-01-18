@@ -1,95 +1,132 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>@yield('title', 'Admin Panel')</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    {{-- Bootstrap --}}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>@yield('title', 'Admin Panel') - MarketPlace</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f9f506",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#23220f",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#2c2b18",
+                        "text-main": "#181811",
+                        "text-muted": "#8c8b5f",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
         body {
-            background-color: #f4f6f9;
-        }
-
-        .admin-navbar {
-            background-color: #1f2937;
-        }
-
-        .admin-navbar .nav-link,
-        .admin-navbar .navbar-brand {
-            color: #e5e7eb;
-        }
-
-        .admin-navbar .nav-link.active {
-            color: #ffffff;
-            font-weight: 600;
-        }
-
-        .admin-navbar .nav-link:hover {
-            color: #ffffff;
+            font-family: "Spline Sans", sans-serif;
         }
     </style>
 </head>
-<body>
+<body class="bg-background-light dark:bg-background-dark text-text-main dark:text-white min-h-screen flex flex-col font-display">
+    {{-- Admin Header --}}
+    <header class="sticky top-0 z-50 w-full bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-[#e6e6e0] dark:border-[#3a3928]">
+        <div class="max-w-[1440px] mx-auto px-4 md:px-8 py-3 flex items-center justify-between gap-4">
+            <a class="flex items-center gap-2 group shrink-0" href="{{ route('admin.dashboard') }}">
+                <div class="size-8 bg-primary rounded-lg flex items-center justify-center text-[#181811]">
+                    <span class="material-symbols-outlined">admin_panel_settings</span>
+                </div>
+                <h1 class="text-xl font-bold tracking-tight text-[#181811] dark:text-white hidden sm:block">Admin Panel</h1>
+            </a>
+            
+            <nav class="hidden md:flex items-center gap-1">
+                <a href="{{ route('admin.dashboard') }}" class="px-4 py-2 rounded-full text-sm font-bold transition-colors {{ request()->routeIs('admin.dashboard') ? 'bg-primary text-[#181811]' : 'text-text-muted hover:text-text-main dark:hover:text-white hover:bg-white/50 dark:hover:bg-[#32311b]' }}">
+                    Dashboard
+                </a>
+                <a href="{{ route('admin.users.index') }}" class="px-4 py-2 rounded-full text-sm font-bold transition-colors {{ request()->routeIs('admin.users.*') ? 'bg-primary text-[#181811]' : 'text-text-muted hover:text-text-main dark:hover:text-white hover:bg-white/50 dark:hover:bg-[#32311b]' }}">
+                    Users
+                </a>
+                <a href="{{ route('admin.advertisements.index') }}" class="px-4 py-2 rounded-full text-sm font-bold transition-colors {{ request()->routeIs('admin.advertisements.*') ? 'bg-primary text-[#181811]' : 'text-text-muted hover:text-text-main dark:hover:text-white hover:bg-white/50 dark:hover:bg-[#32311b]' }}">
+                    Advertisements
+                </a>
+            </nav>
 
-<nav class="navbar navbar-expand-lg admin-navbar">
-    <div class="container-fluid px-4">
-
-        {{-- Brand --}}
-        <a class="navbar-brand" href="{{ route('admin.dashboard') }}">
-            Admin Panel
-        </a>
-
-        {{-- Toggle --}}
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="adminNavbar">
-
-            {{-- Left links --}}
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"
-                    href="{{ route('admin.dashboard') }}">
-                        Dashboard
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}"
-                    href="{{ route('admin.users.index') }}">
-                        Users
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.advertisements.*') ? 'active' : '' }}"
-                    href="{{ route('admin.advertisements.index') }}">
-                        Advertisements
-                    </a>
-                </li>
-            </ul>
-
-
-            {{-- Right --}}
-            <form action="{{ route('admin.logout') }}" method="POST">
-                @csrf
-                <button class="btn btn-outline-light btn-sm">
-                    Logout
+            <div class="flex items-center gap-3">
+                {{-- Mobile Menu Button --}}
+                <button id="adminMobileMenuToggle" onclick="toggleAdminMobileMenu()" class="md:hidden size-10 flex items-center justify-center rounded-full bg-white dark:bg-[#32311b] hover:bg-gray-100 dark:hover:bg-[#3d3c22] transition-colors border border-[#e6e6e0] dark:border-[#3a3928]">
+                    <span class="material-symbols-outlined text-xl">menu</span>
                 </button>
-            </form>
 
+                <form action="{{ route('admin.logout') }}" method="POST" class="inline hidden sm:block">
+                    @csrf
+                    <button type="submit" class="flex items-center gap-2 px-4 py-2 rounded-full bg-white dark:bg-[#32311b] hover:bg-gray-100 dark:hover:bg-[#3d3c22] transition-colors border border-[#e6e6e0] dark:border-[#3a3928] text-sm font-bold">
+                        <span class="material-symbols-outlined text-lg">logout</span>
+                        <span>Logout</span>
+                    </button>
+                </form>
+            </div>
         </div>
-    </div>
-</nav>
 
-{{-- Page Content --}}
-<div class="container-fluid px-4 py-4">
-    @yield('content')
-</div>
+        {{-- Mobile Menu --}}
+        <div id="adminMobileMenu" class="md:hidden hidden border-t border-[#e6e6e0] dark:border-[#3a3928] bg-background-light dark:bg-background-dark">
+            <nav class="flex flex-col px-4 py-3 gap-1">
+                <a href="{{ route('admin.dashboard') }}" onclick="toggleAdminMobileMenu()" class="px-4 py-3 rounded-xl text-sm font-bold transition-colors {{ request()->routeIs('admin.dashboard') ? 'bg-primary text-[#181811]' : 'text-text-muted hover:text-text-main dark:hover:text-white hover:bg-white/50 dark:hover:bg-[#32311b]' }} flex items-center gap-3">
+                    <span class="material-symbols-outlined">dashboard</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="{{ route('admin.users.index') }}" onclick="toggleAdminMobileMenu()" class="px-4 py-3 rounded-xl text-sm font-bold transition-colors {{ request()->routeIs('admin.users.*') ? 'bg-primary text-[#181811]' : 'text-text-muted hover:text-text-main dark:hover:text-white hover:bg-white/50 dark:hover:bg-[#32311b]' }} flex items-center gap-3">
+                    <span class="material-symbols-outlined">people</span>
+                    <span>Users</span>
+                </a>
+                <a href="{{ route('admin.advertisements.index') }}" onclick="toggleAdminMobileMenu()" class="px-4 py-3 rounded-xl text-sm font-bold transition-colors {{ request()->routeIs('admin.advertisements.*') ? 'bg-primary text-[#181811]' : 'text-text-muted hover:text-text-main dark:hover:text-white hover:bg-white/50 dark:hover:bg-[#32311b]' }} flex items-center gap-3">
+                    <span class="material-symbols-outlined">campaign</span>
+                    <span>Advertisements</span>
+                </a>
+                <form action="{{ route('admin.logout') }}" method="POST" class="inline">
+                    @csrf
+                    <button type="submit" class="w-full px-4 py-3 rounded-xl text-sm font-bold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors flex items-center gap-3">
+                        <span class="material-symbols-outlined">logout</span>
+                        <span>Logout</span>
+                    </button>
+                </form>
+            </nav>
+        </div>
+    </header>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    {{-- Page Content --}}
+    <main class="flex-grow w-full max-w-[1440px] mx-auto px-4 md:px-8 py-6">
+        @if(session('success'))
+            <div class="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl">
+                <p class="text-sm text-green-600 dark:text-green-400">{{ session('success') }}</p>
+            </div>
+        @endif
+
+        @yield('content')
+    </main>
+
+    @include('partials.footer')
+
+    <script>
+        function toggleAdminMobileMenu() {
+            const menu = document.getElementById('adminMobileMenu');
+            const button = document.getElementById('adminMobileMenuToggle');
+            if (menu) {
+                menu.classList.toggle('hidden');
+                if (button) {
+                    const icon = button.querySelector('.material-symbols-outlined');
+                    if (icon) {
+                        icon.textContent = menu.classList.contains('hidden') ? 'menu' : 'close';
+                    }
+                }
+            }
+        }
+    </script>
 </body>
 </html>

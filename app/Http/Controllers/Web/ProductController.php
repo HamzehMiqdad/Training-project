@@ -19,7 +19,6 @@ class ProductController extends Controller
     {
         $query = $request->input('q');
         
-        // Record search if query exists
         if ($query) {
             $this->searchHistoryService->recordSearch($query);
         }
@@ -34,7 +33,6 @@ class ProductController extends Controller
 
         $products = $this->productService->getProducts($filters)->withQueryString();
 
-        // Get featured data
         $topCategories = $this->productService->getTopCategories();
         $topProducts = $this->productService->getTopProducts();
         $newProducts = $this->productService->getNewProducts();
@@ -46,6 +44,13 @@ class ProductController extends Controller
         $ad_sidebar = $advertisements['sidebar'];
         $ad_bottom = $advertisements['bottom'];
 
+        // Get statistics
+        $stats = [
+            'users' => \App\Models\User::where('activated', true)->count(),
+            'products' => \App\Models\Product::where('availabe_for_sale', true)->count(),
+            'categories' => $categories->count(),
+        ];
+
         return view('home', compact(
             'topCategories',
             'topProducts',
@@ -55,7 +60,8 @@ class ProductController extends Controller
             'subcategories',
             'ad_top',
             'ad_sidebar',
-            'ad_bottom'
+            'ad_bottom',
+            'stats'
         ));
     }
 

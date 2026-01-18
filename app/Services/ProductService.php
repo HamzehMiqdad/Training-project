@@ -151,13 +151,14 @@ class ProductService
     }
 
     /**
-     * Get top categories
+     * Get top categories based on sum of product hits
      */
     public function getTopCategories(int $limit = 3): SupportCollection
     {
         return Product::select('category')
+            ->selectRaw('SUM(hits) as total_hits')
             ->groupBy('category')
-            ->orderByRaw('COUNT(*) DESC')
+            ->orderByRaw('SUM(hits) DESC')
             ->limit($limit)
             ->pluck('category');
     }

@@ -18,8 +18,8 @@ class AuthController extends Controller
     public function store(LoginRequest $request): JsonResponse
     {
         try {
-            $request->validated();
-            $request->authenticate();
+        $request->validated();
+        $request->authenticate();
 
             $user = $this->authService->getAuthenticatedUser();
             $token = $this->authService->createToken($user);

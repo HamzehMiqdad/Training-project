@@ -55,7 +55,7 @@ class UserProductController extends Controller
     public function update(Product $product, UpdateProductRequest $request)
     {
         $data = $request->validated();
-        $data['availabe_for_sale'] = $request->has('availabe_for_sale');
+        $data['availabe_for_sale'] = $request->input('availabe_for_sale') == '1';
         
         $this->productService->updateProduct($product, $data);
         
