@@ -1,30 +1,8 @@
 <!DOCTYPE html>
 <html class="light" lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    @include('partials.head-assets')
     <title>MarketHub - Home</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#f9f506",
-                        "background-light": "#f8f8f5",
-                        "background-dark": "#23220f",
-                    },
-                    fontFamily: {
-                        "display": ["Spline Sans", "sans-serif"]
-                    },
-                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
-                },
-            },
-        }
-    </script>
     <style type="text/tailwindcss">
         body {
             font-family: "Spline Sans", sans-serif;
@@ -172,6 +150,54 @@
                     </div>
             </div>
         </section>
+
+                    <section class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 animate-fade-in-up w-full max-w-[1440px] mx-auto px-4 md:px-8">
+                        <div class="bg-white dark:bg-[#32311b] rounded-xl p-6 md:p-8 border border-[#e6e6e0] dark:border-[#3a3928] shadow-sm hover:shadow-md transition-shadow group relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-500"></div>
+                            <div class="relative z-10">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div class="size-12 bg-primary/20 dark:bg-primary/30 rounded-xl flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-2xl text-primary">people</span>
+                                    </div>
+                                </div>
+                                <h3 class="text-3xl md:text-4xl font-black text-[#181811] dark:text-white mb-2">
+                                    <span class="counter" data-target="{{ $stats['users'] }}">0</span>
+                                </h3>
+                                <p class="text-sm font-medium text-gray-600 dark:text-gray-300">Active Users</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-[#32311b] rounded-xl p-6 md:p-8 border border-[#e6e6e0] dark:border-[#3a3928] shadow-sm hover:shadow-md transition-shadow group relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-500"></div>
+                            <div class="relative z-10">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div class="size-12 bg-primary/20 dark:bg-primary/30 rounded-xl flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-2xl text-primary">inventory_2</span>
+                                    </div>
+                                </div>
+                                <h3 class="text-3xl md:text-4xl font-black text-[#181811] dark:text-white mb-2">
+                                    <span class="counter" data-target="{{ $stats['products'] }}">0</span>
+                                </h3>
+                                <p class="text-sm font-medium text-gray-600 dark:text-gray-300">Available Products</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-[#32311b] rounded-xl p-6 md:p-8 border border-[#e6e6e0] dark:border-[#3a3928] shadow-sm hover:shadow-md transition-shadow group relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-500"></div>
+                            <div class="relative z-10">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div class="size-12 bg-primary/20 dark:bg-primary/30 rounded-xl flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-2xl text-primary">category</span>
+                                    </div>
+                                </div>
+                                <h3 class="text-3xl md:text-4xl font-black text-[#181811] dark:text-white mb-2">
+                                    <span class="counter" data-target="{{ $stats['categories'] }}">0</span>
+                                </h3>
+                                <p class="text-sm font-medium text-gray-600 dark:text-gray-300">Product Categories</p>
+                            </div>
+                        </div>
+                    </section>
+                
     @endif
 
     {{-- Main Content --}}
@@ -245,54 +271,7 @@
             {{-- Main Content Area --}}
             <div class="flex-1 space-y-10 min-w-0">
                 {{-- Statistics Counters Section --}}
-                @if(!request()->filled('q') && !request()->filled('category') && !request()->filled('subcategory'))
-                    <section class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 animate-fade-in-up">
-                        <div class="bg-white dark:bg-[#32311b] rounded-xl p-6 md:p-8 border border-[#e6e6e0] dark:border-[#3a3928] shadow-sm hover:shadow-md transition-shadow group relative overflow-hidden">
-                            <div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-500"></div>
-                            <div class="relative z-10">
-                                <div class="flex items-center gap-3 mb-4">
-                                    <div class="size-12 bg-primary/20 dark:bg-primary/30 rounded-xl flex items-center justify-center">
-                                        <span class="material-symbols-outlined text-2xl text-primary">people</span>
-                                    </div>
-                                </div>
-                                <h3 class="text-3xl md:text-4xl font-black text-[#181811] dark:text-white mb-2">
-                                    <span class="counter" data-target="{{ $stats['users'] }}">0</span>
-                                </h3>
-                                <p class="text-sm font-medium text-gray-600 dark:text-gray-300">Active Users</p>
-                            </div>
-                        </div>
-
-                        <div class="bg-white dark:bg-[#32311b] rounded-xl p-6 md:p-8 border border-[#e6e6e0] dark:border-[#3a3928] shadow-sm hover:shadow-md transition-shadow group relative overflow-hidden">
-                            <div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-500"></div>
-                            <div class="relative z-10">
-                                <div class="flex items-center gap-3 mb-4">
-                                    <div class="size-12 bg-primary/20 dark:bg-primary/30 rounded-xl flex items-center justify-center">
-                                        <span class="material-symbols-outlined text-2xl text-primary">inventory_2</span>
-                                    </div>
-                                </div>
-                                <h3 class="text-3xl md:text-4xl font-black text-[#181811] dark:text-white mb-2">
-                                    <span class="counter" data-target="{{ $stats['products'] }}">0</span>
-                                </h3>
-                                <p class="text-sm font-medium text-gray-600 dark:text-gray-300">Available Products</p>
-                            </div>
-                        </div>
-
-                        <div class="bg-white dark:bg-[#32311b] rounded-xl p-6 md:p-8 border border-[#e6e6e0] dark:border-[#3a3928] shadow-sm hover:shadow-md transition-shadow group relative overflow-hidden">
-                            <div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-500"></div>
-                            <div class="relative z-10">
-                                <div class="flex items-center gap-3 mb-4">
-                                    <div class="size-12 bg-primary/20 dark:bg-primary/30 rounded-xl flex items-center justify-center">
-                                        <span class="material-symbols-outlined text-2xl text-primary">category</span>
-                                    </div>
-                                </div>
-                                <h3 class="text-3xl md:text-4xl font-black text-[#181811] dark:text-white mb-2">
-                                    <span class="counter" data-target="{{ $stats['categories'] }}">0</span>
-                                </h3>
-                                <p class="text-sm font-medium text-gray-600 dark:text-gray-300">Product Categories</p>
-                            </div>
-                        </div>
-                    </section>
-                @endif
+                
 
                 {{-- Hero Section --}}
             @if(!request()->filled('q') && !request()->filled('category') && !request()->filled('subcategory'))
