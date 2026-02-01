@@ -1,13 +1,13 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Users')
+@section('title', __('messages.users_management'))
 
 @section('content')
 <div class="flex flex-col gap-8">
     <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div class="flex flex-col gap-1">
-            <h1 class="text-4xl font-black tracking-tight text-[#181811] dark:text-white">Users Management</h1>
-            <p class="text-base text-[#8c8b5f] dark:text-[#a1a18d]">Manage all registered users and their accounts.</p>
+            <h1 class="text-4xl font-black tracking-tight text-[#181811] dark:text-white">{{ __('messages.users_management') }}</h1>
+            <p class="text-base text-[#8c8b5f] dark:text-[#a1a18d]">{{ __('messages.manage_users') }}</p>
         </div>
     </div>
 
@@ -16,11 +16,11 @@
             <table class="w-full min-w-[800px] table-fixed">
                 <thead>
                     <tr class="border-b border-[#e6e6db] bg-[#fcfcfb] dark:bg-[#2c2b18] dark:border-[#3a392a]">
-                        <th class="w-[250px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">Store</th>
-                        <th class="w-[250px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">Email</th>
-                        <th class="w-[150px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">Phone</th>
-                        <th class="w-[120px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">Status</th>
-                        <th class="w-[150px] px-6 py-4 text-right text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">Actions</th>
+                        <th class="w-[250px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">{{ __('messages.store') }}</th>
+                        <th class="w-[250px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">{{ __('messages.email') }}</th>
+                        <th class="w-[150px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">{{ __('messages.phone') }}</th>
+                        <th class="w-[120px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">{{ __('messages.status') }}</th>
+                        <th class="w-[150px] px-6 py-4 text-right text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">{{ __('messages.actions') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-[#e6e6db] dark:divide-[#3a392a]">
@@ -35,7 +35,7 @@
                             <td class="px-6 py-4 text-sm text-[#181811] dark:text-white">{{ $user->phone_number }}</td>
                             <td class="px-6 py-4">
                                 <span class="px-3 py-1 rounded-full text-xs font-bold {{ $user->activated ? 'bg-green-500/20 text-green-700 dark:text-green-400' : 'bg-red-500/20 text-red-700 dark:text-red-400' }}">
-                                    {{ $user->activated ? 'Active' : 'Blocked' }}
+                                    {{ $user->activated ? __('messages.active') : __('messages.blocked') }}
                                 </span>
                             </td>
                             <td class="px-6 py-4 text-right">
@@ -44,14 +44,14 @@
                                     @method('PATCH')
                                     <button type="submit" class="h-10 px-4 rounded-xl font-bold text-sm transition-colors {{ $user->activated ? 'bg-red-500/20 hover:bg-red-500/30 text-red-600 dark:text-red-400' : 'bg-green-500/20 hover:bg-green-500/30 text-green-600 dark:text-green-400' }} flex items-center justify-center gap-2">
                                         <span class="material-symbols-outlined text-lg">{{ $user->activated ? 'block' : 'check_circle' }}</span>
-                                        <span>{{ $user->activated ? 'Deactivate' : 'Activate' }}</span>
+                                        <span>{{ $user->activated ? __('messages.deactivate') : __('messages.activate') }}</span>
                                     </button>
                                 </form>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">No users found.</td>
+                            <td colspan="5" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">{{ __('messages.no_users_found') }}</td>
                         </tr>
                     @endforelse
                 </tbody>
@@ -59,7 +59,7 @@
         </div>
         @if($users->hasPages())
             <div class="flex items-center justify-between border-t border-[#e6e6db] bg-[#fcfcfb] px-6 py-4 dark:bg-[#2c2b18] dark:border-[#3a392a]">
-                <span class="text-sm font-medium text-[#8c8b5f] dark:text-[#a1a18d]">Showing {{ $users->firstItem() }} to {{ $users->lastItem() }} of {{ $users->total() }} users</span>
+                <span class="text-sm font-medium text-[#8c8b5f] dark:text-[#a1a18d]">{{ __('messages.showing_users', ['first' => $users->firstItem(), 'last' => $users->lastItem(), 'total' => $users->total()]) }}</span>
                 <div class="flex items-center gap-2">
                     @if ($users->onFirstPage())
                         <span class="flex size-8 items-center justify-center rounded-full border border-[#e6e6db] text-[#8c8b5f] dark:border-[#3a392a] dark:text-[#a1a18d] cursor-not-allowed">

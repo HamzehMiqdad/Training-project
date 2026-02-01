@@ -1,13 +1,13 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Admin Dashboard')
+@section('title', __('messages.admin_dashboard'))
 
 @section('content')
 <div class="flex flex-col gap-8">
     <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div class="flex flex-col gap-1">
-            <h1 class="text-4xl font-black tracking-tight text-[#181811] dark:text-white">Admin Dashboard</h1>
-            <p class="text-base text-[#8c8b5f] dark:text-[#a1a18d]">Manage all products across the marketplace.</p>
+            <h1 class="text-4xl font-black tracking-tight text-[#181811] dark:text-white">{{ __('messages.admin_dashboard') }}</h1>
+            <p class="text-base text-[#8c8b5f] dark:text-[#a1a18d]">{{ __('messages.manage_products') }}</p>
         </div>
     </div>
 
@@ -22,7 +22,7 @@
                     </div>
                 </div>
                 <h3 class="text-3xl md:text-4xl font-black text-[#181811] dark:text-white mb-2">{{ number_format($stats['total_users']) }}</h3>
-                <p class="text-sm font-medium text-gray-600 dark:text-gray-300">Total Users</p>
+                <p class="text-sm font-medium text-gray-600 dark:text-gray-300">{{ __('messages.total_users') }}</p>
             </div>
         </div>
 
@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <h3 class="text-3xl md:text-4xl font-black text-[#181811] dark:text-white mb-2">{{ number_format($stats['total_products']) }}</h3>
-                <p class="text-sm font-medium text-gray-600 dark:text-gray-300">Total Products</p>
+                <p class="text-sm font-medium text-gray-600 dark:text-gray-300">{{ __('messages.total_products') }}</p>
             </div>
         </div>
 
@@ -48,7 +48,7 @@
                     </div>
                 </div>
                 <h3 class="text-3xl md:text-4xl font-black text-[#181811] dark:text-white mb-2">{{ number_format($stats['total_hits']) }}</h3>
-                <p class="text-sm font-medium text-gray-600 dark:text-gray-300">Total Hits</p>
+                <p class="text-sm font-medium text-gray-600 dark:text-gray-300">{{ __('messages.total_hits') }}</p>
             </div>
         </div>
 
@@ -61,7 +61,7 @@
                     </div>
                 </div>
                 <h3 class="text-3xl md:text-4xl font-black text-[#181811] dark:text-white mb-2">{{ number_format($stats['new_users_last_month']) }}</h3>
-                <p class="text-sm font-medium text-gray-600 dark:text-gray-300">New Users (Last Month)</p>
+                <p class="text-sm font-medium text-gray-600 dark:text-gray-300">{{ __('messages.new_users_month') }}</p>
             </div>
         </div>
 
@@ -74,7 +74,7 @@
                     </div>
                 </div>
                 <h3 class="text-3xl md:text-4xl font-black text-[#181811] dark:text-white mb-2">{{ number_format($stats['new_products_last_month']) }}</h3>
-                <p class="text-sm font-medium text-gray-600 dark:text-gray-300">New Products (Last Month)</p>
+                <p class="text-sm font-medium text-gray-600 dark:text-gray-300">{{ __('messages.new_products_month') }}</p>
             </div>
         </div>
     </div>
@@ -87,33 +87,33 @@
             </span>
             <input 
                 class="h-12 w-full rounded-xl border border-[#e6e6db] bg-[#f8f8f5] pl-12 pr-4 text-base font-medium text-[#181811] placeholder-[#8c8b5f] focus:border-primary focus:ring-0 dark:bg-background-dark dark:border-[#3a392a] dark:text-white" 
-                placeholder="Search products..."
+                placeholder="{{ __('messages.search_products') }}"
                 name="q"
                 value="{{ request('q') }}"
             />
         </div>
         <select name="category" class="h-12 rounded-xl border border-[#e6e6db] bg-[#f8f8f5] px-4 text-base font-medium text-[#181811] focus:border-primary focus:ring-0 dark:bg-background-dark dark:border-[#3a392a] dark:text-white">
-            <option value="">All Categories</option>
+            <option value="">{{ __('messages.all_categories') }}</option>
             @foreach($categories as $category)
                 <option value="{{ $category }}" {{ request('category') == $category ? 'selected' : '' }}>{{ $category }}</option>
             @endforeach
         </select>
         <select name="subcategory" class="h-12 rounded-xl border border-[#e6e6db] bg-[#f8f8f5] px-4 text-base font-medium text-[#181811] focus:border-primary focus:ring-0 dark:bg-background-dark dark:border-[#3a392a] dark:text-white">
-            <option value="">All Subcategories</option>
+            <option value="">{{ __('messages.all_subcategories') }}</option>
             @foreach($subcategories as $subcategory)
                 <option value="{{ $subcategory }}" {{ request('subcategory') == $subcategory ? 'selected' : '' }}>{{ $subcategory }}</option>
             @endforeach
         </select>
         <button type="submit" class="h-12 px-6 rounded-xl bg-primary hover:bg-[#d9d505] text-[#181811] font-bold transition-colors shadow-lg shadow-primary/20 flex items-center justify-center gap-2">
             <span class="material-symbols-outlined">filter_list</span>
-            <span>Filter</span>
+            <span>{{ __('messages.filter') }}</span>
         </button>
     </form>
 
     {{-- Products Grid --}}
     @if($products->isEmpty())
         <div class="text-center py-12 rounded-3xl bg-white dark:bg-[#32311b] border border-[#e6e6db] dark:border-[#3a392a]">
-            <p class="text-gray-500 dark:text-gray-400 text-lg">No products found.</p>
+            <p class="text-gray-500 dark:text-gray-400 text-lg">{{ __('messages.no_products_found') }}</p>
         </div>
     @else
         <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
@@ -152,10 +152,10 @@
                         <div class="flex items-center justify-between pt-2 border-t border-[#e6e6db] dark:border-[#3a392a]">
                             <div class="flex items-center gap-2 text-sm text-[#8c8b5f]">
                                 <span class="material-symbols-outlined text-base">visibility</span>
-                                <span class="font-medium">{{ number_format($product->hits) }} hits</span>
+                                <span class="font-medium">{{ number_format($product->hits) }} {{ __('messages.hits') }}</span>
                             </div>
                             <span class="px-3 py-1 rounded-full text-xs font-bold {{ $product->availabe_for_sale ? 'bg-green-500/20 text-green-700 dark:text-green-400' : 'bg-red-500/20 text-red-700 dark:text-red-400' }}">
-                                {{ $product->availabe_for_sale ? 'Available' : 'Not Available' }}
+                                {{ $product->availabe_for_sale ? __('messages.available') : __('messages.not_available_badge') }}
                             </span>
                         </div>
                     </div>
@@ -166,15 +166,15 @@
                             @method('PATCH')
                             <button type="submit" class="w-full h-10 px-4 rounded-xl {{ $product->availabe_for_sale ? 'bg-green-500/20 hover:bg-green-500/30 text-green-700 dark:text-green-400' : 'bg-red-500/20 hover:bg-red-500/30 text-red-700 dark:text-red-400' }} font-bold text-sm transition-colors flex items-center justify-center gap-2">
                                 <span class="material-symbols-outlined text-lg">{{ $product->availabe_for_sale ? 'toggle_on' : 'toggle_off' }}</span>
-                                <span>{{ $product->availabe_for_sale ? 'Disable' : 'Enable' }}</span>
+                                <span>{{ $product->availabe_for_sale ? __('messages.disable') : __('messages.enable') }}</span>
                             </button>
                         </form>
-                        <form action="{{ route('admin.products.destroy', $product) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this product?');" class="flex-1">
+                        <form action="{{ route('admin.products.destroy', $product) }}" method="POST" onsubmit="return confirm('{{ __('messages.confirm_delete') }}');" class="flex-1">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="w-full h-10 px-4 rounded-xl bg-red-500/20 hover:bg-red-500/30 text-red-600 dark:text-red-400 font-bold text-sm transition-colors flex items-center justify-center gap-2">
                                 <span class="material-symbols-outlined text-lg">delete</span>
-                                <span>Delete</span>
+                                <span>{{ __('messages.delete') }}</span>
                             </button>
                         </form>
                     </div>
@@ -185,7 +185,7 @@
         {{-- Pagination --}}
         @if($products->hasPages())
             <div class="flex items-center justify-between border-t border-[#e6e6db] bg-[#fcfcfb] px-6 py-4 dark:bg-[#2c2b18] dark:border-[#3a392a] rounded-b-xl">
-                <span class="text-sm font-medium text-[#8c8b5f] dark:text-[#a1a18d]">Showing {{ $products->firstItem() }} to {{ $products->lastItem() }} of {{ $products->total() }} products</span>
+                <span class="text-sm font-medium text-[#8c8b5f] dark:text-[#a1a18d]">{{ __('messages.showing_products', ['first' => $products->firstItem(), 'last' => $products->lastItem(), 'total' => $products->total()]) }}</span>
                 <div class="flex items-center gap-2">
                     @if ($products->onFirstPage())
                         <span class="flex size-8 items-center justify-center rounded-full border border-[#e6e6db] text-[#8c8b5f] dark:border-[#3a392a] dark:text-[#a1a18d] cursor-not-allowed">

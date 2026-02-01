@@ -207,7 +207,7 @@
 
                                 @if($product->user->facebook)
                                     <div>
-                                        <p class="text-[10px] uppercase font-bold text-[#8c8b5f] mb-1">Facebook</p>
+                                        <p class="text-[10px] uppercase font-bold text-[#8c8b5f] mb-1">{{ __('messages.facebook') }}</p>
                                         <a href="{{ $product->user->facebook }}" target="_blank" class="text-sm text-yellow-400 hover:underline">
                                             {{ __('messages.view_profile') }}
                                         </a>

@@ -1,17 +1,17 @@
 @extends('admin.layouts.app')
 
-@section('title','Advertisements')
+@section('title', __('messages.advertisements'))
 
 @section('content')
 <div class="flex flex-col gap-8">
     <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div class="flex flex-col gap-1">
-            <h1 class="text-4xl font-black tracking-tight text-[#181811] dark:text-white">Advertisements</h1>
-            <p class="text-base text-[#8c8b5f] dark:text-[#a1a18d]">Manage all advertisements across the marketplace.</p>
+            <h1 class="text-4xl font-black tracking-tight text-[#181811] dark:text-white">{{ __('messages.advertisements') }}</h1>
+            <p class="text-base text-[#8c8b5f] dark:text-[#a1a18d]">{{ __('messages.manage_advertisements') }}</p>
         </div>
         <a href="{{ route('admin.advertisements.create') }}" class="flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-bold text-[#181811] shadow-lg shadow-primary/20 hover:brightness-105 transition-all">
             <span class="material-symbols-outlined text-[20px]">add</span>
-            <span>Add Advertisement</span>
+            <span>{{ __('messages.add_advertisement') }}</span>
         </a>
     </div>
 
@@ -20,12 +20,12 @@
             <table class="w-full min-w-[1000px] table-fixed">
                 <thead>
                     <tr class="border-b border-[#e6e6db] bg-[#fcfcfb] dark:bg-[#2c2b18] dark:border-[#3a392a]">
-                        <th class="w-[150px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">Image</th>
-                        <th class="w-[200px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">Owner</th>
-                        <th class="w-[150px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">Place</th>
-                        <th class="w-[250px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">Period</th>
-                        <th class="w-[100px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">Hits</th>
-                        <th class="w-[150px] px-6 py-4 text-right text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">Actions</th>
+                        <th class="w-[150px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">{{ __('messages.image') }}</th>
+                        <th class="w-[200px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">{{ __('messages.owner') }}</th>
+                        <th class="w-[150px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">{{ __('messages.place') }}</th>
+                        <th class="w-[250px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">{{ __('messages.period') }}</th>
+                        <th class="w-[100px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">{{ __('messages.hits') }}</th>
+                        <th class="w-[150px] px-6 py-4 text-right text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">{{ __('messages.actions') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-[#e6e6db] dark:divide-[#3a392a]">
@@ -49,13 +49,13 @@
                             <td class="px-6 py-4 text-sm font-medium text-[#181811] dark:text-white">{{ number_format($ad->hits) }}</td>
                             <td class="px-6 py-4 text-right">
                                 <div class="flex justify-end gap-2">
-                                    <a href="{{ route('admin.advertisements.edit', $ad) }}" class="flex size-8 items-center justify-center rounded-full bg-[#f8f8f5] text-[#181811] hover:bg-primary transition-colors dark:bg-[#2c2b18] dark:text-white" title="Edit">
+                                    <a href="{{ route('admin.advertisements.edit', $ad) }}" class="flex size-8 items-center justify-center rounded-full bg-[#f8f8f5] text-[#181811] hover:bg-primary transition-colors dark:bg-[#2c2b18] dark:text-white" title="{{ __('messages.edit') }}">
                                         <span class="material-symbols-outlined text-[18px]">edit</span>
                                     </a>
-                                    <form action="{{ route('admin.advertisements.destroy', $ad) }}" method="POST" onsubmit="return confirm('Delete this advertisement?');" class="inline">
+                                    <form action="{{ route('admin.advertisements.destroy', $ad) }}" method="POST" onsubmit="return confirm('{{ __('messages.delete_ad_confirm') }}');" class="inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="flex size-8 items-center justify-center rounded-full bg-[#f8f8f5] text-[#181811] hover:bg-red-100 hover:text-red-600 transition-colors dark:bg-[#2c2b18] dark:text-white" title="Delete">
+                                        <button type="submit" class="flex size-8 items-center justify-center rounded-full bg-[#f8f8f5] text-[#181811] hover:bg-red-100 hover:text-red-600 transition-colors dark:bg-[#2c2b18] dark:text-white" title="{{ __('messages.delete') }}">
                                             <span class="material-symbols-outlined text-[18px]">delete</span>
                                         </button>
                                     </form>
@@ -64,7 +64,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">No advertisements found.</td>
+                            <td colspan="6" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">{{ __('messages.no_ads') }}</td>
                         </tr>
                     @endforelse
                 </tbody>
@@ -72,7 +72,7 @@
         </div>
         @if($ads->hasPages())
             <div class="flex items-center justify-between border-t border-[#e6e6db] bg-[#fcfcfb] px-6 py-4 dark:bg-[#2c2b18] dark:border-[#3a392a]">
-                <span class="text-sm font-medium text-[#8c8b5f] dark:text-[#a1a18d]">Showing {{ $ads->firstItem() }} to {{ $ads->lastItem() }} of {{ $ads->total() }} advertisements</span>
+                <span class="text-sm font-medium text-[#8c8b5f] dark:text-[#a1a18d]">{{ __('messages.showing_ads', ['first' => $ads->firstItem(), 'last' => $ads->lastItem(), 'total' => $ads->total()]) }}</span>
                 <div class="flex items-center gap-2">
                     @if ($ads->onFirstPage())
                         <span class="flex size-8 items-center justify-center rounded-full border border-[#e6e6db] text-[#8c8b5f] dark:border-[#3a392a] dark:text-[#a1a18d] cursor-not-allowed">

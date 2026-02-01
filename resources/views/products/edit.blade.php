@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="light" lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
+<html class="light" lang="{{ app()->getLocale() }}">
 <head>
     @include('partials.head-assets')
     <title>{{ __('messages.edit_product') }} - {{ __('messages.marketplace') }}</title>
@@ -72,7 +72,7 @@
                                     <span class="material-symbols-outlined text-3xl text-primary">add_a_photo</span>
                                 </div>
                                 <p class="text-base font-medium"><span class="text-slate-900 dark:text-white underline decoration-primary decoration-2 underline-offset-2">{{ __('messages.click_to_upload') }}</span> {{ __('messages.drag_and_drop') }}</p>
-                                <p class="text-sm">SVG, PNG, JPG or GIF (max. 10MB)</p>
+                                <p class="text-sm">{{ __('messages.image_formats') }}</p>
                             </div>
                         </div>
                         @error('image')
@@ -84,7 +84,7 @@
                                 <button type="button" onclick="removeImagePreview()" class="absolute top-1 right-1 size-6 bg-black/50 text-white rounded-full flex items-center justify-center hover:bg-red-500 transition-colors">
                                     <span class="material-symbols-outlined text-sm">close</span>
                                 </button>
-                                <div class="absolute bottom-0 inset-x-0 bg-black/60 text-white text-[10px] font-bold px-2 py-1 text-center">Cover</div>
+                                <div class="absolute bottom-0 inset-x-0 bg-black/60 text-white text-[10px] font-bold px-2 py-1 text-center">{{ __('messages.cover') }}</div>
                             </div>
                         </div>
                     </div>
@@ -123,7 +123,7 @@
                                 <textarea 
                                     class="form-textarea w-full rounded-xl border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-slate-900 dark:text-white focus:border-primary focus:ring-primary min-h-[140px] p-4 placeholder:text-stone-400 dark:placeholder:text-stone-600 font-normal shadow-sm resize-y @error('details') border-red-500 @enderror" 
                                     name="details" 
-                                    placeholder="Tell buyers about your item's features and history..."
+                                    placeholder="{{ __('messages.tell_about_store') }}"
                                     required
                                 >{{ old('details', $product->details) }}</textarea>
                                 @error('details')
@@ -177,7 +177,7 @@
                                 <input 
                                     class="form-input w-full rounded-xl border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-slate-900 dark:text-white focus:border-primary focus:ring-primary h-14 px-4 placeholder:text-stone-400 font-normal shadow-sm @error('code') border-red-500 @enderror" 
                                     name="code" 
-                                    placeholder="e.g. MH-12345" 
+                                    placeholder="{{ __('messages.sku_placeholder') }}" 
                                     type="text"
                                     value="{{ old('code', $product->code) }}"
                                 />
@@ -219,7 +219,7 @@
                                     type="checkbox"
                                     {{ old('availabe_for_sale', $product->availabe_for_sale) ? 'checked' : '' }}
                                 />
-                                <div class="relative w-14 h-7 bg-stone-200 peer-focus:outline-none rounded-full peer dark:bg-stone-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+                                <div class="relative w-14 h-7 bg-stone-200 peer-focus:outline-none rounded-full peer dark:bg-stone-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
                             </label>
                         </div>
                     </div>

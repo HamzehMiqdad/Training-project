@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="light" lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
+<html class="light" lang="{{ app()->getLocale() }}">
 <head>
     @include('partials.head-assets')
     <title>{{ __('messages.product_management') }} - {{ __('messages.marketplace') }}</title>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="light" lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
+<html class="light" lang="{{ app()->getLocale() }}">
 <head>
     @include('partials.head-assets')
     <title>{{ __('messages.list_new_item') }} - {{ __('messages.marketplace') }}</title>
@@ -166,7 +166,7 @@
                                 <input 
                                     class="form-input w-full rounded-xl border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-slate-900 dark:text-white focus:border-primary focus:ring-primary h-14 px-4 placeholder:text-stone-400 font-normal shadow-sm @error('code') border-red-500 @enderror" 
                                     name="code" 
-                                    placeholder="e.g. MH-12345" 
+                                    placeholder="{{ __('messages.sku_placeholder') }}" 
                                     type="text"
                                     value="{{ old('code') }}"
                                 />
@@ -208,7 +208,7 @@
                                     type="checkbox"
                                     {{ old('availabe_for_sale', true) ? 'checked' : '' }}
                                 />
-                                <div class="relative w-14 h-7 bg-stone-200 peer-focus:outline-none rounded-full peer dark:bg-stone-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+                                <div class="relative w-14 h-7 bg-stone-200 peer-focus:outline-none rounded-full peer dark:bg-stone-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
                             </label>
                         </div>
                     </div>

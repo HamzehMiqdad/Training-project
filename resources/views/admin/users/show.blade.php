@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'User Details')
+@section('title', __('messages.user_details'))
 
 @section('content')
 <div class="flex flex-col gap-8">
@@ -23,14 +23,14 @@
                     </div>
                     <div class="flex flex-col items-start md:items-end gap-2">
                         <span class="px-3 py-1 rounded-full text-xs font-bold {{ $user->activated ? 'bg-green-500/20 text-green-700 dark:text-green-400' : 'bg-red-500/20 text-red-700 dark:text-red-400' }}">
-                            {{ $user->activated ? 'Active' : 'Disabled' }}
+                            {{ $user->activated ? __('messages.active') : __('messages.disabled') }}
                         </span>
                         <form action="{{ route('admin.users.toggle', $user) }}" method="POST">
                             @csrf
                             @method('PATCH')
                             <button type="submit" class="h-10 px-4 rounded-xl font-bold text-sm transition-colors {{ $user->activated ? 'bg-red-500/20 hover:bg-red-500/30 text-red-600 dark:text-red-400' : 'bg-green-500/20 hover:bg-green-500/30 text-green-600 dark:text-green-400' }} flex items-center justify-center gap-2">
                                 <span class="material-symbols-outlined text-lg">{{ $user->activated ? 'block' : 'check_circle' }}</span>
-                                <span>{{ $user->activated ? 'Disable User' : 'Enable User' }}</span>
+                                <span>{{ $user->activated ? __('messages.disable_user') : __('messages.enable_user') }}</span>
                             </button>
                         </form>
                     </div>
@@ -54,7 +54,7 @@
                     @if($user->facebook)
                         <div class="flex items-center gap-2">
                             <span class="material-symbols-outlined text-base">link</span>
-                            <a href="{{ $user->facebook }}" target="_blank" class="hover:text-primary transition-colors">Facebook</a>
+                            <a href="{{ $user->facebook }}" target="_blank" class="hover:text-primary transition-colors">{{ __('messages.facebook') }}</a>
                         </div>
                     @endif
                 </div>
@@ -70,26 +70,26 @@
             </span>
             <input 
                 class="h-12 w-full rounded-xl border border-[#e6e6db] bg-[#f8f8f5] pl-12 pr-4 text-base font-medium text-[#181811] placeholder-[#8c8b5f] focus:border-primary focus:ring-0 dark:bg-background-dark dark:border-[#3a392a] dark:text-white" 
-                placeholder="Product name or category..."
+                placeholder="{{ __('messages.product_name_category') }}"
                 name="q"
                 value="{{ request('q') }}"
             />
         </div>
         <select name="status" class="h-12 rounded-xl border border-[#e6e6db] bg-[#f8f8f5] px-4 text-base font-medium text-[#181811] focus:border-primary focus:ring-0 dark:bg-background-dark dark:border-[#3a392a] dark:text-white">
-            <option value="">All Status</option>
-            <option value="1" {{ request('status') === '1' ? 'selected' : '' }}>Active</option>
-            <option value="0" {{ request('status') === '0' ? 'selected' : '' }}>Hidden</option>
+            <option value="">{{ __('messages.all_status') }}</option>
+            <option value="1" {{ request('status') === '1' ? 'selected' : '' }}>{{ __('messages.active') }}</option>
+            <option value="0" {{ request('status') === '0' ? 'selected' : '' }}>{{ __('messages.hidden') }}</option>
         </select>
         <button type="submit" class="h-12 px-6 rounded-xl bg-primary hover:bg-[#d9d505] text-[#181811] font-bold transition-colors shadow-lg shadow-primary/20 flex items-center justify-center gap-2">
             <span class="material-symbols-outlined">filter_list</span>
-            <span>Filter</span>
+            <span>{{ __('messages.filter') }}</span>
         </button>
     </form>
 
     {{-- Products --}}
     @if($products->isEmpty())
         <div class="text-center py-12 rounded-3xl bg-white dark:bg-[#32311b] border border-[#e6e6db] dark:border-[#3a392a]">
-            <p class="text-gray-500 dark:text-gray-400 text-lg">No products found.</p>
+            <p class="text-gray-500 dark:text-gray-400 text-lg">{{ __('messages.no_products_found') }}</p>
         </div>
     @else
         <form action="{{ route('admin.products.bulk-toggle') }}" method="POST">
@@ -100,11 +100,11 @@
             <div class="flex gap-2 mb-4">
                 <button name="action" value="enable" type="submit" class="h-10 px-4 rounded-xl bg-green-500/20 hover:bg-green-500/30 text-green-600 dark:text-green-400 font-bold text-sm transition-colors flex items-center justify-center gap-2">
                     <span class="material-symbols-outlined text-lg">check_circle</span>
-                    <span>Enable Selected</span>
+                    <span>{{ __('messages.enable_selected') }}</span>
                 </button>
                 <button name="action" value="disable" type="submit" class="h-10 px-4 rounded-xl bg-red-500/20 hover:bg-red-500/30 text-red-600 dark:text-red-400 font-bold text-sm transition-colors flex items-center justify-center gap-2">
                     <span class="material-symbols-outlined text-lg">block</span>
-                    <span>Disable Selected</span>
+                    <span>{{ __('messages.disable_selected') }}</span>
                 </button>
             </div>
 
@@ -116,11 +116,11 @@
                                 <th class="w-[50px] px-6 py-4 text-left">
                                     <input type="checkbox" id="checkAll" class="rounded border-[#e6e6e0] dark:border-[#3a3928] text-primary focus:ring-primary"/>
                                 </th>
-                                <th class="w-[300px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">Product</th>
-                                <th class="w-[200px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">Category</th>
-                                <th class="w-[150px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">Price</th>
-                                <th class="w-[120px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">Status</th>
-                                <th class="w-[150px] px-6 py-4 text-right text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">Actions</th>
+                                <th class="w-[300px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">{{ __('messages.product') }}</th>
+                                <th class="w-[200px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">{{ __('messages.category') }}</th>
+                                <th class="w-[150px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">{{ __('messages.price') }}</th>
+                                <th class="w-[120px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">{{ __('messages.status') }}</th>
+                                <th class="w-[150px] px-6 py-4 text-right text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">{{ __('messages.actions') }}</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-[#e6e6db] dark:divide-[#3a392a]">
@@ -139,15 +139,15 @@
                                     <td class="px-6 py-4 text-sm font-medium text-[#181811] dark:text-white">{{ $product->price ? number_format($product->price) . ' SYP' : '—' }}</td>
                                     <td class="px-6 py-4">
                                         <span class="px-3 py-1 rounded-full text-xs font-bold {{ $product->availabe_for_sale ? 'bg-green-500/20 text-green-700 dark:text-green-400' : 'bg-gray-500/20 text-gray-700 dark:text-gray-400' }}">
-                                            {{ $product->availabe_for_sale ? 'Active' : 'Hidden' }}
+                                            {{ $product->availabe_for_sale ? __('messages.active') : __('messages.hidden') }}
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 text-right">
                                         <div class="flex justify-end gap-2">
-                                            <a href="{{ route('products.show', $product) }}" class="flex size-8 items-center justify-center rounded-full bg-[#f8f8f5] text-[#181811] hover:bg-primary transition-colors dark:bg-[#2c2b18] dark:text-white" title="View">
+                                            <a href="{{ route('products.show', $product) }}" class="flex size-8 items-center justify-center rounded-full bg-[#f8f8f5] text-[#181811] hover:bg-primary transition-colors dark:bg-[#2c2b18] dark:text-white" title="{{ __('messages.view') }}">
                                                 <span class="material-symbols-outlined text-[18px]">visibility</span>
                                             </a>
-                                            <button type="button" onclick="submitDelete({{ $product->id }})" class="flex size-8 items-center justify-center rounded-full bg-[#f8f8f5] text-[#181811] hover:bg-red-100 hover:text-red-600 transition-colors dark:bg-[#2c2b18] dark:text-white" title="Delete">
+                                            <button type="button" onclick="submitDelete({{ $product->id }})" class="flex size-8 items-center justify-center rounded-full bg-[#f8f8f5] text-[#181811] hover:bg-red-100 hover:text-red-600 transition-colors dark:bg-[#2c2b18] dark:text-white" title="{{ __('messages.delete') }}">
                                                 <span class="material-symbols-outlined text-[18px]">delete</span>
                                             </button>
                                         </div>
@@ -163,7 +163,7 @@
         {{-- Pagination --}}
         @if($products->hasPages())
             <div class="flex items-center justify-between border-t border-[#e6e6db] bg-[#fcfcfb] px-6 py-4 dark:bg-[#2c2b18] dark:border-[#3a392a] rounded-b-xl">
-                <span class="text-sm font-medium text-[#8c8b5f] dark:text-[#a1a18d]">Showing {{ $products->firstItem() }} to {{ $products->lastItem() }} of {{ $products->total() }} products</span>
+                <span class="text-sm font-medium text-[#8c8b5f] dark:text-[#a1a18d]">{{ __('messages.showing_products', ['first' => $products->firstItem(), 'last' => $products->lastItem(), 'total' => $products->total()]) }}</span>
                 <div class="flex items-center gap-2">
                     @if ($products->onFirstPage())
                         <span class="flex size-8 items-center justify-center rounded-full border border-[#e6e6db] text-[#8c8b5f] dark:border-[#3a392a] dark:text-[#a1a18d] cursor-not-allowed">
@@ -210,7 +210,7 @@ document.getElementById('checkAll')?.addEventListener('change', function () {
 });
 
 function submitDelete(productId) {
-    if (!confirm('Delete this product?')) return;
+    if (!confirm('{{ __('messages.delete_product_confirm') }}')) return;
     const form = document.getElementById('deleteForm');
     form.action = `/admin/products/${productId}`;
     form.submit();
