@@ -6,12 +6,16 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Web\AdvertisementController;
 use App\Http\Controllers\Auth\AdminAuthController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\Web\ProductController;
 use App\Http\Controllers\Web\ProfileController;
 use App\Http\Controllers\Web\UserProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/','/products')->name('home');
+
+// Language switching
+Route::get('/language/{locale}', [LanguageController::class, 'switch'])->name('language.switch');
 
 
 Route::get('/dashboard', [UserProductController::class,'index'])->middleware(['auth', 'verified','activated'])->name('dashboard');
@@ -42,8 +46,9 @@ Route::get('products/suggestions/{field}', [ProductController::class, 'suggestio
 Route::prefix('admin')->name('admin.')->group(function () {
     
     Route::middleware('guest:admin')->group(function(){
+        // Redirect admin login to user login page
         Route::get('login', [AuthController::class, 'index'])->name('login');
-        Route::post('login', [AuthController::class, 'store']);
+        // Admin login is now handled through the main login route
     });
 
     Route::middleware('auth:admin')->group(function () {

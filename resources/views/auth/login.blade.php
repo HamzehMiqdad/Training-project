@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html class="light" lang="en">
+<html class="light" lang="{{ app()->getLocale() }}">
 <head>
     @include('partials.auth-head')
+    <title>Login - MarketPlace</title>
 </head>
 <body class="bg-background-light dark:bg-background-dark text-text-main dark:text-white transition-colors duration-200 min-h-screen flex flex-col">
     @include('partials.auth-header')
@@ -11,17 +12,17 @@
             <div class="w-full lg:w-1/2 p-8 lg:p-16 flex flex-col justify-center relative">
                 <div class="max-w-[420px] mx-auto w-full">
                     <div class="mb-10 text-center">
-                        <h1 class="text-3xl lg:text-4xl font-bold mb-3 text-text-main dark:text-white">Welcome Back</h1>
-                        <p class="text-text-muted dark:text-[#a3a38a]">Enter your details to access your account.</p>
+                        <h1 class="text-3xl lg:text-4xl font-bold mb-3 text-text-main dark:text-white">{{ __('messages.welcome_back') }}</h1>
+                        <p class="text-text-muted dark:text-[#a3a38a]">{{ __('messages.enter_details') }}</p>
                     </div>
 
                     <div class="mb-8">
                         <div class="flex border-b border-[#e6e6db] dark:border-[#3e3d24]">
                             <button class="flex-1 pb-4 border-b-[3px] border-primary text-text-main dark:text-white font-bold text-sm transition-all">
-                                Log In
+                                {{ __('messages.log_in') }}
                             </button>
                             <a href="{{ route('register') }}" class="flex-1 pb-4 border-b-[3px] border-transparent text-text-muted hover:text-text-main dark:hover:text-white font-bold text-sm transition-all text-center">
-                                Sign Up
+                                {{ __('messages.sign_up') }}
                             </a>
                         </div>
                     </div>
@@ -41,7 +42,7 @@
                     @csrf
 
                         <label class="flex flex-col gap-2">
-                            <span class="text-sm font-bold text-text-main dark:text-white ml-1">Email Address</span>
+                            <span class="text-sm font-bold text-text-main dark:text-white ml-1">{{ __('messages.email_address') }}</span>
                             <div class="relative">
                                 <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">mail</span>
                                 <input 
@@ -59,7 +60,7 @@
 
                         <label class="flex flex-col gap-2">
                             <div class="flex justify-between items-center ml-1">
-                                <span class="text-sm font-bold text-text-main dark:text-white">Password</span>
+                                <span class="text-sm font-bold text-text-main dark:text-white">{{ __('messages.password') }}</span>
                             </div>
                             <div class="relative">
                                 <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">lock</span>
@@ -91,17 +92,17 @@
                                 {{ old('remember') ? 'checked' : '' }}
                             />
                             <label class="ml-3 text-sm font-medium text-text-muted hover:text-text-main dark:hover:text-white cursor-pointer select-none transition-colors" for="remember_me">
-                                Remember me
+                                {{ __('messages.remember_me') }}
                             </label>
                         </div>
 
                         <button class="w-full h-14 bg-primary hover:bg-[#d9d505] text-[#181811] font-bold rounded-full text-base mt-2 transition-colors shadow-[0_4px_14px_rgba(249,245,6,0.3)]" type="submit">
-                            Log In
+                            {{ __('messages.log_in') }}
                         </button>
                     </form>
 
                     <p class="text-center mt-8 text-sm text-text-muted">
-                        Don't have an account? <a class="text-text-main dark:text-white font-bold underline decoration-primary decoration-2 underline-offset-4 hover:decoration-[#d9d505]" href="{{ route('register') }}">Sign up</a>
+                        {{ __('messages.dont_have_account') }} <a class="text-text-main dark:text-white font-bold underline decoration-primary decoration-2 underline-offset-4 hover:decoration-[#d9d505]" href="{{ route('register') }}">{{ __('messages.sign_up') }}</a>
                     </p>
                 </div>
             </div>
@@ -115,9 +116,9 @@
                 <div class="absolute bottom-16 left-12 right-12 text-white">
                     <div class="inline-flex items-center gap-2 px-3 py-1 bg-white/20 backdrop-blur-md rounded-full mb-4 border border-white/20">
                         <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                        <span class="text-xs font-medium">New Collection Dropped</span>
+                        <span class="text-xs font-medium">{{ __('messages.new_collection_dropped') }}</span>
                     </div>
-                    <h3 class="text-3xl font-bold mb-4 leading-tight">Join the fastest growing marketplace for creators.</h3>
+                    <h3 class="text-3xl font-bold mb-4 leading-tight">{{ __('messages.join_fastest_marketplace') }}</h3>
                     <div class="flex items-center gap-4">
                         <div class="flex -space-x-3">
                             <div class="w-10 h-10 rounded-full border-2 border-white bg-gray-200 bg-cover bg-center" data-alt="Portrait of a female user smiling" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCShToIGyn5RXPLZ-D9b2ffHBKNQhpkG3F3w3t_ziF8XcdfNkc5cKCj6Y-8mw_hgpXTyNqhZTsPRCgNatc4gRq0AjBfGyvXXj6rWb2VYo16njU6WB0ajgo1AR7gRS_CRO4m7pqI2xVnIA7gkd-nL3FlO6DorMoN9rdcWjFW2doK2fhjDKxhRnkVc66Hr4X3IjaLjQJN2znKhnplAcHkk5tawhrKGPEI5YxGPLuVghIBx8NJL6IzNVkobg32Ucr_iPZbAoxHy5nkI2w')"></div>
@@ -125,7 +126,7 @@
                             <div class="w-10 h-10 rounded-full border-2 border-white bg-gray-200 bg-cover bg-center" data-alt="Portrait of a male user smiling with glasses" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC2_tLcu-XGdUBlLUu1Uab9nMfHt1ZVFVze3JbIEJ2VV-qCaPrMQR2u0ecT7yrli2hYMNM6UBQxDYpmuGa-q9gbU-iX3kmI74BuzqY0q4zBo8cPUBxDktO1anZyEb7gVTniI5CwUNbJoaVUu1xfWwSLrfK6KoSpjLdSdOkiKe35jFVggYHK4u2RT3RAud1NAvtuPoI9zkWICX19OrdzxaBr5ISqRtGTmgD8NRbVcmsfshLot0L039bPIg1NW3sbRwpw3IuUk8sHrFE')"></div>
                             <div class="w-10 h-10 rounded-full border-2 border-white bg-primary text-[#181811] flex items-center justify-center text-xs font-bold">+2k</div>
                         </div>
-                        <p class="text-sm font-medium text-white/90">Creators joined this week</p>
+                        <p class="text-sm font-medium text-white/90">{{ __('messages.creators_joined_week') }}</p>
                     </div>
                 </div>
             </div>

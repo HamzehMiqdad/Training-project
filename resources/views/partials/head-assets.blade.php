@@ -6,4 +6,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 @include('partials.tailwind-config')
+<style>
+    /* Base styles */
+    body {
+        font-family: "Spline Sans", sans-serif;
+    }
+</style>
 

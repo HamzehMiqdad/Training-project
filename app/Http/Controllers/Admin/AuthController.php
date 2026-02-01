@@ -11,11 +11,14 @@ class AuthController extends Controller
 {
     public function index()
     {
-        return view('admin.login');
+        // Redirect to unified login page - it will automatically detect admin credentials
+        return redirect()->route('login');
     }
 
     public function store(AdminLoginRequest $request)
     {
+        // This method is no longer used, but kept for backward compatibility
+        // Admin login is now handled through the user login page
         $request->authenticate();
 
         $request->session()->regenerate();
@@ -28,7 +31,7 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('admin.login');
+        return redirect()->route('login');
     }
 }
 

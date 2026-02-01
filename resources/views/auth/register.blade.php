@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="light" lang="en">
+<html class="light" lang="{{ app()->getLocale() }}">
 <head>
     @include('partials.auth-head')
 </head>
@@ -12,17 +12,17 @@
             <div class="w-full lg:w-1/2 p-8 lg:p-16 flex flex-col justify-start relative overflow-y-auto max-h-[90vh] lg:max-h-none">
                 <div class="max-w-[420px] mx-auto w-full">
                     <div class="mb-10 text-center">
-                        <h1 class="text-3xl lg:text-4xl font-bold mb-3 text-text-main dark:text-white">Create Account</h1>
-                        <p class="text-text-muted dark:text-[#a3a38a]">Enter your details to join our marketplace.</p>
+                        <h1 class="text-3xl lg:text-4xl font-bold mb-3 text-text-main dark:text-white">{{ __('messages.create_account') }}</h1>
+                        <p class="text-text-muted dark:text-[#a3a38a]">{{ __('messages.enter_details_join') }}</p>
                     </div>
 
                     <div class="mb-8">
                         <div class="flex border-b border-[#e6e6db] dark:border-[#3e3d24]">
                             <a href="{{ route('login') }}" class="flex-1 pb-4 border-b-[3px] border-transparent text-text-muted hover:text-text-main dark:hover:text-white font-bold text-sm transition-all text-center">
-                                Log In
+                                {{ __('messages.log_in') }}
                             </a>
                             <button class="flex-1 pb-4 border-b-[3px] border-primary text-text-main dark:text-white font-bold text-sm transition-all">
-                                Sign Up
+                                {{ __('messages.sign_up') }}
                             </button>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
                         {{-- First Name & Last Name --}}
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <label class="flex flex-col gap-2">
-                                <span class="text-sm font-bold text-text-main dark:text-white ml-1">First Name</span>
+                                <span class="text-sm font-bold text-text-main dark:text-white ml-1">{{ __('messages.first_name') }}</span>
                                 <div class="relative">
                                     <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">person</span>
                                     <input 
@@ -63,7 +63,7 @@
                             </label>
 
                             <label class="flex flex-col gap-2">
-                                <span class="text-sm font-bold text-text-main dark:text-white ml-1">Last Name</span>
+                                <span class="text-sm font-bold text-text-main dark:text-white ml-1">{{ __('messages.last_name') }}</span>
                                 <div class="relative">
                                     <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">person</span>
                                     <input 
@@ -83,7 +83,7 @@
 
                         {{-- Email --}}
                         <label class="flex flex-col gap-2">
-                            <span class="text-sm font-bold text-text-main dark:text-white ml-1">Email Address</span>
+                            <span class="text-sm font-bold text-text-main dark:text-white ml-1">{{ __('messages.email_address') }}</span>
                             <div class="relative">
                                 <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">mail</span>
                                 <input 
@@ -103,7 +103,7 @@
                         {{-- Phone Number & Age --}}
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <label class="flex flex-col gap-2">
-                                <span class="text-sm font-bold text-text-main dark:text-white ml-1">Phone Number</span>
+                                <span class="text-sm font-bold text-text-main dark:text-white ml-1">{{ __('messages.phone_number') }}</span>
                                 <div class="relative">
                                     <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">phone</span>
                                     <input 
@@ -121,7 +121,7 @@
                             </label>
 
                             <label class="flex flex-col gap-2">
-                                <span class="text-sm font-bold text-text-main dark:text-white ml-1">Age</span>
+                                <span class="text-sm font-bold text-text-main dark:text-white ml-1">{{ __('messages.age') }}</span>
                                 <div class="relative">
                                     <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">cake</span>
                                     <input 
@@ -141,7 +141,7 @@
 
                         {{-- Gender --}}
                         <label class="flex flex-col gap-2">
-                            <span class="text-sm font-bold text-text-main dark:text-white ml-1">Gender</span>
+                            <span class="text-sm font-bold text-text-main dark:text-white ml-1">{{ __('messages.gender') }}</span>
                             <div class="relative">
                                 <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none z-10">wc</span>
                                 <select 
@@ -149,9 +149,9 @@
                                     name="gender"
                                     required
                                 >
-                                    <option value="">Select Gender</option>
-                                    <option value="male" {{ old('gender') === 'male' ? 'selected' : '' }}>Male</option>
-                                    <option value="female" {{ old('gender') === 'female' ? 'selected' : '' }}>Female</option>
+                                    <option value="">{{ __('messages.select_gender') }}</option>
+                                    <option value="male" {{ old('gender') === 'male' ? 'selected' : '' }}>{{ __('messages.male') }}</option>
+                                    <option value="female" {{ old('gender') === 'female' ? 'selected' : '' }}>{{ __('messages.female') }}</option>
                                 </select>
                                 <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">arrow_drop_down</span>
                         </div>
@@ -162,7 +162,7 @@
 
                         {{-- Store Name --}}
                         <label class="flex flex-col gap-2">
-                            <span class="text-sm font-bold text-text-main dark:text-white ml-1">Store Name</span>
+                            <span class="text-sm font-bold text-text-main dark:text-white ml-1">{{ __('messages.store_name') }}</span>
                             <div class="relative">
                                 <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">store</span>
                                 <input 
@@ -181,12 +181,12 @@
 
                         {{-- Location --}}
                         <label class="flex flex-col gap-2">
-                            <span class="text-sm font-bold text-text-main dark:text-white ml-1">Location</span>
+                            <span class="text-sm font-bold text-text-main dark:text-white ml-1">{{ __('messages.location') }}</span>
                             <div class="relative">
                                 <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">location_on</span>
                                 <input 
                                     class="w-full h-14 bg-background-light dark:bg-background-dark border border-[#e6e6db] dark:border-[#3e3d24] rounded-full px-12 text-base text-text-main dark:text-white placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all @error('location') border-red-500 @enderror" 
-                                    placeholder="Street Address" 
+                                    placeholder="{{ __('messages.street_address') }}" 
                                     type="text"
                                     name="location"
                                     value="{{ old('location') }}"
@@ -201,12 +201,12 @@
                         {{-- Country & City --}}
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <label class="flex flex-col gap-2">
-                                <span class="text-sm font-bold text-text-main dark:text-white ml-1">Country</span>
+                                <span class="text-sm font-bold text-text-main dark:text-white ml-1">{{ __('messages.country') }}</span>
                                 <div class="relative">
                                     <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">public</span>
                                     <input 
                                         class="w-full h-14 bg-background-light dark:bg-background-dark border border-[#e6e6db] dark:border-[#3e3d24] rounded-full px-12 text-base text-text-main dark:text-white placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all @error('country') border-red-500 @enderror" 
-                                        placeholder="Country" 
+                                        placeholder="{{ __('messages.country') }}" 
                                         type="text"
                                         name="country"
                                         value="{{ old('country') }}"
@@ -219,12 +219,12 @@
                             </label>
 
                             <label class="flex flex-col gap-2">
-                                <span class="text-sm font-bold text-text-main dark:text-white ml-1">City</span>
+                                <span class="text-sm font-bold text-text-main dark:text-white ml-1">{{ __('messages.city') }}</span>
                                 <div class="relative">
                                     <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">location_city</span>
                                     <input 
                                         class="w-full h-14 bg-background-light dark:bg-background-dark border border-[#e6e6db] dark:border-[#3e3d24] rounded-full px-12 text-base text-text-main dark:text-white placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all @error('city') border-red-500 @enderror" 
-                                        placeholder="City" 
+                                        placeholder="{{ __('messages.city') }}" 
                                         type="text"
                                         name="city"
                                         value="{{ old('city') }}"
@@ -240,7 +240,7 @@
                         {{-- WhatsApp & Facebook --}}
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <label class="flex flex-col gap-2">
-                                <span class="text-sm font-bold text-text-main dark:text-white ml-1">WhatsApp</span>
+                                <span class="text-sm font-bold text-text-main dark:text-white ml-1">{{ __('messages.whatsapp') }}</span>
                                 <div class="relative">
                                     <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">chat</span>
                                     <input 
@@ -258,7 +258,7 @@
                             </label>
 
                             <label class="flex flex-col gap-2">
-                                <span class="text-sm font-bold text-text-main dark:text-white ml-1">Facebook URL</span>
+                                <span class="text-sm font-bold text-text-main dark:text-white ml-1">{{ __('messages.facebook_url') }}</span>
                                 <div class="relative">
                                     <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">link</span>
                                     <input 
@@ -279,7 +279,7 @@
                         {{-- User Image & Logo --}}
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <label class="flex flex-col gap-2">
-                                <span class="text-sm font-bold text-text-main dark:text-white ml-1">Profile Image <span class="text-red-500">*</span></span>
+                                <span class="text-sm font-bold text-text-main dark:text-white ml-1">{{ __('messages.profile_image') }} <span class="text-red-500">*</span></span>
                                 <div class="relative">
                                     <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">image</span>
                                     <input 
@@ -294,7 +294,7 @@
                             </label>
 
                             <label class="flex flex-col gap-2">
-                                <span class="text-sm font-bold text-text-main dark:text-white ml-1">Store Logo (Optional)</span>
+                                <span class="text-sm font-bold text-text-main dark:text-white ml-1">{{ __('messages.store_logo_optional') }}</span>
                                 <div class="relative">
                                     <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">image</span>
                                     <input 
@@ -312,12 +312,12 @@
 
                         {{-- Details --}}
                         <label class="flex flex-col gap-2">
-                            <span class="text-sm font-bold text-text-main dark:text-white ml-1">Details (Optional)</span>
+                            <span class="text-sm font-bold text-text-main dark:text-white ml-1">{{ __('messages.details_optional') }}</span>
                             <div class="relative">
                                 <span class="material-symbols-outlined absolute left-4 top-4 text-text-muted select-none pointer-events-none">description</span>
                                 <textarea 
                                     class="w-full min-h-[100px] bg-background-light dark:bg-background-dark border border-[#e6e6db] dark:border-[#3e3d24] rounded-2xl px-12 pt-4 pb-4 text-base text-text-main dark:text-white placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none @error('details') border-red-500 @enderror" 
-                                    placeholder="Tell us about your store..." 
+                                    placeholder="{{ __('messages.tell_about_store') }}" 
                                     name="details"
                                     rows="3"
                                 >{{ old('details') }}</textarea>
@@ -329,7 +329,7 @@
 
                         {{-- Password & Confirm Password --}}
                         <label class="flex flex-col gap-2">
-                            <span class="text-sm font-bold text-text-main dark:text-white ml-1">Password</span>
+                            <span class="text-sm font-bold text-text-main dark:text-white ml-1">{{ __('messages.password') }}</span>
                             <div class="relative">
                                 <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">lock</span>
                                 <input 
@@ -354,7 +354,7 @@
                         </label>
 
                         <label class="flex flex-col gap-2">
-                            <span class="text-sm font-bold text-text-main dark:text-white ml-1">Confirm Password</span>
+                            <span class="text-sm font-bold text-text-main dark:text-white ml-1">{{ __('messages.confirm_password') }}</span>
                             <div class="relative">
                                 <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted select-none pointer-events-none">lock</span>
                                 <input 
@@ -376,12 +376,12 @@
                         </label>
 
                         <button class="w-full h-14 bg-primary hover:bg-[#d9d505] text-[#181811] font-bold rounded-full text-base mt-2 transition-colors shadow-[0_4px_14px_rgba(249,245,6,0.3)]" type="submit">
-                            Create Account
+                            {{ __('messages.create_account') }}
                         </button>
                     </form>
 
                     <p class="text-center mt-8 text-sm text-text-muted">
-                        Already have an account? <a class="text-text-main dark:text-white font-bold underline decoration-primary decoration-2 underline-offset-4 hover:decoration-[#d9d505]" href="{{ route('login') }}">Log in</a>
+                        {{ __('messages.already_have_account') }} <a class="text-text-main dark:text-white font-bold underline decoration-primary decoration-2 underline-offset-4 hover:decoration-[#d9d505]" href="{{ route('login') }}">{{ __('messages.log_in') }}</a>
                     </p>
                 </div>
                         </div>
@@ -395,9 +395,9 @@
                 <div class="absolute bottom-16 left-12 right-12 text-white">
                     <div class="inline-flex items-center gap-2 px-3 py-1 bg-white/20 backdrop-blur-md rounded-full mb-4 border border-white/20">
                         <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                        <span class="text-xs font-medium">New Collection Dropped</span>
+                        <span class="text-xs font-medium">{{ __('messages.new_collection_dropped') }}</span>
                     </div>
-                    <h3 class="text-3xl font-bold mb-4 leading-tight">Join the fastest growing marketplace for creators.</h3>
+                    <h3 class="text-3xl font-bold mb-4 leading-tight">{{ __('messages.join_fastest_marketplace') }}</h3>
                     <div class="flex items-center gap-4">
                         <div class="flex -space-x-3">
                             <div class="w-10 h-10 rounded-full border-2 border-white bg-gray-200 bg-cover bg-center" data-alt="Portrait of a female user smiling" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCShToIGyn5RXPLZ-D9b2ffHBKNQhpkG3F3w3t_ziF8XcdfNkc5cKCj6Y-8mw_hgpXTyNqhZTsPRCgNatc4gRq0AjBfGyvXXj6rWb2VYo16njU6WB0ajgo1AR7gRS_CRO4m7pqI2xVnIA7gkd-nL3FlO6DorMoN9rdcWjFW2doK2fhjDKxhRnkVc66Hr4X3IjaLjQJN2znKhnplAcHkk5tawhrKGPEI5YxGPLuVghIBx8NJL6IzNVkobg32Ucr_iPZbAoxHy5nkI2w')"></div>
@@ -405,7 +405,7 @@
                             <div class="w-10 h-10 rounded-full border-2 border-white bg-gray-200 bg-cover bg-center" data-alt="Portrait of a male user smiling with glasses" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC2_tLcu-XGdUBlLUu1Uab9nMfHt1ZVFVze3JbIEJ2VV-qCaPrMQR2u0ecT7yrli2hYMNM6UBQxDYpmuGa-q9gbU-iX3kmI74BuzqY0q4zBo8cPUBxDktO1anZyEb7gVTniI5CwUNbJoaVUu1xfWwSLrfK6KoSpjLdSdOkiKe35jFVggYHK4u2RT3RAud1NAvtuPoI9zkWICX19OrdzxaBr5ISqRtGTmgD8NRbVcmsfshLot0L039bPIg1NW3sbRwpw3IuUk8sHrFE')"></div>
                             <div class="w-10 h-10 rounded-full border-2 border-white bg-primary text-[#181811] flex items-center justify-center text-xs font-bold">+2k</div>
                         </div>
-                        <p class="text-sm font-medium text-white/90">Creators joined this week</p>
+                        <p class="text-sm font-medium text-white/90">{{ __('messages.creators_joined_week') }}</p>
                     </div>
                 </div>
             </div>

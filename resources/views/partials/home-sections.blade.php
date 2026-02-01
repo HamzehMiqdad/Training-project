@@ -1,31 +1,31 @@
 {{-- Features/Benefits Section --}}
 <section class="py-12 md:py-16 animate-fade-in-up">
     <div class="text-center mb-10 px-2">
-        <h2 class="text-3xl md:text-4xl font-black text-[#181811] dark:text-white mb-4">Why Choose MarketHub?</h2>
-        <p class="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">Experience the best marketplace platform with features designed for both buyers and sellers.</p>
+        <h2 class="text-3xl md:text-4xl font-black text-[#181811] dark:text-white mb-4">{{ __('messages.why_choose_us') }}</h2>
+        <p class="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">{{ __('messages.why_choose_description') }}</p>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         @php
             $features = [
                 [
                     'icon' => 'verified_user',
-                    'title' => 'Verified Sellers',
-                    'description' => 'All sellers are verified to ensure trust and safety in every transaction.'
+                    'title' => __('messages.verified_sellers_feature'),
+                    'description' => __('messages.verified_sellers_desc')
                 ],
                 [
                     'icon' => 'security',
-                    'title' => 'Secure Platform',
-                    'description' => 'Your data and transactions are protected with industry-standard security.'
+                    'title' => __('messages.secure_platform'),
+                    'description' => __('messages.secure_platform_desc')
                 ],
                 [
                     'icon' => 'search',
-                    'title' => 'Easy Discovery',
-                    'description' => 'Powerful search and filters help you find exactly what you\'re looking for.'
+                    'title' => __('messages.easy_discovery'),
+                    'description' => __('messages.easy_discovery_desc')
                 ],
                 [
                     'icon' => 'support_agent',
-                    'title' => '24/7 Support',
-                    'description' => 'Get help whenever you need it from our dedicated support team.'
+                    'title' => __('messages.support_24_7'),
+                    'description' => __('messages.support_24_7_desc')
                 ]
             ];
         @endphp
@@ -47,8 +47,8 @@
 {{-- How It Works Section --}}
 <section class="py-12 md:py-16 bg-gradient-to-br from-primary/10 via-transparent to-primary/5 dark:from-primary/5 dark:via-transparent dark:to-primary/5 rounded-2xl px-6 md:px-8 animate-fade-in-up">
     <div class="text-center mb-10">
-        <h2 class="text-3xl md:text-4xl font-black text-[#181811] dark:text-white mb-4">How It Works</h2>
-        <p class="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">Getting started is simple. Follow these three easy steps.</p>
+        <h2 class="text-3xl md:text-4xl font-black text-[#181811] dark:text-white mb-4">{{ __('messages.how_it_works') }}</h2>
+        <p class="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">{{ __('messages.how_it_works_desc') }}</p>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
         @php
@@ -56,20 +56,20 @@
                 [
                     'number' => '01',
                     'icon' => 'person_add',
-                    'title' => 'Create Account',
-                    'description' => 'Sign up in seconds with your email and start exploring thousands of products.'
+                    'title' => __('messages.create_account_step'),
+                    'description' => __('messages.create_account_step_desc')
                 ],
                 [
                     'number' => '02',
                     'icon' => 'search',
-                    'title' => 'Browse & Search',
-                    'description' => 'Discover products by category, use filters, or search for specific items.'
+                    'title' => __('messages.browse_search_step'),
+                    'description' => __('messages.browse_search_step_desc')
                 ],
                 [
                     'number' => '03',
                     'icon' => 'shopping_cart',
-                    'title' => 'Connect & Buy',
-                    'description' => 'Contact sellers directly via WhatsApp and complete your purchase safely.'
+                    'title' => __('messages.connect_buy_step'),
+                    'description' => __('messages.connect_buy_step_desc')
                 ]
             ];
         @endphp
@@ -103,12 +103,12 @@
     <section class="py-12 md:py-16 animate-fade-in-up">
         <div class="flex items-center justify-between mb-10 px-2">
             <div>
-                <h2 class="text-3xl md:text-4xl font-black text-[#181811] dark:text-white mb-2">Shop by Category</h2>
-                <p class="text-gray-600 dark:text-gray-400">Explore our most popular categories</p>
+                <h2 class="text-3xl md:text-4xl font-black text-[#181811] dark:text-white mb-2">{{ __('messages.shop_by_category') }}</h2>
+                <p class="text-gray-600 dark:text-gray-400">{{ __('messages.explore_popular_categories') }}</p>
             </div>
             @if($hasMoreCategories)
                 <button type="button" onclick="toggleAllCategories(event)" id="toggleCategoriesBtn" class="relative z-10 hidden md:flex items-center gap-2 text-sm font-bold text-primary hover:underline transition-colors cursor-pointer">
-                    <span id="toggleCategoriesText">View All</span>
+                    <span id="toggleCategoriesText">{{ __('messages.view_all') }}</span>
                     <span class="material-symbols-outlined text-lg" id="toggleCategoriesIcon">expand_more</span>
                 </button>
             @endif
@@ -146,11 +146,11 @@
                             @php
                                 $count = \App\Models\Product::where('category', $category)->where('availabe_for_sale', true)->count();
                             @endphp
-                            {{ $count }} {{ Str::plural('product', $count) }}
+                            {{ trans_choice('messages.product_count', $count, ['count' => $count]) }}
                         </p>
                     </div>
                     <div class="relative z-10 flex items-center gap-2 text-sm font-bold text-primary opacity-0 group-hover:opacity-100 transition-opacity">
-                        <span>Explore</span>
+                        <span>{{ __('messages.explore') }}</span>
                         <span class="material-symbols-outlined text-lg">arrow_forward</span>
                     </div>
                 </a>
@@ -195,11 +195,11 @@
                                 @php
                                     $count = \App\Models\Product::where('category', $category)->where('availabe_for_sale', true)->count();
                                 @endphp
-                                {{ $count }} {{ Str::plural('product', $count) }}
+                                {{ trans_choice('messages.product_count', $count, ['count' => $count]) }}
                             </p>
                         </div>
                         <div class="relative z-10 flex items-center gap-2 text-sm font-bold text-primary opacity-0 group-hover:opacity-100 transition-opacity">
-                            <span>Explore</span>
+                            <span>{{ __('messages.explore') }}</span>
                             <span class="material-symbols-outlined text-lg">arrow_forward</span>
                         </div>
                     </a>
@@ -209,7 +209,7 @@
         @if($remainingCategories->count() > 0)
             <div class="flex md:hidden justify-center mt-6">
                 <button type="button" onclick="toggleAllCategories(event)" id="toggleCategoriesBtnMobile" class="relative z-10 flex items-center gap-2 text-sm font-bold text-primary hover:underline transition-colors cursor-pointer">
-                    <span id="toggleCategoriesTextMobile">View All Categories</span>
+                    <span id="toggleCategoriesTextMobile">{{ __('messages.view_all_categories') }}</span>
                     <span class="material-symbols-outlined text-lg" id="toggleCategoriesIconMobile">expand_more</span>
                 </button>
             </div>
@@ -257,10 +257,10 @@
                 
                 // Update button text and icon
                 if (toggleText) {
-                    toggleText.textContent = showAllCategories ? 'Show Less' : 'View All';
+                    toggleText.textContent = showAllCategories ? '{{ __('messages.show_less') }}' : '{{ __('messages.view_all') }}';
                 }
                 if (toggleTextMobile) {
-                    toggleTextMobile.textContent = showAllCategories ? 'Show Less' : 'View All Categories';
+                    toggleTextMobile.textContent = showAllCategories ? '{{ __('messages.show_less') }}' : '{{ __('messages.view_all_categories') }}';
                 }
                 if (toggleIcon) {
                     toggleIcon.textContent = showAllCategories ? 'expand_less' : 'expand_more';
@@ -284,30 +284,30 @@
         <div class="mb-6">
             <span class="inline-flex items-center gap-2 px-4 py-2 bg-white/90 dark:bg-[#32311b]/90 backdrop-blur-md text-xs font-bold uppercase tracking-wider rounded-full text-[#181811] dark:text-white border border-primary/20">
                 <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                Join Today
+                {{ __('messages.join_today') }}
             </span>
         </div>
         <h2 class="text-3xl md:text-4xl lg:text-5xl font-black text-[#181811] dark:text-white mb-4 leading-tight">
-            Ready to Start Buying or Selling?
+            {{ __('messages.ready_to_start') }}
         </h2>
         <p class="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-8 leading-relaxed">
-            Join thousands of satisfied users and start your journey with MarketHub today. Create your account in seconds!
+            {{ __('messages.cta_description') }}
         </p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
             @auth
                 <a href="{{ route('products.create') }}" class="w-full sm:w-auto px-8 py-4 bg-primary hover:bg-[#d9d505] text-[#181811] font-bold rounded-full text-base md:text-lg transition-all shadow-xl shadow-primary/30 hover:scale-105 active:scale-95 flex items-center justify-center gap-2">
                     <span class="material-symbols-outlined">add_circle</span>
-                    List Your Product
+                    {{ __('messages.list_your_product') }}
                 </a>
             @else
                 <a href="{{ route('register') }}" class="w-full sm:w-auto px-8 py-4 bg-primary hover:bg-[#d9d505] text-[#181811] font-bold rounded-full text-base md:text-lg transition-all shadow-xl shadow-primary/30 hover:scale-105 active:scale-95 flex items-center justify-center gap-2">
                     <span class="material-symbols-outlined">person_add</span>
-                    Get Started Free
+                    {{ __('messages.get_started_free') }}
                 </a>
             @endauth
             <a href="#new-arrivals" class="w-full sm:w-auto px-8 py-4 bg-white dark:bg-[#32311b] hover:bg-gray-50 dark:hover:bg-[#3a3928] text-[#181811] dark:text-white font-bold rounded-full text-base md:text-lg transition-all border-2 border-[#e6e6e0] dark:border-[#3a3928] shadow-lg hover:scale-105 active:scale-95 flex items-center justify-center gap-2">
                 <span class="material-symbols-outlined">explore</span>
-                Browse Products
+                {{ __('messages.browse_products') }}
             </a>
         </div>
     </div>

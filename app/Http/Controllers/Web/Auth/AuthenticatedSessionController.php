@@ -16,8 +16,13 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View|RedirectResponse
     {
-        if (Auth::check()) {
+        // Check if user is already logged in
+        if (Auth::guard('web')->check()) {
             return redirect()->route('products.index');
+        }
+        
+        if (Auth::guard('admin')->check()) {
+            return redirect()->route('admin.dashboard');
         }
         
         return view('auth.login');
@@ -28,8 +33,15 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
+        // Try to authenticate as admin first
+        if (Auth::guard('admin')->attempt($request->only('email', 'password'), $request->boolean('remember'))) {
+            $request->session()->regenerate();
+            return redirect()->intended(default: route('admin.dashboard', absolute: false));
+        }
 
+        // If admin authentication fails, try user authentication
+        // This will handle rate limiting and validation errors
+        $request->authenticate();
         $request->session()->regenerate();
 
         return redirect()->intended(default: route('dashboard', absolute: false));

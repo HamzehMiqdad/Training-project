@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html class="light" lang="en">
+<html class="light" lang="{{ app()->getLocale() }}">
 <head>
     @include('partials.head-assets')
-    <title>{{ $product->name }} - MarketHub</title>
+    <title>{{ $product->name }} - {{ __('messages.marketplace') }}</title>
     <style>
         body {
             font-family: "Spline Sans", sans-serif;
@@ -20,7 +20,7 @@
         {{-- Breadcrumbs --}}
         <nav class="flex items-center gap-2 mb-6 overflow-x-auto whitespace-nowrap scrollbar-hide">
             <a class="text-[#8c8b5f] text-sm font-medium hover:text-[#181811] dark:hover:text-white flex items-center gap-1" href="{{ route('products.index') }}">
-                <span class="material-symbols-outlined text-sm">home</span> Home
+                <span class="material-symbols-outlined text-sm">home</span> {{ __('messages.home') }}
             </a>
             <span class="text-[#8c8b5f] text-xs">/</span>
             <a class="text-[#8c8b5f] text-sm font-medium hover:text-[#181811] dark:hover:text-white" href="{{ route('products.index', ['category' => $product->category]) }}">
@@ -62,16 +62,16 @@
                     <div class="flex items-center gap-3 mb-2">
                         @if($product->availabe_for_sale)
                             <span class="inline-flex items-center px-3 py-1 rounded-full bg-primary/20 text-[#181811] dark:text-primary text-xs font-bold uppercase tracking-wider">
-                                Available for Sale
+                                {{ __('messages.available_for_sale_badge') }}
                             </span>
                         @else
                             <span class="inline-flex items-center px-3 py-1 rounded-full bg-red-500/20 text-red-600 dark:text-red-400 text-xs font-bold uppercase tracking-wider">
-                                Not Available
+                                {{ __('messages.not_available') }}
                             </span>
                         @endif
                         <div class="flex items-center gap-1 text-[#8c8b5f] text-xs font-medium">
                             <span class="material-symbols-outlined text-[14px]">visibility</span>
-                            {{ number_format($product->hits ?? 0) }} hits
+                            {{ number_format($product->hits ?? 0) }} {{ __('messages.hits') }}
                         </div>
                     </div>
                     <h1 class="text-3xl md:text-4xl font-bold leading-tight mb-2">{{ $product->name }}</h1>
@@ -81,7 +81,7 @@
                         </div>
                     @else
                         <div class="flex items-baseline gap-3">
-                            <span class="text-2xl font-bold text-[#8c8b5f]">Price on request</span>
+                            <span class="text-2xl font-bold text-[#8c8b5f]">{{ __('messages.price_on_request') }}</span>
                         </div>
                     @endif
                 </div>
@@ -91,22 +91,22 @@
                     <div class="grid grid-cols-2 gap-4">
                         @if($product->code)
                             <div>
-                                <p class="text-[10px] uppercase font-bold text-[#8c8b5f] mb-1">Product Code</p>
+                                <p class="text-[10px] uppercase font-bold text-[#8c8b5f] mb-1">{{ __('messages.product_code') }}</p>
                                 <p class="font-mono text-sm">{{ $product->code }}</p>
                             </div>
                         @endif
                         <div>
-                            <p class="text-[10px] uppercase font-bold text-[#8c8b5f] mb-1">Category</p>
+                            <p class="text-[10px] uppercase font-bold text-[#8c8b5f] mb-1">{{ __('messages.category') }}</p>
                             <p class="text-sm">{{ $product->category }}</p>
                         </div>
                         @if($product->subcategory)
                             <div>
-                                <p class="text-[10px] uppercase font-bold text-[#8c8b5f] mb-1">Subcategory</p>
+                                <p class="text-[10px] uppercase font-bold text-[#8c8b5f] mb-1">{{ __('messages.subcategory') }}</p>
                                 <p class="text-sm">{{ $product->subcategory }}</p>
                             </div>
                         @endif
                         <div>
-                            <p class="text-[10px] uppercase font-bold text-[#8c8b5f] mb-1">Added</p>
+                            <p class="text-[10px] uppercase font-bold text-[#8c8b5f] mb-1">{{ __('messages.added') }}</p>
                             <p class="text-sm">{{ $product->created_at->format('M d, Y') }}</p>
                         </div>
                     </div>
@@ -114,7 +114,7 @@
 
                 {{-- Description --}}
                 <div>
-                    <h3 class="text-sm font-bold uppercase tracking-widest text-[#8c8b5f] mb-3">Product Description</h3>
+                    <h3 class="text-sm font-bold uppercase tracking-widest text-[#8c8b5f] mb-3">{{ __('messages.product_description') }}</h3>
                     <p class="text-[#181811]/70 dark:text-white/70 leading-relaxed text-base">
                         {{ $product->details }}
                     </p>
@@ -130,7 +130,7 @@
                                 class="w-full bg-primary hover:bg-[#e6e200] text-[#181811] h-14 rounded-full font-bold text-lg flex items-center justify-center gap-2 transition-all shadow-lg shadow-primary/20"
                             >
                                 <span class="material-symbols-outlined">chat</span>
-                                Contact Seller
+                                {{ __('messages.contact_seller') }}
                             </a>
                         @endif
                     @endif
@@ -139,14 +139,14 @@
                         <div class="grid grid-cols-2 gap-3">
                             <a href="{{ route('products.edit', $product) }}" class="flex items-center justify-center gap-2 h-12 rounded-full border-2 border-primary font-bold text-sm hover:bg-primary hover:text-[#181811] transition-colors">
                                 <span class="material-symbols-outlined text-xl">edit</span>
-                                Edit
+                                {{ __('messages.edit') }}
                             </a>
-                            <form action="{{ route('products.destroy', $product) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this product?');" class="flex items-center justify-center">
+                            <form action="{{ route('products.destroy', $product) }}" method="POST" onsubmit="return confirm('{{ __('messages.confirm_delete') }}');" class="flex items-center justify-center">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="w-full flex items-center justify-center gap-2 h-12 rounded-full border-2 border-red-500 text-red-500 font-bold text-sm hover:bg-red-500 hover:text-white transition-colors">
                                     <span class="material-symbols-outlined text-xl">delete</span>
-                                    Delete
+                                    {{ __('messages.delete') }}
                                 </button>
                             </form>
                         </div>
@@ -159,7 +159,7 @@
         {{-- Seller Information Section --}}
         @if($product->user && $product->user->activated)
             <section class="mt-16 pt-8 border-t border-[#f5f5f0] dark:border-white/10">
-                <h2 class="text-2xl font-bold mb-6">Seller Information</h2>
+                <h2 class="text-2xl font-bold mb-6">{{ __('messages.seller_information') }}</h2>
                 <div class="bg-white dark:bg-white/5 rounded-xl p-6 border border-[#f5f5f0] dark:border-white/10">
                     <div class="flex flex-col md:flex-row gap-6 items-start">
                         {{-- Logo / Image --}}
@@ -192,13 +192,13 @@
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
-                                    <p class="text-[10px] uppercase font-bold text-[#8c8b5f] mb-1">Phone</p>
+                                    <p class="text-[10px] uppercase font-bold text-[#8c8b5f] mb-1">{{ __('messages.phone') }}</p>
                                     <p class="text-sm">{{ $product->user->phone_number }}</p>
                                 </div>
 
                                 @if($product->user->whatsapp)
                                     <div>
-                                        <p class="text-[10px] uppercase font-bold text-[#8c8b5f] mb-1">WhatsApp</p>
+                                        <p class="text-[10px] uppercase font-bold text-[#8c8b5f] mb-1">{{ __('messages.whatsapp') }}</p>
                                         <a href="https://wa.me/{{ $product->user->whatsapp }}" target="_blank" class="text-sm text-yellow-400 hover:underline">
                                             {{ $product->user->whatsapp }}
                                         </a>
@@ -209,13 +209,13 @@
                                     <div>
                                         <p class="text-[10px] uppercase font-bold text-[#8c8b5f] mb-1">Facebook</p>
                                         <a href="{{ $product->user->facebook }}" target="_blank" class="text-sm text-yellow-400 hover:underline">
-                                            View Profile
+                                            {{ __('messages.view_profile') }}
                                         </a>
                                     </div>
                                 @endif
 
                                 <div>
-                                    <p class="text-[10px] uppercase font-bold text-[#8c8b5f] mb-1">Location</p>
+                                    <p class="text-[10px] uppercase font-bold text-[#8c8b5f] mb-1">{{ __('messages.location') }}</p>
                                     <p class="text-sm">
                                         {{ $product->user->location }}, {{ $product->user->city }}, {{ $product->user->country }}
                                     </p>

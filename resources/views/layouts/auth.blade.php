@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="light" lang="en">
+<html class="light" lang="{{ app()->getLocale() }}">
 <head>
     @include('partials.head-assets')
     <title>@yield('title', 'Sign Up / Login - Marketplace')</title>

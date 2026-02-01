@@ -1,10 +1,10 @@
 {{-- Announcement Banner --}}
-<div class="w-full bg-[#181811] text-white py-2 px-4 overflow-hidden relative">
+<div class="w-full bg-[#181811] text-white py-2 px-4 relative">
     <div class="max-w-[1440px] mx-auto flex items-center justify-center gap-4 text-xs md:text-sm font-semibold tracking-wide animate-fade-in-up">
-        <span class="bg-primary text-black px-2 py-0.5 rounded text-[10px] uppercase font-bold animate-pulse">Featured</span>
+        <span class="bg-primary text-black px-2 py-0.5 rounded text-[10px] uppercase font-bold animate-pulse">{{ __('messages.featured') }}</span>
         <p class="flex items-center gap-2">
-            <span>Special Offer: Up to 70% off on all clearance items.</span>
-            <a class="underline hover:text-primary transition-colors font-bold" href="#">Shop Now</a>
+            <span>{{ __('messages.special_offer_banner') }}</span>
+            <a class="underline hover:text-primary transition-colors font-bold" href="#">{{ __('messages.shop_now') }}</a>
         </p>
     </div>
 </div>
@@ -16,29 +16,32 @@
             <div class="size-8 bg-primary rounded-lg flex items-center justify-center text-[#181811]">
                 <span class="material-symbols-outlined">storefront</span>
             </div>
-            <h1 class="text-xl font-bold tracking-tight text-[#181811] dark:text-white hidden sm:block">MarketPlace</h1>
+            <h1 class="text-xl font-bold tracking-tight text-[#181811] dark:text-white hidden sm:block">{{ __('messages.marketplace') }}</h1>
         </a>
         
         <form method="GET" action="{{ route('products.index') }}" class="flex flex-1 max-w-lg mx-2 md:mx-4">
             <label class="relative flex w-full items-center">
-                <div class="absolute inset-y-0 left-0 flex items-center pl-3 md:pl-4 pointer-events-none text-gray-500">
+                <div class="absolute inset-y-0 left-0 pl-3 md:pl-4 flex items-center pointer-events-none text-gray-500">
                     <span class="material-symbols-outlined text-lg md:text-xl">search</span>
                 </div>
                 <input 
                     name="q"
                     value="{{ request('q') }}"
                     class="w-full h-10 md:h-12 pl-10 md:pl-12 pr-3 md:pr-4 rounded-full bg-white dark:bg-[#32311b] border-2 border-transparent focus:border-primary focus:ring-0 text-sm font-medium transition-all outline-none placeholder:text-gray-400 dark:text-white" 
-                    placeholder="Search..." 
+                    placeholder="{{ __('messages.products') }}..." 
                     type="text"
                 />
             </label>
         </form>
 
         <div class="flex items-center gap-3">
+            {{-- Language Switcher --}}
+            <x-language-switcher />
+            
             @auth
                 <a href="{{ route('products.create') }}" class="hidden sm:flex h-10 px-4 items-center justify-center gap-2 rounded-full font-bold text-sm bg-white dark:bg-[#32311b] hover:bg-gray-100 dark:hover:bg-[#3d3c22] transition-colors border border-[#e6e6e0] dark:border-[#3a3928]">
                     <span class="material-symbols-outlined text-[20px]">cloud_upload</span>
-                    <span class="hidden lg:inline">Upload</span>
+                    <span class="hidden lg:inline">{{ __('messages.add_product') }}</span>
                 </a>
                 <div class="relative group">
                     <button type="button" class="size-10 flex items-center justify-center rounded-full bg-primary text-[#181811] hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20 overflow-hidden border-2 border-primary">
@@ -53,18 +56,18 @@
                         <div class="py-2">
                             <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-4 py-2 text-sm font-medium text-[#181811] dark:text-white hover:text-yellow-600 dark:hover:bg-[#3d3c22] transition-colors">
                                 <span class="material-symbols-outlined text-lg">dashboard</span>
-                                <span>Dashboard</span>
+                                <span>{{ __('messages.dashboard') }}</span>
                             </a>
                             <a href="{{ route('profile.edit') }}" class="flex items-center gap-3 px-4 py-2 text-sm font-medium text-[#181811] dark:text-white hover:text-yellow-600 dark:hover:bg-[#3d3c22] transition-colors">
                                 <span class="material-symbols-outlined text-lg">person</span>
-                                <span>Profile</span>
+                                <span>{{ __('messages.profile') }}</span>
                             </a>
                             <div class="border-t border-[#e6e6e0] dark:border-[#3a3928] my-2"></div>
                             <form action="{{ route('logout') }}" method="POST" class="inline w-full">
                                 @csrf
                                 <button type="submit" class="w-full flex items-center gap-3 px-4 py-2 text-sm font-medium text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:bg-red-900/20 transition-colors">
                                     <span class="material-symbols-outlined text-lg">logout</span>
-                                    <span>Logout</span>
+                                    <span>{{ __('messages.logout') }}</span>
                                 </button>
                             </form>
                         </div>

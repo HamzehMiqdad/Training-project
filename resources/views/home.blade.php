@@ -1,9 +1,19 @@
 <!DOCTYPE html>
-<html class="light" lang="en">
+<html class="light" lang="{{ app()->getLocale() }}">
 <head>
     @include('partials.head-assets')
-    <title>MarketHub - Home</title>
+    <title>{{ __('messages.marketplace') }} - {{ __('messages.products') }}</title>
     <style type="text/tailwindcss">
+        * {
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            overflow-x: hidden;
+            max-width: 100vw;
+            width: 100%;
+        }
+        
         body {
             font-family: "Spline Sans", sans-serif;
         }
@@ -80,9 +90,11 @@
             background-size: 200% 200%;
             animation: gradientShift 8s ease infinite;
         }
+        
     </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark text-[#181811] dark:text-[#f5f5f0] min-h-screen flex flex-col font-display">
+    <div id="app-wrapper" class="w-full">
     @include('partials.header')
 
     {{-- Landing Hero Section (Full Width) --}}
@@ -100,37 +112,37 @@
                         <div class="mb-6 animate-delay-100 animate-fade-in-up">
                             <span class="inline-flex items-center gap-2 px-4 py-2 bg-white/90 dark:bg-[#32311b]/90 backdrop-blur-md text-xs md:text-sm font-bold uppercase tracking-wider rounded-full text-[#181811] dark:text-white border border-primary/20 shadow-lg">
                                 <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                                Welcome to MarketPlace
+                                {{ __('messages.welcome_to_marketplace') }}
                             </span>
                         </div>
                         
                         <h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-[#181811] dark:text-white leading-tight mb-6 animate-delay-200 animate-fade-in-up">
-                            Discover, Shop, and Sell
-                            <span class="block text-primary mt-2">Amazing Products</span>
+                            {{ __('messages.discover_shop_sell') }}
+                            <span class="block text-primary mt-2">{{ __('messages.amazing_products') }}</span>
                         </h1>
                         
                         <p class="text-lg md:text-xl lg:text-2xl text-gray-700 dark:text-gray-300 font-medium max-w-3xl mx-auto mb-8 leading-relaxed animate-delay-300 animate-fade-in-up">
-                            Join thousands of verified sellers and buyers in our thriving marketplace. Find unique items or showcase your products to a global audience.
+                            {{ __('messages.home_description') }}
                         </p>
                         
                         <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12 animate-delay-300 animate-fade-in-up">
                             @auth
                                 <a href="{{ route('products.create') }}" class="w-full sm:w-auto px-8 py-4 bg-primary hover:bg-[#d9d505] text-[#181811] font-bold rounded-full text-base md:text-lg transition-all shadow-xl shadow-primary/30 hover:scale-105 active:scale-95 flex items-center justify-center gap-2">
                                     <span class="material-symbols-outlined">add_circle</span>
-                                    List Your Product
+                                    {{ __('messages.list_your_product') }}
                                 </a>
                                 <a href="#new-arrivals" class="w-full sm:w-auto px-8 py-4 bg-white dark:bg-[#32311b] hover:bg-gray-50 dark:hover:bg-[#3a3928] text-[#181811] dark:text-white font-bold rounded-full text-base md:text-lg transition-all border-2 border-[#e6e6e0] dark:border-[#3a3928] shadow-lg hover:scale-105 active:scale-95 flex items-center justify-center gap-2">
                                     <span class="material-symbols-outlined">shopping_bag</span>
-                                    Browse Products
+                                    {{ __('messages.browse_products') }}
                                 </a>
                             @else
                                 <a href="{{ route('register') }}" class="w-full sm:w-auto px-8 py-4 bg-primary hover:bg-[#d9d505] text-[#181811] font-bold rounded-full text-base md:text-lg transition-all shadow-xl shadow-primary/30 hover:scale-105 active:scale-95 flex items-center justify-center gap-2">
                                     <span class="material-symbols-outlined">person_add</span>
-                                    Get Started
+                                    {{ __('messages.get_started') }}
                                 </a>
                                 <a href="#new-arrivals" class="w-full sm:w-auto px-8 py-4 bg-white dark:bg-[#32311b] hover:bg-gray-50 dark:hover:bg-[#3a3928] text-[#181811] dark:text-white font-bold rounded-full text-base md:text-lg transition-all border-2 border-[#e6e6e0] dark:border-[#3a3928] shadow-lg hover:scale-105 active:scale-95 flex items-center justify-center gap-2">
                                     <span class="material-symbols-outlined">explore</span>
-                                    Explore Marketplace
+                                    {{ __('messages.explore_marketplace') }}
                                 </a>
                             @endauth
                         </div>
@@ -139,12 +151,12 @@
                         <div class="flex flex-wrap items-center justify-center gap-6 md:gap-8 text-sm md:text-base text-gray-600 dark:text-gray-400 animate-delay-300 animate-fade-in-up">
                             <div class="flex items-center gap-2">
                                 <span class="material-symbols-outlined text-primary text-xl">verified</span>
-                                <span>Verified Sellers</span>
+                                <span>{{ __('messages.verified_sellers') }}</span>
                             </div>
                           
                             <div class="flex items-center gap-2">
                                 <span class="material-symbols-outlined text-primary text-xl">local_shipping</span>
-                                <span>Thousands Of Products </span>
+                                <span>{{ __('messages.thousands_of_products') }}</span>
                             </div>
                         </div>
                     </div>
@@ -163,7 +175,7 @@
                                 <h3 class="text-3xl md:text-4xl font-black text-[#181811] dark:text-white mb-2">
                                     <span class="counter" data-target="{{ $stats['users'] }}">0</span>
                                 </h3>
-                                <p class="text-sm font-medium text-gray-600 dark:text-gray-300">Active Users</p>
+                                <p class="text-sm font-medium text-gray-600 dark:text-gray-300">{{ __('messages.active_users') }}</p>
                             </div>
                         </div>
 
@@ -178,7 +190,7 @@
                                 <h3 class="text-3xl md:text-4xl font-black text-[#181811] dark:text-white mb-2">
                                     <span class="counter" data-target="{{ $stats['products'] }}">0</span>
                                 </h3>
-                                <p class="text-sm font-medium text-gray-600 dark:text-gray-300">Available Products</p>
+                                <p class="text-sm font-medium text-gray-600 dark:text-gray-300">{{ __('messages.available_products') }}</p>
                             </div>
                         </div>
 
@@ -193,7 +205,7 @@
                                 <h3 class="text-3xl md:text-4xl font-black text-[#181811] dark:text-white mb-2">
                                     <span class="counter" data-target="{{ $stats['categories'] }}">0</span>
                                 </h3>
-                                <p class="text-sm font-medium text-gray-600 dark:text-gray-300">Product Categories</p>
+                                <p class="text-sm font-medium text-gray-600 dark:text-gray-300">{{ __('messages.product_categories') }}</p>
                             </div>
                         </div>
                     </section>
@@ -209,10 +221,10 @@
                     <div class="flex items-center justify-between px-1">
                         <h2 class="text-lg font-bold flex items-center gap-2">
                             <span class="material-symbols-outlined text-xl">tune</span>
-                            Filters
+                            {{ __('messages.filters') }}
                         </h2>
                         @if(request()->filled('category') || request()->filled('subcategory'))
-                            <a href="{{ route('products.index') }}" class="text-xs font-semibold text-gray-400 hover:text-primary transition-colors">Clear All</a>
+                            <a href="{{ route('products.index') }}" class="text-xs font-semibold text-gray-400 hover:text-primary transition-colors">{{ __('messages.clear_all') }}</a>
                         @endif
             </div>
 
@@ -224,7 +236,7 @@
                         {{-- Category Filters --}}
                         @if($categories->isNotEmpty())
                             <div class="space-y-3">
-                                <h3 class="text-sm font-bold uppercase tracking-wider text-gray-400 px-1">Categories</h3>
+                                <h3 class="text-sm font-bold uppercase tracking-wider text-gray-400 px-1">{{ __('messages.categories') }}</h3>
                                 <div class="space-y-2 px-1">
                     @foreach($categories as $category)
                                         <label class="flex items-center gap-3 group cursor-pointer">
@@ -246,7 +258,7 @@
                         {{-- Subcategory Filter --}}
                         @if($subcategories->isNotEmpty())
                             <div class="space-y-3">
-                                <h3 class="text-sm font-bold uppercase tracking-wider text-gray-400 px-1">Subcategories</h3>
+                                <h3 class="text-sm font-bold uppercase tracking-wider text-gray-400 px-1">{{ __('messages.subcategories') }}</h3>
                                 <div class="space-y-2 px-1">
                     @foreach($subcategories as $subcategory)
                                         <label class="flex items-center gap-3 group cursor-pointer">
@@ -280,12 +292,12 @@
                                 <div class="absolute inset-0 hero-gradient"></div>
                                 <div class="absolute inset-0 bg-gradient-to-r from-primary/20 via-primary/10 to-transparent"></div>
                                 <div class="relative z-10 p-8 md:p-12 max-w-xl flex flex-col items-start gap-4">
-                                    <span class="px-3 py-1 bg-white/90 backdrop-blur text-xs font-bold uppercase tracking-wider rounded-full text-[#181811] animate-delay-100 animate-fade-in-up">Welcome</span>
+                                    <span class="px-3 py-1 bg-white/90 backdrop-blur text-xs font-bold uppercase tracking-wider rounded-full text-[#181811] animate-delay-100 animate-fade-in-up">{{ __('messages.welcome') }}</span>
                                     <h1 class="text-4xl md:text-5xl font-black text-[#181811] dark:text-white leading-tight animate-delay-200 animate-fade-in-up">
-                                        Discover Amazing Products
+                                        {{ __('messages.discover_amazing_products') }}
                                     </h1>
                                     <p class="text-gray-600 dark:text-gray-300 text-base md:text-lg font-medium max-w-md animate-delay-300 animate-fade-in-up">
-                                        Explore our marketplace filled with unique items from verified sellers.
+                                        {{ __('messages.explore_marketplace_description') }}
                                     </p>
                                 </div>
                             </div>
@@ -309,8 +321,8 @@
                                         <div class="absolute right-[-20px] {{ $index % 2 == 0 ? 'bottom-[-20px]' : 'top-[-20px]' }} size-32 rounded-full bg-primary/20 blur-2xl transition-all group-hover:scale-150"></div>
                                         <div class="relative z-10">
                                             <h3 class="text-2xl font-bold mb-1 text-[#181811] dark:text-white">{{ $category }}</h3>
-                                            <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Explore {{ $category }} products</p>
-                                            <a href="{{ route('products.index', ['category' => $category]) }}" class="inline-flex items-center text-sm font-bold underline decoration-2 decoration-primary underline-offset-4 hover:text-primary transition-colors">Browse Category</a>
+                                            <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">{{ __('messages.explore_category_products', ['category' => $category]) }}</p>
+                                            <a href="{{ route('products.index', ['category' => $category]) }}" class="inline-flex items-center text-sm font-bold underline decoration-2 decoration-primary underline-offset-4 hover:text-primary transition-colors">{{ __('messages.browse_category') }}</a>
                                         </div>
                             @if($sampleProduct && $sampleProduct->image)
                                             <img 
@@ -329,7 +341,7 @@
                     @if($topProducts->count() > 0)
                         <section class="space-y-6 animate-fade-in-up">
                             <div class="flex items-center justify-between px-2">
-                                <h2 class="text-xl font-bold text-[#181811] dark:text-white">Top Products</h2>
+                                <h2 class="text-xl font-bold text-[#181811] dark:text-white">{{ __('messages.top_products') }}</h2>
                             </div>
                             <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
                                 @foreach($topProducts as $index => $product)
@@ -345,7 +357,7 @@
                     @if($newProducts->count() > 0)
                         <section id="new-arrivals" class="space-y-6 animate-fade-in-up scroll-mt-24">
                             <div class="flex items-center justify-between px-2">
-                                <h2 class="text-xl font-bold text-[#181811] dark:text-white">New Arrivals</h2>
+                                <h2 class="text-xl font-bold text-[#181811] dark:text-white">{{ __('messages.new_arrivals') }}</h2>
                             </div>
                             <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
                                 @foreach($newProducts as $index => $product)
@@ -366,16 +378,16 @@
                     <div class="flex items-center justify-between px-2">
                         <h2 class="text-xl font-bold text-[#181811] dark:text-white">
                             @if(request()->filled('q') || request()->filled('category'))
-                                Search Results
+                                {{ __('messages.search_results') }}
                             @else
-                                All Products
+                                {{ __('messages.all_products') }}
                             @endif
                         </h2>
                     </div>
 
                     @if($products->isEmpty())
                         <div class="text-center py-12">
-                            <p class="text-gray-500 dark:text-gray-400 text-lg">No products found.</p>
+                            <p class="text-gray-500 dark:text-gray-400 text-lg">{{ __('messages.no_products_found') }}</p>
                         </div>
                     @else
                         <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
@@ -454,7 +466,7 @@
                     <div class="sticky top-24 space-y-6">
                         <div class="w-full bg-white dark:bg-[#32311b] rounded-xl overflow-hidden border border-[#e6e6e0] dark:border-[#3a3928] group">
                             <div class="p-2 border-b border-[#e6e6e0] dark:border-[#3a3928] flex items-center justify-between">
-                                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Sponsored</span>
+                                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{{ __('messages.sponsored') }}</span>
                                 <span class="material-symbols-outlined text-sm text-gray-400">info</span>
                             </div>
                             <a href="{{ route('ads.click', $ad_sidebar) }}" target="_blank" class="block relative aspect-[2/3] overflow-hidden">
@@ -464,9 +476,9 @@
                                     src="{{ asset('storage/' . $ad_sidebar->image) }}"
                                 />
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-6">
-                                    <h4 class="text-xl font-bold text-white mb-2">Special Offer</h4>
-                                    <p class="text-white/80 text-sm mb-4">Check out our featured products and exclusive deals.</p>
-                                    <button class="w-full py-2 bg-primary text-black font-bold rounded-lg hover:bg-white transition-colors">Shop Now</button>
+                                    <h4 class="text-xl font-bold text-white mb-2">{{ __('messages.special_offer') }}</h4>
+                                    <p class="text-white/80 text-sm mb-4">{{ __('messages.check_out_featured') }}</p>
+                                    <button class="w-full py-2 bg-primary text-black font-bold rounded-lg hover:bg-white transition-colors">{{ __('messages.shop_now') }}</button>
                                 </div>
                             </a>
                         </div>
@@ -481,7 +493,7 @@
         <section class="w-full max-w-[1440px] mx-auto px-4 md:px-8">
             <div class="w-full bg-white dark:bg-[#32311b] rounded-xl overflow-hidden border border-[#e6e6e0] dark:border-[#3a3928] group">
                 <div class="p-2 border-b border-[#e6e6e0] dark:border-[#3a3928] flex items-center justify-between">
-                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Sponsored</span>
+                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{{ __('messages.sponsored') }}</span>
                     <span class="material-symbols-outlined text-sm text-gray-400">info</span>
                 </div>
                 <a href="{{ route('ads.click', $ad_bottom) }}" target="_blank" class="block relative aspect-[21/4] md:aspect-[21/3] lg:aspect-[21/2.5] overflow-hidden">
@@ -493,11 +505,11 @@
                     <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent flex items-center p-4 md:p-4 lg:p-5">
                         <div class="flex items-center gap-4 md:gap-4 lg:gap-5 flex-1">
                             <div class="flex-1">
-                                <h4 class="text-base md:text-lg lg:text-lg font-bold text-white mb-0.5">Special Offer</h4>
-                                <p class="text-white/90 text-xs md:text-xs lg:text-sm">Check out our featured products and exclusive deals.</p>
+                                <h4 class="text-base md:text-lg lg:text-lg font-bold text-white mb-0.5">{{ __('messages.special_offer') }}</h4>
+                                <p class="text-white/90 text-xs md:text-xs lg:text-sm">{{ __('messages.check_out_featured') }}</p>
                             </div>
                             <button class="px-3 md:px-4 lg:px-5 py-1.5 md:py-2 lg:py-2.5 bg-primary text-black font-bold text-xs md:text-sm rounded-full hover:bg-white transition-colors shadow-lg shadow-primary/30 flex items-center gap-1.5 shrink-0">
-                                <span>Shop Now</span>
+                                <span>{{ __('messages.shop_now') }}</span>
                                 <span class="material-symbols-outlined text-xs md:text-sm">arrow_forward</span>
                             </button>
                         </div>
@@ -516,7 +528,7 @@
             <div class="sticky top-0 bg-white dark:bg-[#32311b] border-b border-[#e6e6e0] dark:border-[#3a3928] p-4 flex items-center justify-between">
                 <h2 class="text-lg font-bold flex items-center gap-2 text-[#181811] dark:text-white">
                     <span class="material-symbols-outlined text-xl">tune</span>
-                    Filters
+                    {{ __('messages.filters') }}
                 </h2>
                 <button onclick="toggleMobileFilters()" class="size-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-[#3a3928] text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-[#4a4928] transition-colors">
                     <span class="material-symbols-outlined text-xl">close</span>
@@ -525,7 +537,7 @@
             <div class="p-4 space-y-6">
                 @if(request()->filled('category') || request()->filled('subcategory'))
                     <div class="flex justify-end">
-                        <a href="{{ route('products.index') }}" class="text-xs font-semibold text-gray-400 hover:text-primary transition-colors">Clear All</a>
+                        <a href="{{ route('products.index') }}" class="text-xs font-semibold text-gray-400 hover:text-primary transition-colors">{{ __('messages.clear_all') }}</a>
                     </div>
                 @endif
                 
@@ -537,7 +549,7 @@
                     {{-- Category Filters --}}
                     @if($categories->isNotEmpty())
                         <div class="space-y-3">
-                            <h3 class="text-sm font-bold uppercase tracking-wider text-gray-400 px-1">Categories</h3>
+                            <h3 class="text-sm font-bold uppercase tracking-wider text-gray-400 px-1">{{ __('messages.categories') }}</h3>
                             <div class="space-y-2 px-1">
                                 @foreach($categories as $category)
                                     <label class="flex items-center gap-3 group cursor-pointer">
@@ -559,7 +571,7 @@
                     {{-- Subcategory Filter --}}
                     @if($subcategories->isNotEmpty())
                         <div class="space-y-3">
-                            <h3 class="text-sm font-bold uppercase tracking-wider text-gray-400 px-1">Subcategories</h3>
+                            <h3 class="text-sm font-bold uppercase tracking-wider text-gray-400 px-1">{{ __('messages.subcategories') }}</h3>
                             <div class="space-y-2 px-1">
                                 @foreach($subcategories as $subcategory)
                                     <label class="flex items-center gap-3 group cursor-pointer">
@@ -708,5 +720,6 @@
             }
         }
     </script>
+    </div>{{-- End app-wrapper --}}
 </body>
 </html>

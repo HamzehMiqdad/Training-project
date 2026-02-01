@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\CheckActivated;
+use App\Http\Middleware\SetLocale;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -16,10 +17,6 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
 
         $middleware->redirectGuestsTo(function ($request) {
-            if ($request->is('admin/*')) {
-                return route('admin.login');
-            }
-
             return route('login');
         });
 
@@ -41,6 +38,11 @@ return Application::configure(basePath: dirname(__DIR__))
         });
         $middleware->alias([
             'activated' => CheckActivated::class
+        ]);
+        
+        // Set locale middleware for all web requests
+        $middleware->web(append: [
+            SetLocale::class,
         ]);
     })  
     ->withExceptions(function (Exceptions $exceptions): void {

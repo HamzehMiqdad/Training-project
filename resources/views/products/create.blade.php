@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html class="light" lang="en">
+<html class="light" lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 <head>
     @include('partials.head-assets')
-    <title>List a New Item - MarketHub</title>
+    <title>{{ __('messages.list_new_item') }} - {{ __('messages.marketplace') }}</title>
     <style type="text/tailwindcss">
         body {
             font-family: "Spline Sans", sans-serif;
@@ -20,8 +20,8 @@
         <div class="w-full max-w-[960px] flex flex-col gap-8">
             <div class="flex flex-wrap justify-between items-end gap-3 px-2">
                 <div class="flex min-w-72 flex-col gap-2">
-                    <p class="text-slate-900 dark:text-white text-3xl sm:text-4xl font-black leading-tight tracking-[-0.033em]">List a New Item</p>
-                    <p class="text-stone-500 dark:text-stone-400 text-base font-normal leading-normal">Reach thousands of buyers by listing your product on MarketHub.</p>
+                    <p class="text-slate-900 dark:text-white text-3xl sm:text-4xl font-black leading-tight tracking-[-0.033em]">{{ __('messages.list_new_item') }}</p>
+                    <p class="text-stone-500 dark:text-stone-400 text-base font-normal leading-normal">{{ __('messages.reach_thousands_buyers') }}</p>
                 </div>
             </div>
 
@@ -43,7 +43,7 @@
                 <section class="bg-white dark:bg-stone-dark rounded-lg p-6 sm:p-8 shadow-sm border border-stone-100 dark:border-stone-800">
                     <div class="flex items-center gap-2 mb-4">
                         <span class="material-symbols-outlined text-primary">image</span>
-                        <h3 class="text-slate-900 dark:text-white text-xl font-bold leading-tight tracking-[-0.015em]">Product Media</h3>
+                        <h3 class="text-slate-900 dark:text-white text-xl font-bold leading-tight tracking-[-0.015em]">{{ __('messages.product_media') }}</h3>
                     </div>
                     <div class="flex flex-col gap-4">
                         <div class="relative group cursor-pointer flex flex-col items-center justify-center w-full h-64 rounded-xl border-2 border-dashed border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-800/50 hover:bg-stone-100 dark:hover:bg-stone-800 hover:border-primary transition-all">
@@ -60,8 +60,8 @@
                                 <div class="p-3 bg-white dark:bg-stone-800 rounded-full shadow-sm group-hover:scale-110 transition-transform duration-300">
                                     <span class="material-symbols-outlined text-3xl text-primary">add_a_photo</span>
                                 </div>
-                                <p class="text-base font-medium"><span class="text-slate-900 dark:text-white underline decoration-primary decoration-2 underline-offset-2">Click to upload</span> or drag and drop</p>
-                                <p class="text-sm">SVG, PNG, JPG or GIF (max. 10MB)</p>
+                                <p class="text-base font-medium"><span class="text-slate-900 dark:text-white underline decoration-primary decoration-2 underline-offset-2">{{ __('messages.click_to_upload') }}</span> {{ __('messages.drag_and_drop') }}</p>
+                                <p class="text-sm">{{ __('messages.image_formats') }}</p>
                             </div>
                         </div>
                         @error('image')
@@ -73,7 +73,7 @@
                                 <button type="button" onclick="removeImagePreview()" class="absolute top-1 right-1 size-6 bg-black/50 text-white rounded-full flex items-center justify-center hover:bg-red-500 transition-colors">
                                     <span class="material-symbols-outlined text-sm">close</span>
                                 </button>
-                                <div class="absolute bottom-0 inset-x-0 bg-black/60 text-white text-[10px] font-bold px-2 py-1 text-center">Cover</div>
+                                <div class="absolute bottom-0 inset-x-0 bg-black/60 text-white text-[10px] font-bold px-2 py-1 text-center">{{ __('messages.cover') }}</div>
                             </div>
                         </div>
                     </div>
@@ -83,19 +83,19 @@
                 <section class="bg-white dark:bg-stone-dark rounded-lg p-6 sm:p-8 shadow-sm border border-stone-100 dark:border-stone-800">
                     <div class="flex items-center gap-2 mb-6">
                         <span class="material-symbols-outlined text-primary">edit_note</span>
-                        <h3 class="text-slate-900 dark:text-white text-xl font-bold leading-tight tracking-[-0.015em]">Listing Details</h3>
+                        <h3 class="text-slate-900 dark:text-white text-xl font-bold leading-tight tracking-[-0.015em]">{{ __('messages.listing_details') }}</h3>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <input name="hits" type="hidden" value="0"/>
                         
                         <div class="col-span-1 md:col-span-2">
                             <label class="flex flex-col gap-2">
-                                <p class="text-slate-900 dark:text-stone-200 text-base font-medium">Product Name</p>
+                                <p class="text-slate-900 dark:text-stone-200 text-base font-medium">{{ __('messages.product_name') }}</p>
                                 <input 
                                     class="form-input w-full rounded-xl border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-slate-900 dark:text-white focus:border-primary focus:ring-primary h-14 px-4 placeholder:text-stone-400 dark:placeholder:text-stone-600 font-normal shadow-sm @error('name') border-red-500 @enderror" 
                                     name="name" 
                                     id="name"
-                                    placeholder="Enter a descriptive title for your product" 
+                                    placeholder="{{ __('messages.enter_descriptive_title') }}" 
                                     type="text"
                                     value="{{ old('name') }}"
                                     required
@@ -108,11 +108,11 @@
 
                         <div class="col-span-1 md:col-span-2">
                             <label class="flex flex-col gap-2">
-                                <p class="text-slate-900 dark:text-stone-200 text-base font-medium">Details / Description</p>
+                                <p class="text-slate-900 dark:text-stone-200 text-base font-medium">{{ __('messages.details_description') }}</p>
                                 <textarea 
                                     class="form-textarea w-full rounded-xl border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-slate-900 dark:text-white focus:border-primary focus:ring-primary min-h-[140px] p-4 placeholder:text-stone-400 dark:placeholder:text-stone-600 font-normal shadow-sm resize-y @error('details') border-red-500 @enderror" 
                                     name="details" 
-                                    placeholder="Tell buyers about your item's features and history..."
+                                    placeholder="{{ __('messages.tell_about_store') }}"
                                     required
                                 >{{ old('details') }}</textarea>
                                 @error('details')
@@ -123,14 +123,14 @@
 
                         <div class="col-span-1">
                             <label class="flex flex-col gap-2">
-                                <p class="text-slate-900 dark:text-stone-200 text-base font-medium">Category</p>
+                                <p class="text-slate-900 dark:text-stone-200 text-base font-medium">{{ __('messages.categories') }}</p>
                                 <div class="relative">
                                     <input 
                                         type="text" 
                                         name="category" 
                                         id="category"
                                         class="form-input w-full rounded-xl border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-slate-900 dark:text-white focus:border-primary focus:ring-primary h-14 px-4 placeholder:text-stone-400 dark:placeholder:text-stone-600 font-normal shadow-sm @error('category') border-red-500 @enderror" 
-                                        placeholder="Enter category"
+                                        placeholder="{{ __('messages.enter_category') }}"
                                         value="{{ old('category') }}"
                                         required
                                     />
@@ -143,14 +143,14 @@
 
                         <div class="col-span-1">
                             <label class="flex flex-col gap-2">
-                                <p class="text-slate-900 dark:text-stone-200 text-base font-medium">Subcategory</p>
+                                <p class="text-slate-900 dark:text-stone-200 text-base font-medium">{{ __('messages.subcategories') }}</p>
                                 <div class="relative">
                                     <input 
                                         type="text" 
                                         name="subcategory" 
                                         id="subcategory"
                                         class="form-input w-full rounded-xl border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-slate-900 dark:text-white focus:border-primary focus:ring-primary h-14 px-4 placeholder:text-stone-400 dark:placeholder:text-stone-600 font-normal shadow-sm @error('subcategory') border-red-500 @enderror" 
-                                        placeholder="Enter subcategory"
+                                        placeholder="{{ __('messages.enter_subcategory') }}"
                                         value="{{ old('subcategory') }}"
                                     />
                                 </div>
@@ -162,7 +162,7 @@
 
                         <div class="col-span-1">
                             <label class="flex flex-col gap-2">
-                                <p class="text-slate-900 dark:text-stone-200 text-base font-medium">Product Code (SKU)</p>
+                                <p class="text-slate-900 dark:text-stone-200 text-base font-medium">{{ __('messages.product_code_sku') }}</p>
                                 <input 
                                     class="form-input w-full rounded-xl border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-slate-900 dark:text-white focus:border-primary focus:ring-primary h-14 px-4 placeholder:text-stone-400 font-normal shadow-sm @error('code') border-red-500 @enderror" 
                                     name="code" 
@@ -178,7 +178,7 @@
 
                         <div class="col-span-1">
                             <label class="flex flex-col gap-2">
-                                <p class="text-slate-900 dark:text-stone-200 text-base font-medium">Price</p>
+                                <p class="text-slate-900 dark:text-stone-200 text-base font-medium">{{ __('messages.price') }}</p>
                                 <div class="relative">
                                     <span class="absolute left-4 top-1/2 -translate-y-1/2 text-stone-500 font-medium">SYP</span>
                                     <input 
@@ -198,8 +198,8 @@
 
                         <div class="col-span-1 md:col-span-2 flex items-center justify-between p-4 bg-stone-50 dark:bg-stone-800/50 rounded-xl border border-stone-200 dark:border-stone-700 mt-2">
                             <div class="flex flex-col gap-1">
-                                <p class="text-slate-900 dark:text-stone-200 text-base font-semibold">Available for Sale</p>
-                                <p class="text-sm text-stone-500">Enable this to make the product visible to buyers immediately after publishing.</p>
+                                <p class="text-slate-900 dark:text-stone-200 text-base font-semibold">{{ __('messages.available_for_sale') }}</p>
+                                <p class="text-sm text-stone-500">{{ __('messages.enable_visible') }}</p>
                             </div>
                             <label class="inline-flex items-center cursor-pointer">
                                 <input 
@@ -216,10 +216,10 @@
 
                 <div class="flex flex-col-reverse sm:flex-row justify-end items-center gap-4 pt-6 pb-20">
                     <a href="{{ route('dashboard') }}" class="w-full sm:w-auto flex min-w-[120px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-6 bg-transparent border border-stone-300 dark:border-stone-700 text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 text-base font-bold transition-all">
-                        Discard Draft
+                        {{ __('messages.cancel') }}
                     </a>
                     <button class="w-full sm:w-auto flex min-w-[200px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-8 bg-primary text-[#181811] hover:bg-[#eae605] text-base font-bold shadow-lg shadow-primary/20 transition-all hover:scale-[1.02] active:scale-95" type="submit">
-                        Publish to MarketHub
+                        {{ __('messages.publish_product') }}
                     </button>
                 </div>
             </form>

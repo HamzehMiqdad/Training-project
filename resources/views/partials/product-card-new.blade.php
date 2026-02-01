@@ -17,11 +17,11 @@
             
             @if(!$product->availabe_for_sale)
                 <div class="absolute inset-0 bg-[#181811]/60 flex items-center justify-center">
-                    <span class="px-4 py-2 bg-red-500 text-white font-bold text-xs uppercase tracking-widest rounded-full">Out of Stock</span>
+                    <span class="px-4 py-2 bg-red-500 text-white font-bold text-xs uppercase tracking-widest rounded-full">{{ __('messages.out_of_stock') }}</span>
                 </div>
             @elseif($product->hits > 100)
                 <div class="absolute inset-0 bg-blue-500/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <span class="px-4 py-2 bg-white text-blue-600 font-bold text-xs uppercase tracking-widest rounded-full">Popular</span>
+                    <span class="px-4 py-2 bg-white text-blue-600 font-bold text-xs uppercase tracking-widest rounded-full">{{ __('messages.popular') }}</span>
                 </div>
             @endif
         </div>
@@ -33,10 +33,10 @@
                 @if($product->price)
                     <p class="text-lg font-bold text-[#181811] dark:text-white">{{ number_format($product->price) }} SYP</p>
                 @else
-                    <p class="text-lg font-bold text-gray-400">Price on request</p>
+                    <p class="text-lg font-bold text-gray-400">{{ __('messages.price_on_request') }}</p>
                 @endif
                 <a href="{{ route('products.show', $product) }}" class="px-3 py-1 bg-black text-white dark:bg-white dark:text-black rounded-full text-xs font-bold hover:bg-primary hover:text-black transition-colors">
-                    Details
+                    {{ __('messages.details') }}
                 </a>
             </div>
         </div>

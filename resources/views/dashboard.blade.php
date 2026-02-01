@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html class="light" lang="en">
+<html class="light" lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 <head>
     @include('partials.head-assets')
-    <title>Product Management - MarketHub</title>
+    <title>{{ __('messages.product_management') }} - {{ __('messages.marketplace') }}</title>
     <style type="text/tailwindcss">
         .toggle-checkbox:checked {
             @apply right-0 border-primary bg-primary;
@@ -30,13 +30,13 @@
 
             <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                 <div class="flex flex-col gap-1">
-                    <h1 class="text-4xl font-black tracking-tight text-[#181811] dark:text-white">Product Management</h1>
-                    <p class="text-base text-[#8c8b5f] dark:text-[#a1a18d]">Track performance and manage your global product catalog.</p>
+                    <h1 class="text-4xl font-black tracking-tight text-[#181811] dark:text-white">{{ __('messages.product_management') }}</h1>
+                    <p class="text-base text-[#8c8b5f] dark:text-[#a1a18d]">{{ __('messages.track_performance') }}</p>
                 </div>
                 <div class="flex gap-3">
                     <a href="{{ route('products.create') }}" class="flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-bold text-[#181811] shadow-lg shadow-primary/20 hover:brightness-105 transition-all">
                         <span class="material-symbols-outlined text-[20px]">add</span>
-                        <span>New Product</span>
+                        <span>{{ __('messages.new_product') }}</span>
                     </a>
                 </div>
             </div>
@@ -48,7 +48,7 @@
                         <div class="flex size-10 items-center justify-center rounded-xl bg-[#fcfcfb] text-[#8c8b5f] dark:bg-[#2c2b18]">
                             <span class="material-symbols-outlined">inventory</span>
                         </div>
-                        <span class="text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">Total Products</span>
+                        <span class="text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">{{ __('messages.total_products') }}</span>
                     </div>
                     <div class="mt-2">
                         <span class="text-3xl font-black text-[#181811] dark:text-white">{{ $products->count() }}</span>
@@ -60,7 +60,7 @@
                         <div class="flex size-10 items-center justify-center rounded-xl bg-[#fcfcfb] text-[#8c8b5f] dark:bg-[#2c2b18]">
                             <span class="material-symbols-outlined">visibility</span>
                         </div>
-                        <span class="text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">Total Hits</span>
+                        <span class="text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">{{ __('messages.total_hits') }}</span>
                     </div>
                     <div class="mt-2">
                         <span class="text-3xl font-black text-[#181811] dark:text-white">{{ number_format($totalHits ?? 0) }}</span>
@@ -72,14 +72,14 @@
                         <div class="flex size-10 items-center justify-center rounded-xl bg-primary/20 text-[#181811] dark:text-primary">
                             <span class="material-symbols-outlined">trending_up</span>
                         </div>
-                        <span class="text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">Top Product</span>
+                        <span class="text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">{{ __('messages.top_product') }}</span>
                     </div>
                     <div class="mt-2">
                         <div class="text-lg font-bold text-[#181811] dark:text-white truncate">
                             {{ $topProduct?->name ?? '—' }}
                         </div>
                         <span class="text-sm text-[#8c8b5f] font-medium">
-                            {{ number_format($topProduct?->hits ?? 0) }} hits
+                            {{ number_format($topProduct?->hits ?? 0) }} {{ __('messages.hits') }}
                         </span>
                     </div>
                 </div>
@@ -93,14 +93,14 @@
                     </span>
                     <input 
                         class="h-12 w-full rounded-xl border border-[#e6e6db] bg-[#f8f8f5] pl-12 pr-4 text-base font-medium text-[#181811] placeholder-[#8c8b5f] focus:border-primary focus:ring-0 dark:bg-background-dark dark:border-[#3a392a] dark:text-white" 
-                        placeholder="Search by name, code..." 
+                        placeholder="{{ __('messages.search_by_name_code') }}" 
                         name="q"
                         value="{{ $search }}"
                     />
                 </div>
                 <button type="submit" class="flex h-12 items-center justify-center gap-2 rounded-xl border border-[#e6e6db] bg-white dark:bg-[#32311b] dark:border-[#3a392a] px-4 text-sm font-bold text-[#181811] dark:text-white hover:bg-[#f0f0eb] transition-colors">
                     <span class="material-symbols-outlined text-[20px]">search</span>
-                    <span>Search</span>
+                    <span>{{ __('messages.search') }}</span>
                 </button>
             </form>
 
@@ -108,10 +108,10 @@
             <div class="overflow-hidden rounded-[2rem] border border-[#e6e6db] bg-white shadow-sm dark:bg-[#32311b] dark:border-[#3a392a]">
                 @if($products->isEmpty())
                     <div class="p-12 text-center">
-                        <p class="text-[#8c8b5f] dark:text-[#a1a18d] text-lg mb-4">You have no products yet.</p>
+                        <p class="text-[#8c8b5f] dark:text-[#a1a18d] text-lg mb-4">{{ __('messages.no_products_yet') }}</p>
                         <a href="{{ route('products.create') }}" class="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-bold text-[#181811] shadow-lg shadow-primary/20 hover:brightness-105 transition-all">
                             <span class="material-symbols-outlined">add</span>
-                            <span>Create Your First Product</span>
+                            <span>{{ __('messages.create_first_product') }}</span>
                         </a>
                     </div>
                 @else
@@ -119,12 +119,12 @@
                         <table class="w-full min-w-[1000px] table-fixed">
                             <thead>
                                 <tr class="border-b border-[#e6e6db] bg-[#fcfcfb] dark:bg-[#2c2b18] dark:border-[#3a392a]">
-                                    <th class="w-[300px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">Name/Code</th>
-                                    <th class="w-[120px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">Price</th>
-                                    <th class="w-[200px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">Category/Sub</th>
-                                    <th class="w-[120px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">Hits</th>
-                                    <th class="w-[160px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">Available for Sale</th>
-                                    <th class="w-[100px] px-6 py-4 text-right text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">Actions</th>
+                                    <th class="w-[300px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">{{ __('messages.name_code') }}</th>
+                                    <th class="w-[120px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">{{ __('messages.price') }}</th>
+                                    <th class="w-[200px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">{{ __('messages.category_sub') }}</th>
+                                    <th class="w-[120px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">{{ __('messages.total_hits') }}</th>
+                                    <th class="w-[160px] px-6 py-4 text-left text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">{{ __('messages.available_for_sale') }}</th>
+                                    <th class="w-[100px] px-6 py-4 text-right text-sm font-bold text-[#8c8b5f] dark:text-[#a1a18d]">{{ __('messages.actions') }}</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-[#e6e6db] dark:divide-[#3a392a]">
@@ -146,7 +146,7 @@
                                                         {{ $product->name }}
                                                     </a>
                                                     @if($product->code)
-                                                        <span class="text-xs font-medium text-[#8c8b5f]">CODE: {{ $product->code }}</span>
+                                                        <span class="text-xs font-medium text-[#8c8b5f]">{{ __('messages.code') }} {{ $product->code }}</span>
                                                     @endif
                                                 </div>
                                             </div>
@@ -193,13 +193,13 @@
                                         </td>
                                         <td class="px-6 py-4 text-right">
                                             <div class="flex justify-end gap-2">
-                                                <a href="{{ route('products.edit', $product) }}" class="flex size-8 items-center justify-center rounded-full bg-[#f8f8f5] text-[#181811] hover:bg-primary transition-colors dark:bg-[#2c2b18] dark:text-white" title="Edit">
+                                                <a href="{{ route('products.edit', $product) }}" class="flex size-8 items-center justify-center rounded-full bg-[#f8f8f5] text-[#181811] hover:bg-primary transition-colors dark:bg-[#2c2b18] dark:text-white" title="{{ __('messages.edit') }}">
                                                     <span class="material-symbols-outlined text-[18px]">edit</span>
                                                 </a>
-                                                <form action="{{ route('products.destroy', $product) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this product?');" class="inline">
+                                                <form action="{{ route('products.destroy', $product) }}" method="POST" onsubmit="return confirm('{{ __('messages.confirm_delete') }}');" class="inline">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="flex size-8 items-center justify-center rounded-full bg-[#f8f8f5] text-[#181811] hover:bg-red-100 hover:text-red-600 transition-colors dark:bg-[#2c2b18] dark:text-white" title="Delete">
+                                                    <button type="submit" class="flex size-8 items-center justify-center rounded-full bg-[#f8f8f5] text-[#181811] hover:bg-red-100 hover:text-red-600 transition-colors dark:bg-[#2c2b18] dark:text-white" title="{{ __('messages.delete') }}">
                                                         <span class="material-symbols-outlined text-[18px]">delete</span>
                                                     </button>
                                                 </form>
